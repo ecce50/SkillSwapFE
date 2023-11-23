@@ -27,6 +27,8 @@ function ClassCreation() {
     }
   };
 
+
+  
   return (
     <div>
       <h2>Create a class</h2>
