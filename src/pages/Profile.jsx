@@ -1,22 +1,27 @@
 /* eslint-disable no-unused-vars */
-import { AuthContext } from "../context/Auth.context"
-import { useContext } from "react"
-import Navbar from "../components/Navbar"
-import Logout from "../components/Logout"
+import { AuthContext } from "../context/Auth.context";
+import { useContext } from "react";
+import Navbar from "../components/Navbar";
+import Logout from "../components/Logout";
+import SkillCreation from "../components/SkillCreation";
+import ClassCreation from "../components/ClassCreation";
 
 function Profile() {
-    const { authenticateUser, user } = useContext(AuthContext)
+  const user = useContext(AuthContext).user;
 
- 
- 
-    return (
-        <>
-        <Navbar/>
-        <div>Profile</div>
-            <h3>Welcome {user ? user.email : null} </h3>
-        <Logout/>
-      </>
-  )
+  return (
+    <>
+      <Navbar />
+
+      <div>Profile</div>
+      <h3>Welcome {user ? user.email : null} </h3>
+
+      <SkillCreation />
+
+      <ClassCreation />
+      <Logout />
+    </>
+  );
 }
 
-export default Profile
+export default Profile;

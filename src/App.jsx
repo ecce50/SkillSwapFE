@@ -5,6 +5,7 @@ import Login from "./pages/Login";
 import Profile from "./pages/Profile";
 import IsPrivate from "./components/isPrivate";
 
+
 function App() {
   return (
     <>
@@ -17,7 +18,7 @@ function App() {
           path="/profile"
           element={
             <IsPrivate>
-              <Profile/>
+              <Profile />
             </IsPrivate>
           }
         />
