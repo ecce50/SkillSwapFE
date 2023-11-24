@@ -4,7 +4,7 @@ import Signup from "./pages/Signup";
 import Login from "./pages/Login";
 import Profile from "./pages/Profile";
 import IsPrivate from "./components/isPrivate";
-
+import SearchResults from "./pages/SearchResults";
 
 function App() {
   return (
@@ -13,7 +13,8 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
-
+        <Route path="/search-results" element={<SearchResults />} />{" "}
+        {/* Use the new page component */}
         <Route
           path="/profile"
           element={
