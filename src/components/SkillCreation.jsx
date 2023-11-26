@@ -14,7 +14,7 @@ function SkillCreation() {
       console.log("Frontend - UserID:", userId); // Log user ID
       console.log("Frontend - SkillID:", skillId); // Log skill ID
       const res = await axios.put(
-        `http://localhost:5005/user/${user._id}/add-skill`,
+        `http://localhost:5005/user/add-skill`,
         { skillId }
       );
 
@@ -49,7 +49,7 @@ function SkillCreation() {
         skills: [...prevUser.skills, skillId],
       }));
 
-      await updateUserSkills(user._id, skillId);
+      await updateUserSkills(skillId);
 
       await authenticateUser();
       nav("/profile");
