@@ -5,6 +5,7 @@ import { AuthContext } from "../context/Auth.context";
 
 function SkillCreation() {
   const [title, setTitle] = useState("");
+    const [description, setDescription] = useState("");
   const { authenticateUser, user, setUser } = useContext(AuthContext);
   const nav = useNavigate();
 
@@ -34,6 +35,7 @@ function SkillCreation() {
         "http://localhost:5005/skill/skill-creation",
         {
           title,
+          description,
         }
       );
       console.log("This is the axios post result", res);
@@ -70,6 +72,17 @@ function SkillCreation() {
             onChange={(e) => {
               setTitle(e.target.value);
             }}
+          />
+        </label>
+        <label>
+          Description
+          <textarea
+            value={description}
+            required
+            onChange={(e) => {
+              setDescription(e.target.value);
+            }}
+            rows={4} // Set the number of visible rows
           />
         </label>
         <button type="submit">Create skill</button>
