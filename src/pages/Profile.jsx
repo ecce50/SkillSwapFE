@@ -5,6 +5,7 @@ import Navbar from "../components/Navbar";
 import Logout from "../components/Logout";
 import SkillCreation from "../components/SkillCreation";
 import ClassCreation from "../components/ClassCreation";
+import TeacherSkills from "../components/TeacherSkills";
 
 function Profile() {
   const user = useContext(AuthContext).user;
@@ -19,6 +20,7 @@ function Profile() {
       <SkillCreation />
 
       <ClassCreation />
+      <TeacherSkills/>
       <Logout />
     </>
   );

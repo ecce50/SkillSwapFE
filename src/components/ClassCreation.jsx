@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useContext, useState } from "react";
 import { AuthContext } from "../context/Auth.context";
 
+
 function ClassCreation() {
   const [title, setTitle] = useState("");
   const { authenticateUser } = useContext(AuthContext);
