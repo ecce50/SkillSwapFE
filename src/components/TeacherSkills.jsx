@@ -43,7 +43,7 @@ const TeacherSkills = ({ onAddClass }) => {
   };
 
   return (
-    <div>
+    <div className="creation-container">
       <h2>Your Skills</h2>
       {skills.map((skill) => (
         <div key={skill._id}>

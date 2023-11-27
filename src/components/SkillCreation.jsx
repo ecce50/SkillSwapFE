@@ -3,21 +3,26 @@ import { useNavigate } from "react-router-dom";
 import { useContext, useState } from "react";
 import { AuthContext } from "../context/Auth.context";
 
+import "/style/global.css";
+import "/style/creationTemp.css";
+import "/style/navbar.css";
+
 function SkillCreation() {
   const [title, setTitle] = useState("");
-    const [description, setDescription] = useState("");
+  const [description, setDescription] = useState("");
   const { authenticateUser, user, setUser } = useContext(AuthContext);
   const nav = useNavigate();
+
+// updateUserSkills passes the Skill ID to the array of skills on the User document
 
   const updateUserSkills = async (skillId) => {
     try {
       const userId = user._id;
       console.log("Frontend - UserID:", userId); // Log user ID
       console.log("Frontend - SkillID:", skillId); // Log skill ID
-      const res = await axios.put(
-        `http://localhost:5005/user/add-skill`,
-        { skillId }
-      );
+      const res = await axios.put(`http://localhost:5005/user/add-skill`, {
+        skillId,
+      });
 
       console.log("Update User Skills Response:", res.data);
 
@@ -61,7 +66,7 @@ function SkillCreation() {
   };
 
   return (
-    <div>
+    <div className="creation-container">
       <h2>Create a skill</h2>
       <form onSubmit={handleSkillCreation}>
         <label>
