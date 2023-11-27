@@ -3,8 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useContext, useState } from "react";
 import { AuthContext } from "../context/Auth.context";
 
-
-function ClassCreation() {
+function ClassCreation({ skillId }) {
   const [title, setTitle] = useState("");
   const { authenticateUser } = useContext(AuthContext);
   const nav = useNavigate();
@@ -17,6 +16,7 @@ function ClassCreation() {
         "http://localhost:5005/class/class-creation",
         {
           title,
+          skillId,
         }
       );
       console.log("This is the axios post result", res);
@@ -28,8 +28,6 @@ function ClassCreation() {
     }
   };
 
-
-  
   return (
     <div>
       <h2>Create a class</h2>
