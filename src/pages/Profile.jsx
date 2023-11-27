@@ -1,13 +1,23 @@
 /* eslint-disable no-unused-vars */
 import { AuthContext } from "../context/Auth.context";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import Navbar from "../components/Navbar";
 import Logout from "../components/Logout";
 import SkillCreation from "../components/SkillCreation";
 import ClassCreation from "../components/ClassCreation";
+import TeacherSkills from "../components/TeacherSkills";
 
 function Profile() {
   const user = useContext(AuthContext).user;
+  const [isAddingClass, setIsAddingClass] = useState(false);
+
+  const handleAddClass = () => {
+    setIsAddingClass(true);
+  };
+
+  const handleClassCreationClose = () => {
+    setIsAddingClass(false);
+  };
 
   return (
     <>
@@ -17,8 +27,8 @@ function Profile() {
       <h3>Welcome {user ? user.email : null} </h3>
 
       <SkillCreation />
-
-      <ClassCreation />
+      <TeacherSkills onAddClass={handleAddClass} />
+      {isAddingClass && <ClassCreation onClose={handleClassCreationClose} />}
       <Logout />
     </>
   );

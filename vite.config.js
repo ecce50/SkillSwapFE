@@ -7,6 +7,7 @@ export default defineConfig({
   server: {
     proxy: {
       "/search": "http://localhost:5005", // Adjust the path and port accordingly
+      "/skill": "http://localhost:5005", // Adjust the path and port accordingly
     },
   },
 });

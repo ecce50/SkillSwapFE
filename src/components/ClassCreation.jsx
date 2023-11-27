@@ -3,8 +3,13 @@ import { useNavigate } from "react-router-dom";
 import { useContext, useState } from "react";
 import { AuthContext } from "../context/Auth.context";
 
-function ClassCreation() {
+import "/style/navbar.css";
+import "/style/global.css";
+import "/style/creationTemp.css";
+
+function ClassCreation({ skillId }) {
   const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
   const { authenticateUser } = useContext(AuthContext);
   const nav = useNavigate();
 
@@ -16,6 +21,8 @@ function ClassCreation() {
         "http://localhost:5005/class/class-creation",
         {
           title,
+          description,
+          skillId,
         }
       );
       console.log("This is the axios post result", res);
@@ -27,10 +34,8 @@ function ClassCreation() {
     }
   };
 
-
-  
   return (
-    <div>
+    <div className="creation-container">
       <h2>Create a class</h2>
       <form onSubmit={handleClassCreation}>
         <label>
@@ -41,6 +46,17 @@ function ClassCreation() {
             onChange={(e) => {
               setTitle(e.target.value);
             }}
+          />
+        </label>
+        <label>
+          Description
+          <textarea
+            value={description}
+            required
+            onChange={(e) => {
+              setDescription(e.target.value);
+            }}
+            rows={4} // Set the number of visible rows
           />
         </label>
         <button type="submit">Create class</button>
