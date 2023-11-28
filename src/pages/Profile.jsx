@@ -6,6 +6,7 @@ import Logout from "../components/Logout";
 import SkillCreation from "../components/SkillCreation";
 import ClassCreation from "../components/ClassCreation";
 import TeacherSkills from "../components/TeacherSkills";
+import SessionCreation from "../components/SessionCreation";
 
 function Profile() {
   const user = useContext(AuthContext).user;
@@ -29,6 +30,7 @@ function Profile() {
       <SkillCreation />
       <TeacherSkills onAddClass={handleAddClass} />
       {isAddingClass && <ClassCreation onClose={handleClassCreationClose} />}
+      <SessionCreation/>
       <Logout />
     </>
   );
