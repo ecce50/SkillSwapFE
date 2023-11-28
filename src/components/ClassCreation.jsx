@@ -2,10 +2,10 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useContext, useState } from "react";
 import { AuthContext } from "../context/Auth.context";
-
 import "/style/navbar.css";
 import "/style/global.css";
 import "/style/creationTemp.css";
+
 
 function ClassCreation({ skillId }) {
   const [title, setTitle] = useState("");
