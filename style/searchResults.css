@@ -1,0 +1,39 @@
+/* SearchResults.css */
+
+/* Container for the entire search results page */
+#search-results-container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* Individual result item styles */
+.skill-result-item {
+  border: 1px solid #ddd;
+  padding: 10px;
+  margin-bottom: 10px;
+  background-color: #f9f9f9;
+}
+
+.class-result-item {
+  border: 1px solid #ddd;
+  padding: 10px;
+  margin-bottom: 10px;
+  background-color: #eaf7ff;
+}
+
+/* Styling for the search bar */
+#search-bar {
+  margin-bottom: 20px;
+}
+
+/* Heading for search results */
+h1 {
+  color: #333;
+}
+
+/* Media query for responsiveness */
+@media screen and (max-width: 600px) {
+  #search-results-container {
+    width: 100%;
+  }
+}
