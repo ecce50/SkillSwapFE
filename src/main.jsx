@@ -1,16 +1,25 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import { BrowserRouter } from 'react-router-dom';
-import App from './App.jsx'
-import './index.css'
-import { AuthContextWrapper } from './context/Auth.context.jsx';
+import React from "react";
+import { createRoot } from "react-dom/client";
+import { BrowserRouter } from "react-router-dom";
+import App from "./App.jsx";
+import "./index.css";
+import { AuthContextWrapper } from "./context/Auth.context.jsx";
 
-ReactDOM.createRoot(document.getElementById('root')).render(
-  <BrowserRouter>
-    <React.StrictMode>
-      <AuthContextWrapper>
-    <App />
-      </AuthContextWrapper>
-  </React.StrictMode>
-  </BrowserRouter>
-)
+const rootElement = document.getElementById("root");
+
+const renderApp = () => {
+  const root = createRoot(rootElement);
+
+  root.render(
+    <BrowserRouter>
+      <React.StrictMode>
+        <AuthContextWrapper>
+          <App />
+        </AuthContextWrapper>
+      </React.StrictMode>
+    </BrowserRouter>
+  );
+};
+
+// Initial rendering
+renderApp();
