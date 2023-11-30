@@ -1,14 +1,10 @@
-// Navbar.js
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../context/Auth.context";
 import { useLocation } from "react-router-dom";
-// import "../style/navbar.css";
-// import "../style/global.css";
 import navBurger from "../assets/navBurger.png";
 import navLogo from "../assets/navLogo.png";
-import navSearch from "../assets/navSearch.png";
-import SearchBar from "./SearchBar"; // Make sure you are importing it correctly
+import SearchBar from "./search/SearchBar"; // Make sure you are importing it correctly
 
 function Navbar() {
   const { user } = useContext(AuthContext);

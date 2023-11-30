@@ -15,6 +15,9 @@ function SessionCreation({classId}) {
         e.preventDefault();
 
         try {
+
+            console.log("Payload before axios request:", { date, time, status, pointsCost, classId });
+
             const res = await axios.post ("http://localhost:5005/session/session-creation",
                 {
                     date,
