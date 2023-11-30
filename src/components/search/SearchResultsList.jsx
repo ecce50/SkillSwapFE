@@ -1,8 +1,8 @@
 // SearchResultsList.jsx
 import React from "react";
 import { useLocation } from "react-router-dom";
-import SkillResultItem from "../components/SkillResultItem";
-import ClassResultItem from "../components/ClassResultItem";
+import SkillResultItem from "./SkillResultItem";
+import ClassResultItem from "./ClassResultItem";
 
 const SearchResultsList = () => {
   // Use the useLocation hook from react-router-dom to get the location object

@@ -2,7 +2,7 @@
 import { AuthContext } from "../context/Auth.context";
 import { useContext, useState } from "react";
 import Navbar from "../components/Navbar";
-import Logout from "../components/Logout";
+import Logout from "../components/auth/Logout";
 import SkillCreation from "../components/SkillCreation";
 import ClassCreation from "../components/ClassCreation";
 import TeacherSkills from "../components/TeacherSkills";
@@ -28,9 +28,11 @@ function Profile() {
       <h3>Welcome {user ? user.email : null} </h3>
 
       <SkillCreation />
-      <TeacherSkills onAddClass={handleAddClass} />
-      {isAddingClass && <ClassCreation onClose={handleClassCreationClose} />}
+      {/*<TeacherSkills onAddClass={handleAddClass} />
+      {isAddingClass && <ClassCreation onClose={handleClassCreationClose} />} */}
+      <ClassCreation/>
       <SessionCreation/>
+      <TeacherSkills/>
       <Logout />
     </>
   );
