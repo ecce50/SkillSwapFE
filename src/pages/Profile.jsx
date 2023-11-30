@@ -30,7 +30,7 @@ function Profile() {
       <SkillCreation />
       {/*<TeacherSkills onAddClass={handleAddClass} />
       {isAddingClass && <ClassCreation onClose={handleClassCreationClose} />} */}
-      <ClassCreation/>
+      {/* <ClassCreation/> */}
       <SessionCreation/>
       <TeacherSkills/>
       <Logout />

@@ -37,7 +37,7 @@ function SkillCreation() {
 
     try {
       const res = await axios.post(
-        "http://localhost:5005/skill/skill-creation",
+        "http://localhost:5005/skill/create-skill",
         {
           title,
           description,
