@@ -13,7 +13,7 @@ function IsPrivate({ children }) {
         if (!isLoading && !isLoggedIn) {
             navigate("/login");
         }
-    }, [isLoading, isLoggedIn, navigate]);
+    }, [isLoading, isLoggedIn]);
 
     if (isLoading) {
         return <p>Loading...</p>;
