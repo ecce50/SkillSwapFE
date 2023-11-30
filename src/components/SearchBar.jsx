@@ -1,13 +1,15 @@
+// SearchBar.jsx
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-function SearchBar({ onSearch }) {
+function SearchBar({ onSearch, isNavbar }) {
   const navigate = useNavigate();
   const [title, setTitle] = useState("");
 
   const handleSearch = async (e) => {
-    e.preventDefault();
+    // Ensure the event object is properly received
+    e && e.preventDefault();
 
     try {
       console.log("Title before request:", title);
@@ -27,6 +29,29 @@ function SearchBar({ onSearch }) {
       console.error("This is the error", error);
     }
   };
+
+  const handleSearchClick = () => {
+    handleSearch();
+  };
+
+  if (isNavbar) {
+    return (
+      <div>
+        <label>
+          <input
+            value={title}
+            required
+            onChange={(e) => {
+              setTitle(e.target.value);
+            }}
+          />
+        </label>
+        <button type="button" onClick={handleSearchClick}>
+          Search
+        </button>
+      </div>
+    );
+  }
 
   return (
     <div>

@@ -20,15 +20,19 @@ function Login() {
         email,
         password,
       });
-      console.log("here is the Login response", data);
+      console.log("Login response:", data);
+
       localStorage.setItem("authToken", data.token);
 
-      //Make sure you await the authenticate User as it takes time and you cant access the private route until its finished
+      // Make sure you await the authenticateUser as it takes time
       await authenticateUser();
+
+      console.log("User authenticated successfully!");
+
+      // Navigate to the profile page
       nav("/profile");
-      
     } catch (err) {
-      console.log(err);
+      console.error("Login error:", err);
       setErrorMessage(err.response.data.errorMessage);
     }
   };
