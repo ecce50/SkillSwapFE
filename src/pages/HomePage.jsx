@@ -1,5 +1,5 @@
 
-import SearchBar from "../components/SearchBar";
+import SearchBar from "../components/search/SearchBar";
 import Navbar from "../components/Navbar";
 import "/style/global.css";
 import { Link } from "react-router-dom";

@@ -1,7 +1,7 @@
 // SearchResults.jsx
 import React from "react";
-import SearchBar from "../components/SearchBar";
-import SearchResultsList from "../components/SearchResultsList";
+import SearchBar from "../components/search/SearchBar";
+import SearchResultsList from "../components/search/SearchResultsList";
 import Navbar from "../components/Navbar";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";

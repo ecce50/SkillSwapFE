@@ -3,9 +3,9 @@ import HomePage from "./pages/HomePage";
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
 import Profile from "./pages/Profile";
-import IsPrivate from "./components/isPrivate";
+import IsPrivate from "./components/auth/isPrivate";
 import SearchResults from "./pages/SearchResults";
-import ErrorBoundary from "./components/ErrorBoundary";
+import ErrorBoundary from "./components/auth/ErrorBoundary";
 
 function App() {
   return (
