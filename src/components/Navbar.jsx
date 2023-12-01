@@ -5,23 +5,14 @@ import { useLocation } from "react-router-dom";
 import navBurger from "../assets/navBurger.png";
 import navLogo from "../assets/navLogo.png";
 import SearchBar from "./search/SearchBar"; // Make sure you are importing it correctly
+import HamburgerMenu from "./HamburgerMenu";
+import "../../style/Navbar.css"
+import "../../style/global.css";
 
-function Navbar() {
-  const { user } = useContext(AuthContext);
-  const location = useLocation();
-
-  const isHomePage = location.pathname === "/";
-
-  const handleSearch = (title, results) => {
-    // Handle search results if needed
-    console.log("Search results:", title, results);
-  };
-
+const Navbar = ({ isHomePage, handleSearch }) => {
   return (
-    <nav>
-      <div className="navBurger">
-        <img src={navBurger} alt="hamburger menu" />
-      </div>
+    <nav className="navbar-container">
+      <HamburgerMenu />
 
       {!isHomePage && (
         <Link to="/">
@@ -34,6 +25,7 @@ function Navbar() {
       <SearchBar onSearch={handleSearch} isNavbar />
     </nav>
   );
-}
+};
+
 
 export default Navbar;

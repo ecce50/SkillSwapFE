@@ -4,6 +4,7 @@ html {font-size: 100%;} /*16px*/
 
 body {
   margin: 0 auto;
+  padding: 0;
     background-color: #faf8f9;
     color: rgb(42, 42, 42);
   font-family: 'Roboto', sans-serif;

@@ -1,11 +1,34 @@
+/* Apply a CSS reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
-nav {
-    width: 100vw;
-    margin: 0 auto;
-    background-color: aqua;
-    display:flex;
-    justify-content: space-between;
-    gap: 1rem;
-    border-bottom: 0.5px solid rgb(40, 39, 39);
-   
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Roboto', sans-serif;
+  background-color: #faf8f9;
+  color: rgb(42, 42, 42);
+  font-weight: 400;
+  line-height: 1.75;
+  text-align: center;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.navbar-container {
+  display: flex;
+  width: 100vw; /* Change to vw for viewport width */
+  justify-content: space-between;
+  align-items: center;
+  background-color: #3b6ca8;
+  padding: 10px; /* Adjust as needed */
+}
+
+.navLogo img {
+  max-height: 50px; /* Adjust as needed */
 }
