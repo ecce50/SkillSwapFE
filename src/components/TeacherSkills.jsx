@@ -11,18 +11,15 @@ const TeacherSkills = ({ onAddClass }) => {
     const fetchSkills = async () => {
       try {
         const token = localStorage.getItem("authToken");
-        const response = await fetch(
+        const response = await axios.get(
           `http://localhost:5173/skill/skills?timestamp=${Date.now()}`,
           {
-            method: "GET",
             headers: {
-              "Content-Type": "application/json",
               Authorization: `Bearer ${token}`,
             },
           }
         );
-        const data = await response.json();
-        setSkills(data.skills);
+        setSkills(response.data.skills);
       } catch (error) {
         console.error("Error fetching skills:", error);
       }

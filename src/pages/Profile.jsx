@@ -7,6 +7,7 @@ import SkillCreation from "../components/SkillCreation";
 import ClassCreation from "../components/ClassCreation";
 import TeacherSkills from "../components/TeacherSkills";
 import SessionCreation from "../components/SessionCreation";
+import "../../style/global.css";
 
 function Profile() {
   const user = useContext(AuthContext).user;
