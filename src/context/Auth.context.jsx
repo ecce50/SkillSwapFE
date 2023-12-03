@@ -21,11 +21,28 @@ const AuthContextWrapper = ({ children }) => {
     if (tokenInStorage) {
       try {
         const { data } = await axios.get("http://localhost:5005/auth/verify");
-        setUser(data.currentUser);
+        const { currentUser } = data;
+        setUser(currentUser);
         setIsLoading(false);
         setIsLoggedIn(true);
       } catch (err) {
-        console.log("error on the authenticate user function", err);
+        console.error("Error in authenticateUser:", err);
+
+        if (err.response) {
+          // Check for specific error conditions
+          if (err.response.status === 401) {
+            console.warn(
+              "Token verification failed (401 Unauthorized):",
+              err.response.data
+            );
+          } else if (err.response.status === 500) {
+            console.error(
+              "Internal server error during token verification:",
+              err.response.data
+            );
+          }
+        }
+
         setUser(null);
         setIsLoading(false);
         setIsLoggedIn(false);
@@ -36,6 +53,7 @@ const AuthContextWrapper = ({ children }) => {
       setIsLoggedIn(false);
     }
   };
+
 
   useEffect(() => {
     authenticateUser();

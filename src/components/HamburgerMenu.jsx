@@ -28,6 +28,7 @@ const HamburgerMenu = () => {
               {user ? `Welcome, ${user.email}` : "User ▼"}
             </button>
           </div>
+          <Link to="/">Home</Link>
           <Link to="/profile">Profile</Link>
           {user ? null : <Link to="/login">Log in</Link>}
           {user && <Logout />}
