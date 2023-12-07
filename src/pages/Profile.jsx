@@ -11,15 +11,6 @@ import "../../style/global.css";
 
 function Profile() {
   const user = useContext(AuthContext).user;
-  const [isAddingClass, setIsAddingClass] = useState(false);
-
-  const handleAddClass = () => {
-    setIsAddingClass(true);
-  };
-
-  const handleClassCreationClose = () => {
-    setIsAddingClass(false);
-  };
 
   return (
     <>
@@ -28,13 +19,8 @@ function Profile() {
       <div>Profile</div>
       <h3>Welcome {user ? user.email : null} </h3>
 
+      <TeacherSkills />
       <SkillCreation />
-      {/*<TeacherSkills onAddClass={handleAddClass} />
-      {isAddingClass && <ClassCreation onClose={handleClassCreationClose} />} */}
-      {/* <ClassCreation/> */}
-      <SessionCreation/>
-      <TeacherSkills/>
-      <Logout />
     </>
   );
 }
