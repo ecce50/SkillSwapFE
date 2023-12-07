@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from "react";
-import ClassCreation from "./ClassCreation";
 import axios from "axios";
+import { Link, useNavigate } from "react-router-dom";
 
-const TeacherSkills = ({ onAddClass }) => {
+// TeacherSkills component
+const TeacherSkills = () => {
+  // State for skills and edited skill
   const [skills, setSkills] = useState([]);
-  const [selectedSkills, setSelectedSkills] = useState({});
   const [editedSkills, setEditedSkills] = useState({});
+  const navigate = useNavigate(); // Add useNavigate
 
+  // Fetch skills from the server on component mount
   useEffect(() => {
     const fetchSkills = async () => {
       try {
@@ -28,15 +31,7 @@ const TeacherSkills = ({ onAddClass }) => {
     fetchSkills();
   }, []);
 
-  const handleAddClass = (skillId) => {
-    console.log("Clicked Add Class button for skillId:", skillId);
-    setSelectedSkills((prevSelectedSkills) => ({
-      ...prevSelectedSkills,
-      [skillId]: true,
-    }));
-    onAddClass();
-  };
-
+  // Handle the "Edit" button click
   const handleEdit = (skillId) => {
     setEditedSkills((prevEditedSkills) => ({
       ...prevEditedSkills,
@@ -44,7 +39,8 @@ const TeacherSkills = ({ onAddClass }) => {
     }));
   };
 
-  const handleSaveEdit = async (skillId, title, description) => {
+  // Handle the "Save" button click for editing a skill
+  const handleSaveEditSkill = async (skillId, title, description) => {
     try {
       const token = localStorage.getItem("authToken");
       const url = `http://localhost:5173/skill/update-skill/${skillId}`;
@@ -85,6 +81,7 @@ const TeacherSkills = ({ onAddClass }) => {
     }
   };
 
+  // Handle the "Delete" button click
   const handleDelete = async (skillId) => {
     try {
       const token = localStorage.getItem("authToken");
@@ -109,12 +106,14 @@ const TeacherSkills = ({ onAddClass }) => {
     }
   };
 
+  // Render the TeacherSkills component
   return (
     <div className="creation-container">
       <h2>Your Skills</h2>
       {skills.map((skill) => (
         <div key={skill._id}>
           {editedSkills[skill._id] ? (
+            // Render edit form for the skill
             <>
               <label>
                 Title
@@ -149,24 +148,33 @@ const TeacherSkills = ({ onAddClass }) => {
               </label>
               <button
                 onClick={() =>
-                  handleSaveEdit(skill._id, skill.title, skill.description)
+                  handleSaveEditSkill(skill._id, skill.title, skill.description)
                 }
               >
                 Save
               </button>
             </>
           ) : (
+            // Render skill details and action buttons
             <>
               <h3>{skill.title}</h3>
               <p>{skill.description}</p>
-              <button onClick={() => handleAddClass(skill._id)}>
-                Add Class
+              {/* Use navigate for manual navigation */}
+              <button
+                onClick={() =>
+                  navigate(`/skill-detail`, {
+                    state: {
+                      skillId: skill._id,
+                      skillTitle: skill.title,
+                    },
+                  })
+                }
+              >
+                Read more
               </button>
+
               <button onClick={() => handleEdit(skill._id)}>Edit</button>
               <button onClick={() => handleDelete(skill._id)}>Delete</button>
-              {selectedSkills[skill._id] && (
-                <ClassCreation skillId={skill._id} />
-              )}
             </>
           )}
         </div>
@@ -176,3 +184,4 @@ const TeacherSkills = ({ onAddClass }) => {
 };
 
 export default TeacherSkills;
+

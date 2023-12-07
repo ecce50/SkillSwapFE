@@ -1,67 +1,29 @@
+// SkillCreation.js
+import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { useContext, useState } from "react";
-import { AuthContext } from "../context/Auth.context";
-
-import "/style/global.css";
-import "/style/creationTemp.css";
-import "/style/navbar.css";
 
 function SkillCreation() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const { authenticateUser, user, setUser } = useContext(AuthContext);
+  const [skillId, setSkillId] = useState(null);
   const nav = useNavigate();
-
-// updateUserSkills passes the Skill ID to the array of skills on the User document
-
-  const updateUserSkills = async (skillId) => {
-    try {
-      const userId = user._id;
-      console.log("Frontend - UserID:", userId); // Log user ID
-      console.log("Frontend - SkillID:", skillId); // Log skill ID
-      const res = await axios.put(`http://localhost:5005/user/add-skill`, {
-        skillId,
-      });
-
-      console.log("Update User Skills Response:", res.data);
-
-      // Handle the response as needed
-    } catch (error) {
-      console.error("Error updating user skills:", error);
-    }
-  };
 
   const handleSkillCreation = async (e) => {
     e.preventDefault();
 
     try {
-      const res = await axios.post(
-        "http://localhost:5005/skill/create-skill",
-        {
-          title,
-          description,
-        }
-      );
-      console.log("This is the axios post result", res);
+      const res = await axios.post("http://localhost:5005/skill/create-skill", {
+        title,
+        description,
+      });
 
       const createdSkill = res.data.skill;
-      const skillId = createdSkill._id;
-      console.log("Frontend - Created SkillID:", skillId); // Log created skill ID
-      // const skillTitle = createdSkill.title;
+      const createdSkillId = createdSkill._id;
 
-      // Update the user's skills array
-      setUser((prevUser) => ({
-        ...prevUser,
-        skills: [...prevUser.skills, skillId],
-      }));
-
-      await updateUserSkills(skillId);
-
-      await authenticateUser();
-      nav("/profile");
+      setSkillId(createdSkillId);
     } catch (error) {
-      console.error("This is the error", error);
+      console.error("Error creating skill:", error);
     }
   };
 
@@ -87,10 +49,11 @@ function SkillCreation() {
             onChange={(e) => {
               setDescription(e.target.value);
             }}
-            rows={4} // Set the number of visible rows
+            rows={4}
           />
         </label>
-        <button type="submit">Create skill</button>
+        {/* Add the missing button for skill creation */}
+        <button type="submit">Create Skill</button>
       </form>
     </div>
   );

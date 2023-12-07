@@ -5,8 +5,7 @@ import { AuthContext } from "../context/Auth.context";
 import "/style/global.css";
 import "/style/creationTemp.css";
 
-
-function ClassCreation({ skillId }) {
+function ClassCreation({ skillId, skillTitle}) {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const { authenticateUser } = useContext(AuthContext);
@@ -36,6 +35,8 @@ function ClassCreation({ skillId }) {
   return (
     <div className="creation-container">
       <h2>Create a class</h2>
+      <h2>Here is the skill id: {skillId}</h2>
+      <h2>Here is the skill title: {skillTitle}</h2>
       <form onSubmit={handleClassCreation}>
         <label>
           Class
