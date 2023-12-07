@@ -25,8 +25,8 @@ function ClassCreation({ skillId, skillTitle}) {
       );
       console.log("This is the axios post result", res);
 
-      await authenticateUser();
-      nav("/profile");
+      //await authenticateUser();
+      nav("/skill-detail")
     } catch (error) {
       console.error("This is the error", error);
     }
@@ -35,8 +35,6 @@ function ClassCreation({ skillId, skillTitle}) {
   return (
     <div className="creation-container">
       <h2>Create a class</h2>
-      <h2>Here is the skill id: {skillId}</h2>
-      <h2>Here is the skill title: {skillTitle}</h2>
       <form onSubmit={handleClassCreation}>
         <label>
           Class
