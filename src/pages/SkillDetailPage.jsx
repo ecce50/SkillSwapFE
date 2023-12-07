@@ -1,5 +1,5 @@
-import React from "react";
 import ClassCreation from "../components/ClassCreation";
+import SkillClasses from "../components/SkillClasses";
 import { useLocation } from "react-router-dom";
 
 function SkillDetailPage() {
@@ -12,10 +12,10 @@ function SkillDetailPage() {
 
   return (
     <div>
-      <h2>Here is the skill title</h2>
       <h2>
-        {skillId} and {skillTitle}
+        {skillTitle}
       </h2>
+      <SkillClasses skillId={skillId}/>
       <ClassCreation skillId={skillId} skillTitle={skillTitle} />
     </div>
   );

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 // TeacherSkills component
 const TeacherSkills = () => {
@@ -15,7 +15,7 @@ const TeacherSkills = () => {
       try {
         const token = localStorage.getItem("authToken");
         const response = await axios.get(
-          `http://localhost:5173/skill/skills?timestamp=${Date.now()}`,
+          `http://localhost:5005/skill/skills?timestamp=${Date.now()}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
