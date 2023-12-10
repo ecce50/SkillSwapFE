@@ -7,7 +7,7 @@ const TeacherSkills = () => {
   // State for skills and edited skill
   const [skills, setSkills] = useState([]);
   const [editedSkills, setEditedSkills] = useState({});
-  const navigate = useNavigate(); // Add useNavigate
+  const nav = useNavigate(); // Add useNavigate
 
   // Fetch skills from the server on component mount
   useEffect(() => {
@@ -162,7 +162,7 @@ const TeacherSkills = () => {
               {/* Use navigate for manual navigation */}
               <button
                 onClick={() =>
-                  navigate(`/skill-detail`, {
+                  nav(`/skill-detail`, {
                     state: {
                       skillId: skill._id,
                       skillTitle: skill.title,
