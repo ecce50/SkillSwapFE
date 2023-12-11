@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import ClassSessions from "./ClassSessions";
+import SessionCreation from "./SessionCreation";
 
 const SkillClasses = ({ skillId }) => { //we're not passing the skillID!
   const [classes, setClasses] = useState([]);
@@ -43,6 +45,8 @@ const SkillClasses = ({ skillId }) => { //we're not passing the skillID!
         <div key={aClass._id}>
           <h2>Class Title: {aClass.title} </h2>
           <h2>Class Description: {aClass.description}</h2>
+          <ClassSessions classes={classes}/>
+          <SessionCreation classes={classes} />
         </div>
       ))}
     </div>
