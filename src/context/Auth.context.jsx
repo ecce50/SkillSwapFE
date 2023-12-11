@@ -20,6 +20,10 @@ const AuthContextWrapper = ({ children }) => {
 
     if (tokenInStorage) {
       try {
+        // Dynamically set the Authorization header for this request
+        axios.defaults.headers.common[
+          "Authorization"
+        ] = `Bearer ${tokenInStorage}`;
         const { data } = await axios.get("http://localhost:5005/auth/verify");
         const { currentUser } = data;
         setUser(currentUser);

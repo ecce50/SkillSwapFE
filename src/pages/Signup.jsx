@@ -28,6 +28,7 @@ function Signup() {
 
       localStorage.setItem("authToken", loginRes.data.token);
       console.log("This is the result from the login route", loginRes);
+        console.log("This is the token in storage", loginRes.data.token);
 
       await authenticateUser();
 
