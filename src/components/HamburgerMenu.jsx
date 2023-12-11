@@ -32,7 +32,7 @@ const HamburgerMenu = () => {
           <Link to="/profile">Profile</Link>
           {user ? null : <Link to="/login">Log in</Link>}
           {user ? null : <Link to="/signup">Sign up</Link>}
-          {user && <Logout />}
+          <Logout />
         </div>
       </div>
     </>
