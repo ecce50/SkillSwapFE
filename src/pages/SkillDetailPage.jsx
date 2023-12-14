@@ -1,6 +1,6 @@
 import Navbar from "../components/Navbar";
-import ClassCreation from "../components/ClassCreation";
-import SkillClasses from "../components/SkillClasses";
+import ClassCreation from "../components/classes/ClassCreation";
+import SkillClasses from "../components/classes/SkillClasses";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 

@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-// TeacherSkills component
-const TeacherSkills = () => {
+// UserSkills component
+const UserSkills = () => {
   // State for skills and edited skill
   const [skills, setSkills] = useState([]);
   const [editedSkills, setEditedSkills] = useState({});
@@ -106,7 +106,7 @@ const TeacherSkills = () => {
     }
   };
 
-  // Render the TeacherSkills component
+  // Render the UserSkills component
   return (
     <div className="creation-container">
       <h2>Your Skills</h2>
@@ -183,5 +183,5 @@ const TeacherSkills = () => {
   );
 };
 
-export default TeacherSkills;
+export default UserSkills;
 
