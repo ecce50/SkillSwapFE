@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useContext, useState } from "react";
-import { AuthContext } from "../context/Auth.context";
+import { AuthContext } from "../../context/Auth.context";
 import "/style/global.css";
 import "/style/creationTemp.css";
 

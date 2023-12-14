@@ -2,8 +2,8 @@
 import { AuthContext } from "../context/Auth.context";
 import { useContext, useState } from "react";
 import Navbar from "../components/Navbar";
-import SkillCreation from "../components/SkillCreation";
-import TeacherSkills from "../components/TeacherSkills";
+import SkillCreation from "../components/skills/SkillCreation";
+import UserSkills from "../components/skills/UserSkills";
 import "../../style/global.css";
 
 function Profile() {
@@ -16,7 +16,7 @@ function Profile() {
       <div>Profile</div>
       <h3>Welcome {user ? user.email : null} </h3>
 
-      <TeacherSkills />
+      <UserSkills />
       <SkillCreation />
     </>
   );

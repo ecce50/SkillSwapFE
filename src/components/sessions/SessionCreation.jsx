@@ -1,6 +1,7 @@
 import axios from "axios";
-import { useContext, useState } from "react";
-import { AuthContext } from "../context/Auth.context";
+import { useContext, useState, useEffect } from "react";
+import { AuthContext } from "../../context/Auth.context";
+
 
 function SessionCreation({ classId }) {
   console.log("This is the passed classid: ", classId);
@@ -9,6 +10,16 @@ function SessionCreation({ classId }) {
   const [status, setStatus] = useState("");
   const [pointsCost, setPointsCost] = useState("");
   const { authenticateUser } = useContext(AuthContext);
+
+  // useEffect with an empty dependency array to log classId only once on mount
+  useEffect(() => {
+    console.log("This is the passed classid: ", classId);
+
+    // Clean up function (optional)
+    return () => {
+      // Code to run on component unmount or when classId changes (if needed)
+    };
+  }, []); // Empty dependency array means this effect runs once on mount
 
   const handleSessionCreation = async (e) => {
     e.preventDefault();
@@ -19,7 +30,7 @@ function SessionCreation({ classId }) {
         time,
         status,
         pointsCost,
-        classId,
+        classId, //This is being console.logged every time we press a key. Should just be once?
       });
 
       const res = await axios.post(
@@ -43,7 +54,7 @@ function SessionCreation({ classId }) {
   return (
     <div>
       <h2>Create a Session</h2>
-      <h1>{classId}</h1>
+      <h5>This is the classdD: {classId}</h5>
       <form onSubmit={handleSessionCreation}>
         <label>Date</label>
         <input

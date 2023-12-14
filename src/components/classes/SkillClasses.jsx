@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import ClassSessions from "./ClassSessions";
-import SessionCreation from "./SessionCreation";
+import ClassSessions from "../sessions/ClassSessions";
+import SessionCreation from "../sessions/SessionCreation";
 
 const SkillClasses = ({ skillId }) => { //we're not passing the skillID!
   const [classes, setClasses] = useState([]);
@@ -36,7 +36,7 @@ const SkillClasses = ({ skillId }) => { //we're not passing the skillID!
   return (
     /* This component is to show all of the classes that belong to a particular skill. 
       It is the parent/main component of the SkillDetailPage.
-      It need to receive the skillid from the TeacherSkills component. 
+      It need to receive the skillid from the UserSkills component. 
       How do we do that when they are on different pages and not connected each other?\ */
     <div>
       <h2>Skill Classes component</h2>
@@ -45,8 +45,9 @@ const SkillClasses = ({ skillId }) => { //we're not passing the skillID!
         <div key={aClass._id}>
           <h2>Class Title: {aClass.title} </h2>
           <h2>Class Description: {aClass.description}</h2>
-          <ClassSessions classes={classes}/>
-          <SessionCreation classes={classes} />
+          <ClassSessions classId={aClass._id} />
+          {/* it's ok for it to have a different name than is received as */}
+          <SessionCreation classId={aClass._id} />
         </div>
       ))}
     </div>
