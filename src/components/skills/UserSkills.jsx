@@ -164,11 +164,19 @@ const UserSkills = () => {
                 onClick={() =>
                   nav(`/skill-detail`, {
                     state: {
-                      skillId: skill._id,
-                      skillTitle: skill.title,
+                      skill,
                     },
                   })
                 }
+                // Trying to pass entire skill object, not just certain attributes – below is how it was before
+                // onClick={() =>
+                //   nav(`/skill-detail`, {
+                //     state: {
+                //       skillId: skill._id,
+                //       skillTitle: skill.title,
+                //     },
+                //   })
+                // }
               >
                 Read more
               </button>
@@ -184,4 +192,3 @@ const UserSkills = () => {
 };
 
 export default UserSkills;
-
