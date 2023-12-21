@@ -41,7 +41,7 @@ function Signup() {
   return (
     <div>
       <h2>Sign Up</h2>
-      <form onSubmit={handleSignup}>
+      <form onSubmit={handleSignup} >
         <label>
           <input
             type="email"

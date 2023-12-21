@@ -1,6 +1,6 @@
 import Navbar from "../components/Navbar";
-import ClassCreation from "../components/ClassCreation";
-import SkillClasses from "../components/SkillClasses";
+import ClassCreation from "../components/classes/ClassCreation";
+import SkillClasses from "../components/classes/SkillClasses";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 
@@ -8,28 +8,28 @@ function SkillDetailPage() {
   const location = useLocation();
   console.log("Full location object:", location);
 
-  const { skillId, skillTitle } = location.state || {};
-  console.log("This is the skill ID:", skillId);
-  console.log("This is the skill title:", skillTitle);
+  const { skill } = location.state || {};
+  console.log("This is the skill ID:", skill._id);
+  console.log("This is the skill title:", skill.title);
 
   const nav = useNavigate();
 
   useEffect(() => {
-    if (!skillId) {
+    if (!skill._id) {
       nav("/profile");
     }
-    localStorage.setItem("currentSkillId", skillId);
+    localStorage.setItem("currentSkillId", skill._id);
     return () => {
       localStorage.removeItem("currentSkillId");
     };
-  }, [skillId]);
+  }, [skill._id]);
 
   return (
     <div>
       <Navbar />
-      <h2>Skill Title: {skillTitle}</h2>
-      <SkillClasses skillId={skillId} />
-      <ClassCreation skillId={skillId} skillTitle={skillTitle} />
+      <h2>Skill Title: {skill.title}</h2>
+      <SkillClasses skill={skill} />
+      <ClassCreation skillId={skill._id} skillTitle={skill.title} />
     </div>
   );
 }

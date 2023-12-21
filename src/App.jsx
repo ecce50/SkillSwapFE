@@ -7,8 +7,14 @@ import IsPrivate from "./components/auth/isPrivate";
 import SearchResults from "./pages/SearchResults";
 import ErrorBoundary from "./components/auth/ErrorBoundary";
 import SkillDetailPage from "./pages/SkillDetailPage";
+import { Cloudinary } from "@cloudinary/url-gen";
 
 function App() {
+  const cld = new Cloudinary({
+    cloud: {
+      cloudName: "dpncxyxs4",
+    },
+  });
   return (
     <>
       <ErrorBoundary>
