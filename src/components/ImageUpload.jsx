@@ -28,6 +28,7 @@ function ImageUpload() {
         }
     }
     
+    
 return (
 <div>
     <input type="file" name="image" onChange={handleFile}></input>
