@@ -1,82 +1,52 @@
-import axios from 'axios';
-import React from 'react'
-import { useState } from 'react';
+import axios from "axios";
+import React from "react";
+import { useState } from "react";
 
 function ImageUpload() {
 
-    //const [image, setImage] = useState();
-    
-    const handleFile = async (event) => {
-        const file = event.target.files[0];
+  // const [image, setImage] = useState();
 
-        try {
-            const formData = new FormData();
-            formData.append('file', file);
+  // Define a function to handle file input changes
+  const handleFile = async (event) => {
+    // Get the selected file from the event
+    const file = event.target.files[0];
 
-            console.log('Axios Request:', {
-                method: 'post',
-                url: 'http://localhost:5005/image/upload-image',
-                data: formData,
-            });
+    try {
+      // Create a FormData object and append the selected file to it (with key value pairs)
+      const formData = new FormData();
+      formData.append("file", file);
 
-            const res = await axios.post ("http://localhost:5005/image/upload-image", formData )
+      // Log the Axios request details for debugging purposes
+      console.log("Axios Request:", {
+        method: "post",
+        url: "http://localhost:5005/image/upload-image",
+        data: formData,
+      });
 
-            console.log("This is the response from the image upload to cloudinary", res);
+      // Send a POST request to the server using Axios to upload the image
+      const res = await axios.post(
+        "http://localhost:5005/image/upload-image",
+        formData
+      );
 
-        } catch (error) {
-            console.error("This is the cloudinary post error", error);
-        }
+      // Log the response from the image upload to Cloudinary
+      console.log(
+        "This is the response from the image upload to Cloudinary",
+        res
+      );
+    } catch (error) {
+      // Log an error if the image upload to Cloudinary fails
+      console.error("This is the Cloudinary post error", error);
     }
-    
-    
-return (
-<div>
-    <input type="file" name="image" onChange={handleFile}></input>
-</div>
-    )
-    }
+  };
 
-export default ImageUpload;
-
-
-
-/*
-import React, {useState} from 'react';
-import axios from 'axios';
-
-function ImageUpload() {
-
-    const [selectedImage, setSelectedImage] = useState("");
-
-
-    const uploadImage = async (files) => {
-        const formData = new FormData();
-        formData.append("file", selectedImage);
-        formData.append("upload_preset", "wgh4ayc3");
-
-
-        try {
-            const response = await axios.post ("https://api.cloudinary.com/v1_1/dopx79zod/image/upload",
-            formData);
-
-            console.log("This is the response from the image upload to cloudinary", response);
-
-        } catch (error) {
-            console.error("This is the cloudinary post error", error);
-        }
-
-    }
-
-
+  // JSX for rendering the file input element
   return (
     <div>
-        <input type="file" 
-            onChange={(e) => {setSelectedImage(e.target.files[0]);}}
-        />
-        <button onClick={uploadImage} >Upload Image</button>
+      <input type="file" name="image" onChange={handleFile}></input>
     </div>
-  )
+  );
 }
 
+// Export the ImageUpload component as the default export of this module
 export default ImageUpload;
-*/
