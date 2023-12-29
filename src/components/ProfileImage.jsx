@@ -10,6 +10,7 @@ function ProfileImage() {
 
 
   return (
+
     <div>
         <h2>Profile Image</h2>
 
