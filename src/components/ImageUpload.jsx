@@ -4,7 +4,7 @@ import { useState } from "react";
 
 function ImageUpload() {
 
-  // const [image, setImage] = useState();
+  const [imageUrl, setImageUrl] = useState();
 
   // Define a function to handle file input changes
   const handleFile = async (event) => {

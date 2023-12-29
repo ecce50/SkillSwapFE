@@ -1,7 +1,6 @@
 import SearchBar from "../components/search/SearchBar";
 import Navbar from "../components/Navbar";
 import { Link } from "react-router-dom";
-import ImageUpload from "../components/ImageUpload";
 import "/style/global.css";
 
 
@@ -16,8 +15,6 @@ function HomePage() {
       <h1>Skill Ƨwap</h1>
 
       <SearchBar />
-
-      <ImageUpload/>
     </div>
   );
 }
