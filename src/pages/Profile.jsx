@@ -9,6 +9,7 @@ import "../../style/global.css";
 
 function Profile() {
   const user = useContext(AuthContext).user;
+  
 
   return (
     <>
