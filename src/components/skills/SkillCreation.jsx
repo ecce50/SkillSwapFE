@@ -8,23 +8,41 @@ function SkillCreation() {
   const [skillId, setSkillId] = useState(null);
   const nav = useNavigate();
 
-  const handleSkillCreation = async (e) => {
-    e.preventDefault();
+ const handleSkillCreation = async (e) => {
+   e.preventDefault();
 
-    try {
-      const res = await axios.post("http://localhost:5005/skill/create-skill", {
-        title,
-        description,
-      });
+   try {
+     // Create the skill
+     const skillResponse = await axios.post(
+       "http://localhost:5005/skill/create-skill",
+       {
+         title,
+         description,
+       }
+     );
+       console.log("Add skill: skillResponse: ", skillResponse);
 
-      const createdSkill = res.data.skill;
-      const createdSkillId = createdSkill._id;
+     const createdSkill = skillResponse.data.skill;
+     const createdSkillId = createdSkill._id;
 
-      setSkillId(createdSkillId);
-    } catch (error) {
-      console.error("Error creating skill:", error);
-    }
-  };
+     // Update the user with the skillId
+     const userResponse = await axios.put(
+       "http://localhost:5005/user/add-skill",
+       {
+         skillId: createdSkillId,
+       }
+       );
+       console.log("Add skill: userResponse: ", userResponse)
+
+     const updatedUser = userResponse.data.user;
+
+     // Handle the updated user as needed
+   } catch (error) {
+     console.error("Error creating skill or updating user:", error);
+   }
+ };
+
+
 
   return (
     <div className="creation-container">
