@@ -1,4 +1,4 @@
-// ProfileImageUpload.jsx
+// This component is for adding and updating the user image
 import React, { useContext } from "react";
 import ImageUpload from "./ImageUpload";
 import axios from "axios";
