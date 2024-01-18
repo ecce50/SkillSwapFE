@@ -6,8 +6,7 @@ import ImageUpload from "./ImageUpload";
 import UserImage from "./UserImage";
 
 function UserInfo() {
-  
-  const { user, setUserInfo } = useContext(AuthContext);
+  const { user, setUser } = useContext(AuthContext);
   const [editMode, setEditMode] = useState(false);
   const [newUserData, setNewUserData] = useState({
     // Initialize with the current user data
@@ -38,12 +37,35 @@ function UserInfo() {
     });
   };
 
+  // const handleSaveEdit = async () => {
+  //   try {
+  //     const token = localStorage.getItem("authToken");
+  //     const response = await axios.put(
+  //       `http://localhost:5005/user/update-profile`,
+  //       newUserData,
+  //       {
+  //         headers: {
+  //           Authorization: `Bearer ${token}`,
+  //         },
+  //       }
+  //     );
+
+  //     // Update the user info in the context after successful edit
+  //     setUserInfo(response.data.user);
+
+  //     setEditMode(false);
+  //   } catch (error) {
+  //     console.error("Error when updating user profile:", error);
+  //   }
+  // };
+
   const handleSaveEdit = async () => {
     try {
       const token = localStorage.getItem("authToken");
+      const userId = user._id;
       const response = await axios.put(
         `http://localhost:5005/user/update`,
-        newUserData,
+        { userId, ...newUserData },
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -51,8 +73,9 @@ function UserInfo() {
         }
       );
 
-      // Update the user info in the context after successful edit
-      setUserInfo(response.data.user);
+      // Assuming that your AuthContext directly updates the user
+      // without a separate setUserInfo method
+      setUser(response.data.user);
 
       setEditMode(false);
     } catch (error) {
