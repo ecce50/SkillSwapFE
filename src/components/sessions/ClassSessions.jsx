@@ -4,6 +4,7 @@ import SessionCreation from "./SessionCreation";
 
 function ClassSessions({ classId }) {
   const [sessions, setSessions] = useState([]);
+  const [editSession, setEditSession] = useState(null);
 
   useEffect(() => {
     const fetchSessions = async () => {
@@ -25,22 +26,135 @@ function ClassSessions({ classId }) {
     }; fetchSessions();
   }, [classId]);
 
+  /*----------------------------------------------------------*/
+
+  const handleEditClick = (session) => {
+    setEditSession(session);
+  };
+
+  const handleUpdateClick = async (updatedSession) => {
+    try {
+      const token = localStorage.getItem("authToken");
+      await axios.put(
+        `http://localhost:5005/session/update/${updatedSession._id}`,
+        updatedSession,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      // Update the sessions after successful update
+      setSessions((prevSessions) =>
+        prevSessions.map((session) =>
+          session._id === updatedSession._id ? updatedSession : session
+        )
+      );
+
+      // Reset the editingSession state
+      setEditSession(null);
+    } catch (error) {
+      console.error("Error when updating the session:", error);
+    }
+  };
+
+  /*
+  const handleUpdateSuccess = (updatedSession) => {
+    // Update the sessions list with the updated session
+    setSessions((prevSessions) =>
+      prevSessions.map((session) =>
+        session._id === updatedSession._id ? updatedSession : session
+      )
+    );
+
+    // Close the edit modal or reset editSession state
+    setEditSession(null);
+  };
+  */
+
+  /*------------------------------------------------------------------- */
+
+  
   return (
-    /* This component is to show all of the sessions that belong to a particular class. 
-      It is a child component of the SkillClasses component.
-      It needs to receive the classid from the SkillClasses component. 
-     We can reuse the current logic from the UserSkills component */
     <div>
       <h2>ClassSessions</h2>
       {sessions.map((aSession) => (
         <div key={aSession._id}>
-          <h2>Session Date: {aSession.date} </h2>
-          <h2>Session Time: {aSession.time}</h2>
+          {editSession && editSession._id === aSession._id ? (
+            <div>
+              {/* Edit form */}
+              <input
+                type="text"
+                value={editSession.date}
+                onChange={(e) =>
+                  setEditSession({
+                    ...editSession,
+                    date: e.target.value,
+                  })
+                }
+              />
+              {/* Add other fields for editing */}
+              <button onClick={() => handleUpdateClick(editSession)}>
+                Update
+              </button>
+            </div>
+          ) : (
+            // Display session details
+            <>
+              <h2>Session Date: {aSession.date} </h2>
+              <h2>Session Time: {aSession.time}</h2>
+              <h2>Session Level: {aSession.status}</h2>
+              <h2>Session Cost: {aSession.pointsCost} points</h2>
+
+              <button onClick={() => handleEditClick(aSession)}>Edit</button>
+            </>
+          )}
         </div>
       ))}
-      {/* <SessionCreation classId={classId} /> */}
     </div>
   );
+
+
+  // return (
+    /* This component is to show all of the sessions that belong to a particular class. 
+      It is a child component of the SkillClasses component.
+      It needs to receive the classid from the SkillClasses component. 
+     We can reuse the current logic from the UserSkills component */
+   // <div>
+   //   <h2>ClassSessions</h2>
+   //   {sessions.map((aSession) => (
+   //     <div key={aSession._id}>
+          {/*
+          <h2>Session Date: {aSession.date} </h2>
+          <h2>Session Time: {aSession.time}</h2>
+          <h2>Session Level: {aSession.status}</h2>
+          <h2>Session Cost: {aSession.pointsCost} points</h2>
+          */}
+
+          
+
+    //      <button onClick={() => handleEditClick(aSession)}>Edit</button>
+
+    //    </div>
+    //  ))}
+
+    {/*
+      {editSession && (
+        <SessionCreation
+          classId={classId}
+          editMode
+          sessionToEdit={editSession}
+          onUpdateSuccess={handleUpdateSuccess}
+        />
+      )}
+      */}
+
+
+      {/* <SessionCreation classId={classId} /> */}
+   // </div>
+    
+ // );
 }
 
 export default ClassSessions;
