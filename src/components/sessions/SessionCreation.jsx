@@ -4,7 +4,9 @@ import { AuthContext } from "../../context/Auth.context";
 
 
 function SessionCreation({ classId }) {
+
   console.log("This is the passed classid: ", classId);
+
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
   const [status, setStatus] = useState("");
@@ -13,7 +15,7 @@ function SessionCreation({ classId }) {
 
   // useEffect with an empty dependency array to log classId only once on mount
   useEffect(() => {
-    console.log("This is the passed classid: ", classId);
+    //console.log("This is the passed classid: ", classId);
 
     // Clean up function (optional)
     return () => {
@@ -54,7 +56,6 @@ function SessionCreation({ classId }) {
   return (
     <div>
       <h2>Create a Session</h2>
-      <h5>This is the classdD: {classId}</h5>
       <form onSubmit={handleSessionCreation}>
         <label>Date</label>
         <input

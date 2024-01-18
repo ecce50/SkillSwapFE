@@ -7,7 +7,7 @@ const UserSkills = () => {
   // State for skills and edited skill
   const [skills, setSkills] = useState([]);
   const [editedSkills, setEditedSkills] = useState({});
-  const nav = useNavigate(); // Add useNavigate
+  const nav = useNavigate();
 
   // Fetch skills from the server on component mount
   useEffect(() => {
@@ -106,7 +106,7 @@ const UserSkills = () => {
     }
   };
 
-  // Render the UserSkills component
+
   return (
     <div className="creation-container">
       <h2>Your Skills</h2>

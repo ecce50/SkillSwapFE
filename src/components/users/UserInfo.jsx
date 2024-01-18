@@ -6,6 +6,7 @@ import ImageUpload from "./ImageUpload";
 import UserImage from "./UserImage";
 
 function UserInfo() {
+  
   const { user, setUserInfo } = useContext(AuthContext);
   const [editMode, setEditMode] = useState(false);
   const [newUserData, setNewUserData] = useState({
@@ -41,7 +42,7 @@ function UserInfo() {
     try {
       const token = localStorage.getItem("authToken");
       const response = await axios.put(
-        `http://localhost:5005/user/update-profile`,
+        `http://localhost:5005/user/update`,
         newUserData,
         {
           headers: {
