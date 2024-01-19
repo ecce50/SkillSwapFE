@@ -5,6 +5,10 @@ import SessionCreation from "./SessionCreation";
 function ClassSessions({ classId }) {
   const [sessions, setSessions] = useState([]);
   const [editSession, setEditSession] = useState(null);
+  
+
+
+
 
   useEffect(() => {
     const fetchSessions = async () => {
@@ -59,6 +63,16 @@ function ClassSessions({ classId }) {
     }
   };
 
+  const deleteSession = () => {
+
+    try {
+      axios.delete(`http://localhost:5005/session/${sessionId}`)
+      
+    } catch (error) {
+      console.error("Error when deleting session:", error);
+    }
+  }
+
   /*
   const handleUpdateSuccess = (updatedSession) => {
     // Update the sessions list with the updated session
@@ -108,6 +122,7 @@ function ClassSessions({ classId }) {
               <h2>Session Cost: {aSession.pointsCost} points</h2>
 
               <button onClick={() => handleEditClick(aSession)}>Edit</button>
+              <button onClick={deleteSession}>Delete Session</button>
             </>
           )}
         </div>
