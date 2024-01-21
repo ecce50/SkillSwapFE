@@ -5,7 +5,7 @@ import { AuthContext } from "../../context/Auth.context";
 
 function SessionCreation({ classId }) {
 
-  console.log("This is the passed classid: ", classId);
+  //console.log("This is the passed classid: ", classId);
 
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
@@ -27,13 +27,13 @@ function SessionCreation({ classId }) {
     e.preventDefault();
 
     try {
-      console.log("Payload before axios request:", {
-        date,
-        time,
-        status,
-        pointsCost,
-        classId, //This is being console.logged every time we press a key. Should just be once?
-      });
+      //console.log("Payload before axios request:", {
+      //  date,
+      //  time,
+      //  status,
+      //  pointsCost,
+      //  classId, //This is being console.logged every time we press a key. Should just be once?
+      //});
 
       const res = await axios.post(
         "http://localhost:5005/session/session-creation",
@@ -45,7 +45,7 @@ function SessionCreation({ classId }) {
           classId,
         }
       );
-      console.log("Here is the axios session-creation result", res);
+      //console.log("Here is the axios session-creation result", res);
 
       await authenticateUser();
     } catch (error) {

@@ -6,7 +6,7 @@ function ClassSessions({ classId }) {
   const [sessions, setSessions] = useState([]);
   const [editSession, setEditSession] = useState(null);
   
-
+  const [sessionId, setSessionId] = useState(null);
 
 
 
@@ -29,6 +29,27 @@ function ClassSessions({ classId }) {
       }
     }; fetchSessions();
   }, [classId]);
+
+  /*----------------------------------------------------------*/
+
+  useEffect (() => {
+
+    console.log("Session ID before fetching:", sessionId);
+
+    const fetchSessionId = async () => {
+      try {
+        const idResponse = await axios.get(`http://localhost:5005/session/sessions/${sessionId}`);
+        console.log("Session ID response:", idResponse.data);
+
+        setSessionId(idResponse.data.session._id);
+
+      } catch (error) {
+        console.error("Error fetching session ID:", error);
+      }
+    }
+
+    fetchSessionId();
+  }, [sessionId]);
 
   /*----------------------------------------------------------*/
 
@@ -63,10 +84,12 @@ function ClassSessions({ classId }) {
     }
   };
 
-  const deleteSession = () => {
+  /*----------------------------------------------------------*/
+
+  const deleteSession = async () => {
 
     try {
-      axios.delete(`http://localhost:5005/session/${sessionId}`)
+      await axios.delete(`http://localhost:5005/session/sessions/${sessionId}`)
       
     } catch (error) {
       console.error("Error when deleting session:", error);
