@@ -9,8 +9,8 @@ function SkillDetailPage() {
   console.log("Full location object:", location);
 
   const { skill } = location.state || {};
-  console.log("This is the skill ID:", skill._id);
-  console.log("This is the skill title:", skill.title);
+  //console.log("This is the skill ID:", skill._id);
+  //console.log("This is the skill title:", skill.title);
 
   const nav = useNavigate();
 

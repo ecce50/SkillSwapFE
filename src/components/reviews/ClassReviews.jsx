@@ -18,12 +18,12 @@ const ClassReviews = ({ classId }) => {
           }
         );
         setReviews(response.data.reviews);
-        console.log("This is what review response is: ", response);
-        console.log(
-          "This is what response.data.reviews is: ",
-          response.data.reviews
-        );
-        console.log("This is what reviews is: ", reviews);
+        //console.log("This is what review response is: ", response);
+        //console.log(
+        //  "This is what response.data.reviews is: ",
+        //  response.data.reviews
+        //);
+        //console.log("This is what reviews is: ", reviews);
       } catch (error) {
         console.error("Error when fetching the reviews:", error);
       }
@@ -35,7 +35,7 @@ const ClassReviews = ({ classId }) => {
 
   }, [classId]);
 
-  console.log("Rendered Reviews:", reviews);
+  //console.log("Rendered Reviews:", reviews);
 
   return (
     

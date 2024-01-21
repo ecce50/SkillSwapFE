@@ -3,7 +3,7 @@ import { useContext, useState, useEffect } from "react";
 import { AuthContext } from "../../context/Auth.context";
 
 function ReviewCreation({ classId }) {
-  console.log("This is the passed classid: ", classId);
+  //console.log("This is the passed classid: ", classId);
   const [score, setScore] = useState("");
   const [content, setContent] = useState("");
   const { authenticateUser } = useContext(AuthContext);
@@ -12,7 +12,7 @@ function ReviewCreation({ classId }) {
 
   // useEffect with an empty dependency array to log classId only once on mount
   useEffect(() => {
-    console.log("This is the passed classid review: ", classId);
+    //console.log("This is the passed classid review: ", classId);
 
     // Clean up function (optional)
     return () => {
@@ -24,7 +24,8 @@ function ReviewCreation({ classId }) {
     e.preventDefault();
 
     try {
-      console.log("Payload before axios request review:", {
+      console.log("Payload before axios request review:", 
+      {
         reviewer,
         score,
         content,
@@ -40,7 +41,7 @@ function ReviewCreation({ classId }) {
           classId,
         }
       );
-      console.log("Here is the axios session-creation result", res);
+      //console.log("Here is the axios session-creation result", res);
 
       await authenticateUser();
     } catch (error) {

@@ -22,12 +22,12 @@ const SkillClasses = ({ skill }) => {
           }
         );
         setClasses(response.data.classes);
-        console.log("This is what response is: ", response);
-        console.log(
-          "This is what response.data.classes is: ",
-          response.data.classes
-        );
-        console.log("This is what classes is: ", classes);
+        //console.log("This is what response is: ", response);
+        //console.log(
+        //  "This is what response.data.classes is: ",
+        //  response.data.classes
+        //);
+        //console.log("This is what classes is: ", classes);
       } catch (error) {
         console.error("Error when fetching the classes:", error);
       }
