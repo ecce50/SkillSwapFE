@@ -34,14 +34,13 @@ function ClassSessions({ classId }) {
 
   useEffect (() => {
 
-    console.log("Session ID before fetching:", sessionId);
-
     const fetchSessionId = async () => {
       try {
-        const idResponse = await axios.get(`http://localhost:5005/session/sessions/${sessionId}`);
-        console.log("Session ID response:", idResponse.data);
+        const idResponse = await axios.get(`http://localhost:5005/session/sessions?classId=${classId}`);
 
-        setSessionId(idResponse.data.session._id);
+        setSessionId(idResponse.data);
+
+        console.log("Session ID response:", idResponse.data);
 
       } catch (error) {
         console.error("Error fetching session ID:", error);
@@ -49,7 +48,7 @@ function ClassSessions({ classId }) {
     }
 
     fetchSessionId();
-  }, [sessionId]);
+  }, []);
 
   /*----------------------------------------------------------*/
 
@@ -86,29 +85,16 @@ function ClassSessions({ classId }) {
 
   /*----------------------------------------------------------*/
 
-  const deleteSession = async () => {
+  const deleteSession = async (sessionId) => {
 
     try {
-      await axios.delete(`http://localhost:5005/session/sessions/${sessionId}`)
+      await axios.delete(`http://localhost:5005/session/delete-session/${sessionId}`)
       
     } catch (error) {
       console.error("Error when deleting session:", error);
     }
   }
 
-  /*
-  const handleUpdateSuccess = (updatedSession) => {
-    // Update the sessions list with the updated session
-    setSessions((prevSessions) =>
-      prevSessions.map((session) =>
-        session._id === updatedSession._id ? updatedSession : session
-      )
-    );
-
-    // Close the edit modal or reset editSession state
-    setEditSession(null);
-  };
-  */
 
   /*------------------------------------------------------------------- */
 
@@ -145,54 +131,13 @@ function ClassSessions({ classId }) {
               <h2>Session Cost: {aSession.pointsCost} points</h2>
 
               <button onClick={() => handleEditClick(aSession)}>Edit</button>
-              <button onClick={deleteSession}>Delete Session</button>
+              <button onClick={() => deleteSession(aSession._id)}>Delete Session</button>
             </>
           )}
         </div>
       ))}
     </div>
   );
-
-
-  // return (
-    /* This component is to show all of the sessions that belong to a particular class. 
-      It is a child component of the SkillClasses component.
-      It needs to receive the classid from the SkillClasses component. 
-     We can reuse the current logic from the UserSkills component */
-   // <div>
-   //   <h2>ClassSessions</h2>
-   //   {sessions.map((aSession) => (
-   //     <div key={aSession._id}>
-          {/*
-          <h2>Session Date: {aSession.date} </h2>
-          <h2>Session Time: {aSession.time}</h2>
-          <h2>Session Level: {aSession.status}</h2>
-          <h2>Session Cost: {aSession.pointsCost} points</h2>
-          */}
-
-          
-
-    //      <button onClick={() => handleEditClick(aSession)}>Edit</button>
-
-    //    </div>
-    //  ))}
-
-    {/*
-      {editSession && (
-        <SessionCreation
-          classId={classId}
-          editMode
-          sessionToEdit={editSession}
-          onUpdateSuccess={handleUpdateSuccess}
-        />
-      )}
-      */}
-
-
-      {/* <SessionCreation classId={classId} /> */}
-   // </div>
-    
- // );
 }
 
 export default ClassSessions;
