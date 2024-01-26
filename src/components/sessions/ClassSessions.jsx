@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import SessionCreation from "./SessionCreation";
 
 function ClassSessions({ classId }) {
   const [sessions, setSessions] = useState([]);
@@ -36,11 +35,11 @@ function ClassSessions({ classId }) {
 
     const fetchSessionId = async () => {
       try {
-        const idResponse = await axios.get(`http://localhost:5005/session/sessions?classId=${classId}`);
+        const sessionIdResponse = await axios.get(`http://localhost:5005/session/sessions?classId=${classId}`);
 
-        setSessionId(idResponse.data);
+        setSessionId(sessionIdResponse.data);
 
-        console.log("Session ID response:", idResponse.data);
+        console.log("Session ID response:", sessionIdResponse.data);
 
       } catch (error) {
         console.error("Error fetching session ID:", error);
@@ -88,7 +87,7 @@ function ClassSessions({ classId }) {
   const deleteSession = async (sessionId) => {
 
     try {
-      await axios.delete(`http://localhost:5005/session/delete-session/${sessionId}`)
+      await axios.delete(`http://localhost:5005/session/delete-session/${sessionId}`);
       
     } catch (error) {
       console.error("Error when deleting session:", error);

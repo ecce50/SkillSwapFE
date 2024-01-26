@@ -1,5 +1,3 @@
-import { AuthContext } from "../context/Auth.context";
-import { useContext } from "react";
 import Navbar from "../components/Navbar";
 import SkillCreation from "../components/skills/SkillCreation";
 import UserSkills from "../components/skills/UserSkills";
