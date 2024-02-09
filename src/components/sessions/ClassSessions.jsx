@@ -4,7 +4,7 @@ import axios from "axios";
 import {
   fetchSessionsByClassId,
   deleteSessionById,
-} from "../../utils/sessionUtils";
+} from "../../utils/SessionUtils";
 
 function ClassSessions({ classId }) {
   const [sessions, setSessions] = useState([]);

@@ -4,12 +4,12 @@ import ImageUpload from "./ImageUpload";
 import axios from "axios";
 import { AuthContext } from "../../context/Auth.context";
 
-function ProfileImageUpload() {
+function UserImageUpload() {
   const { user, setUser } = useContext(AuthContext);
 
   return (
     <div>
-      <h3>Profile Image Upload</h3>
+      <h3>User Image Upload</h3>
       <ImageUpload
         onSuccess={(imageUrl) => {
           // Update the user's imageURL in the MongoDB database
@@ -32,7 +32,7 @@ function ProfileImageUpload() {
   );
 }
 
-export default ProfileImageUpload;
+export default UserImageUpload;
 
 // import React, { useContext } from "react";
 // import ImageUpload from "../ImageUpload";
