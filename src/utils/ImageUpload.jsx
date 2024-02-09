@@ -1,9 +1,8 @@
-// ImageUpload.jsx
 import React from "react";
 import axios from "axios";
 import { useState } from "react";
 
-function ImageUpload({ onSuccess }) {
+function ImageUpload({ onSuccess, imageType, classId, userId }) {
   const [imageUrl, setImageUrl] = useState();
 
   // Define a function to handle file input changes
@@ -13,7 +12,12 @@ function ImageUpload({ onSuccess }) {
     try {
       const formData = new FormData();
       formData.append("file", file);
-
+      formData.append("imageType", imageType); // Add imageType to formData
+   if (imageType === "user") {
+     formData.append("userId", userId);
+   } else if (imageType === "class") {
+     formData.append("classId", classId);
+   }
       const res = await axios.post(
         "http://localhost:5005/image/upload-image",
         formData
