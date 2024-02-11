@@ -83,31 +83,6 @@ const UserSkills = () => {
     }
   };
 
-  // Handle the "Delete" button click
-  // const handleDelete = async (skillId) => {
-  //   try {
-  //     const token = localStorage.getItem("authToken");
-  //     const url = `http://localhost:5173/skill/delete-skill/${skillId}`;
-
-  //     const response = await axios.delete(url, {
-  //       headers: {
-  //         Authorization: `Bearer ${token}`,
-  //       },
-  //     });
-
-  //     if (response.status === 200) {
-  //       // Remove the deleted skill from the local state
-  //       setSkills((prevSkills) => prevSkills.filter((s) => s._id !== skillId));
-
-  //       console.log("Skill deleted successfully");
-  //     } else {
-  //       console.error("Failed to delete skill:", response.data.message);
-  //     }
-  //   } catch (error) {
-  //     console.error("Error deleting skill:", error.message);
-  //   }
-  // };
-
 
   return (
     <div className="creation-container">
@@ -170,21 +145,10 @@ const UserSkills = () => {
                     },
                   })
                 }
-                // Trying to pass entire skill object, not just certain attributes – below is how it was before
-                // onClick={() =>
-                //   nav(`/skill-detail`, {
-                //     state: {
-                //       skillId: skill._id,
-                //       skillTitle: skill.title,
-                //     },
-                //   })
-                // }
               >
                 Read more
               </button>
-
                 <button onClick={() => handleEdit(skill._id)}>Edit</button>
-                <button onClick={() => fetchClassesBySkillId(skill._id)}>Fetch Classes</button>
               <button onClick={() => deleteSkill(skill._id)}>Delete</button>
             </>
           )}
