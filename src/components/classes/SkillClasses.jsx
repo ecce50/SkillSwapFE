@@ -4,10 +4,7 @@ import ClassSessions from "../sessions/ClassSessions";
 import SessionCreation from "../sessions/SessionCreation";
 import ReviewCreation from "../reviews/ReviewCreation";
 import ClassReviews from "../reviews/ClassReviews.jsx";
-import {
-  fetchSessionsByClassId,
-  deleteSessionById,
-} from "../../utils/SessionUtils.jsx";
+import { deleteClass } from "../../utils/ClassUtils.jsx";
 import ClassImage from "./ClassImage.jsx";
 
 const SkillClasses = ({ skill }) => {
@@ -42,58 +39,6 @@ const SkillClasses = ({ skill }) => {
     fetchClasses();
   }, [skill._id]);
 
-  const deleteClass = async (classId) => {
-    try {
-      const sessions = await fetchSessionsByClassId(classId);
-
-      console.log("Before Promise.all");
-      await Promise.all(
-        sessions.map(async (session) => {
-          try {
-            console.log("Deleting session: ", session._id);
-            await deleteSessionById(session._id);
-            console.log("Session deleted successfully: ", session._id);
-          } catch (sessionError) {
-            console.error("Error when deleting session:", sessionError);
-            throw sessionError;
-          }
-        })
-      );
-      console.log("After Promise.all");
-      console.log("All sessions deleted successfully");
-
-      console.log("Deleting class: ", classId);
-      const response = await axios.delete(
-        `http://localhost:5005/class/delete-class/${classId}`
-      );
-      console.log("Class deletion response:", response.status, response.data);
-
-      if (response.status === 200) {
-        console.log("Class deleted successfully");
-        // Update state to trigger a re-render
-        setClasses((prevClasses) =>
-          prevClasses.filter((c) => c._id !== classId)
-        );
-      } else {
-        console.error(
-          "Failed to delete class. Response:",
-          response.status,
-          response.data
-        );
-      }
-    } catch (error) {
-      console.error("Error when deleting class and sessions:", error);
-    }
-  };
-
-  const handleEdit = (classId) => {
-    setEditedClasses((prevEditedClasses) => ({
-      ...prevEditedClasses,
-      [classId]: true,
-    }));
-    // Set edit mode to true
-    setEditMode(true);
-  };
 
   const handleSaveEditClass = async (classId) => {
     try {

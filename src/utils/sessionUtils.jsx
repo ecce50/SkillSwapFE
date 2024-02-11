@@ -20,7 +20,7 @@ export const fetchSessionsByClassId = async (classId) => {
 };
 
 // Utility function to delete a session by ID
-export const deleteSessionById = async (sessionId) => {
+export const deleteSession = async (sessionId) => {
   try {
     console.log("sessutils Before session deletion:", sessionId);
     await axios.delete(
