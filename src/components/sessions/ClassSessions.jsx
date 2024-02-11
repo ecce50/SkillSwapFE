@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import {
   fetchSessionsByClassId,
-  deleteSessionById,
+  deleteSession,
 } from "../../utils/SessionUtils";
 
 function ClassSessions({ classId }) {
@@ -56,7 +56,7 @@ function ClassSessions({ classId }) {
 
   const deleteSession = async (sessionId) => {
     try {
-      await deleteSessionById(sessionId);
+      await deleteSession(sessionId);
     } catch (error) {
       console.error("Error when deleting session:", error);
     }
