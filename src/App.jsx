@@ -8,6 +8,7 @@ import SearchResults from "./pages/SearchResults";
 import ErrorBoundary from "./components/auth/ErrorBoundary";
 import SkillDetailPage from "./pages/SkillDetailPage";
 import { Cloudinary } from "@cloudinary/url-gen";
+import AccountDetails from "./pages/AccountDetails";
 
 function App() {
   const cld = new Cloudinary({
@@ -32,6 +33,7 @@ function App() {
               </IsPrivate>
             }
           />
+          <Route path="/account-details" element={<AccountDetails/>}/>
           <Route path="*" element={<h1>404 page</h1>} />
         </Routes>
       </ErrorBoundary>

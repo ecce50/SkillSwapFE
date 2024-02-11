@@ -12,6 +12,7 @@ function HomePage() {
       <Link to="/profile">Profile</Link>
       <Link to="/login">Log in</Link>
       <Link to="/search-results">Search results</Link>
+      <Link to="/account-details">Account Details</Link>
       <h1>Skill Ƨwap</h1>
 
       <SearchBar />
