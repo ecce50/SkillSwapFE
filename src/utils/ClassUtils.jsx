@@ -2,7 +2,26 @@ import axios from "axios";
 import {
   fetchSessionsByClassId,
   deleteSession,
-} from "../utils/SessionUtils.jsx";
+} from "./SessionUtils.jsx";
+
+export const fetchClassesBySkillId = async (skillId) => {
+  try {
+    const token = localStorage.getItem("authToken");
+    const response = await axios.get(
+      `http://localhost:5005/class/classes?skillId=${skillId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+      console.log("fetchSkillsByClassId response: ", response.data.classes)
+    return response.data.classes;
+  } catch (error) {
+    console.error("Error when fetching classes:", error);
+    return [];
+  }
+};
 
 export const deleteClass = async (classId) => {
   try {

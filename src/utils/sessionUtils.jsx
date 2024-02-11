@@ -14,7 +14,7 @@ export const fetchSessionsByClassId = async (classId) => {
 
     return response.data.sessions;
   } catch (error) {
-    console.error("Error when fetching sessions:", error);
+    console.error("Error when fetching sessions:", error); 
     return [];
   }
 };
