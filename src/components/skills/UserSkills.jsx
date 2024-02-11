@@ -83,6 +83,8 @@ const UserSkills = () => {
     }
   };
 
+
+
   return (
     <div className="creation-container">
       <h2>Your Skills</h2>
@@ -147,7 +149,6 @@ const UserSkills = () => {
               >
                 Read more
               </button>
-
                 <button onClick={() => handleEdit(skill._id)}>Edit</button>
               <button onClick={() => deleteSkill(skill._id)}>Delete</button>
             </>
