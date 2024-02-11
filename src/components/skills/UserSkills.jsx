@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { fetchClassesBySkillId } from "../../utils/ClassUtils";
+import { deleteSkill } from "../../utils/SkillUtils";
 
 // UserSkills component
 const UserSkills = () => {
@@ -82,29 +84,29 @@ const UserSkills = () => {
   };
 
   // Handle the "Delete" button click
-  const handleDelete = async (skillId) => {
-    try {
-      const token = localStorage.getItem("authToken");
-      const url = `http://localhost:5173/skill/delete-skill/${skillId}`;
+  // const handleDelete = async (skillId) => {
+  //   try {
+  //     const token = localStorage.getItem("authToken");
+  //     const url = `http://localhost:5173/skill/delete-skill/${skillId}`;
 
-      const response = await axios.delete(url, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+  //     const response = await axios.delete(url, {
+  //       headers: {
+  //         Authorization: `Bearer ${token}`,
+  //       },
+  //     });
 
-      if (response.status === 200) {
-        // Remove the deleted skill from the local state
-        setSkills((prevSkills) => prevSkills.filter((s) => s._id !== skillId));
+  //     if (response.status === 200) {
+  //       // Remove the deleted skill from the local state
+  //       setSkills((prevSkills) => prevSkills.filter((s) => s._id !== skillId));
 
-        console.log("Skill deleted successfully");
-      } else {
-        console.error("Failed to delete skill:", response.data.message);
-      }
-    } catch (error) {
-      console.error("Error deleting skill:", error.message);
-    }
-  };
+  //       console.log("Skill deleted successfully");
+  //     } else {
+  //       console.error("Failed to delete skill:", response.data.message);
+  //     }
+  //   } catch (error) {
+  //     console.error("Error deleting skill:", error.message);
+  //   }
+  // };
 
 
   return (
@@ -181,8 +183,9 @@ const UserSkills = () => {
                 Read more
               </button>
 
-              <button onClick={() => handleEdit(skill._id)}>Edit</button>
-              <button onClick={() => handleDelete(skill._id)}>Delete</button>
+                <button onClick={() => handleEdit(skill._id)}>Edit</button>
+                <button onClick={() => fetchClassesBySkillId(skill._id)}>Fetch Classes</button>
+              <button onClick={() => deleteSkill(skill._id)}>Delete</button>
             </>
           )}
         </div>
