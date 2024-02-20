@@ -6,6 +6,7 @@ import ReviewCreation from "../reviews/ReviewCreation";
 import ClassReviews from "../reviews/ClassReviews.jsx";
 import { deleteClass } from "../../utils/ClassUtils.jsx";
 import ClassImage from "./ClassImage.jsx";
+import { fetchTeacherByUserId } from "../../utils/UserUtils";
 
 const SkillClasses = ({ skill }) => {
   const [classes, setClasses] = useState([]);
@@ -17,6 +18,7 @@ const SkillClasses = ({ skill }) => {
     location: "",
   });
   const [editMode, setEditMode] = useState(false); // Introduce editMode state
+  const [teacherInfo, setTeacherInfo] = useState("");
 
   useEffect(() => {
     const fetchClasses = async () => {
@@ -38,6 +40,19 @@ const SkillClasses = ({ skill }) => {
 
     fetchClasses();
   }, [skill._id]);
+
+  useEffect(() => {
+    const fetchTeacherInfo = async () => {
+      try {
+        const teacher = await fetchTeacherByUserId(skill.teacherId);
+        setTeacherInfo(teacher);
+      } catch (error) {
+        console.error("Error fetching teacher name:", error);
+      }
+    };
+
+    fetchTeacherInfo();
+  }, [skill.teacherId]);
 
   // Function to toggle edit mode and reset updated class state
   const toggleEditMode = () => {
@@ -102,7 +117,7 @@ const SkillClasses = ({ skill }) => {
           {/* Common part for both edit mode and view mode */}
           <h2>Class Title: {aClass.title} </h2>
           <ClassImage skillClass={aClass} editMode={editMode} />
-          <h4>Teacher: {skill.teacherId}</h4>
+          <h4>Teacher: {teacherInfo.firstname}</h4>
           <p>Class Description: {aClass.description}</p>
           <h4>Duration: {aClass.duration}</h4>
           <h4>Location: {aClass.location}</h4>
