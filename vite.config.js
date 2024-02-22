@@ -6,8 +6,9 @@ export default defineConfig({
   plugins: [react()],
   server: {
     proxy: {
-      "/search": "http://localhost:5005", // Adjust the path and port accordingly
-      "/skill": "http://localhost:5005", // Adjust the path and port accordingly
+      "/search": "http://localhost:5005",
+      "/skill": "http://localhost:5005",
     },
+    historyApiFallback: true,
   },
 });

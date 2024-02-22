@@ -11,12 +11,12 @@ import "../../style/global.css";
 
 const Navbar = ({ isHomePage, handleSearch }) => {
   return (
-    <nav className="navbar-container">
+    <nav>
       <HamburgerMenu />
 
       {!isHomePage && (
         <Link to="/">
-          <div className="navLogo">
+          <div>
             <img src={navLogo} alt="navbar logo" />
           </div>
         </Link>

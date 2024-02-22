@@ -86,7 +86,7 @@ const UserSkills = () => {
 
 
   return (
-    <div className="creation-container">
+    <div>
       <h2>Your Skills</h2>
       {skills.map((skill) => (
         <div key={skill._id}>
@@ -140,7 +140,7 @@ const UserSkills = () => {
               {/* Use navigate for manual navigation */}
               <button
                 onClick={() =>
-                  nav(`/skill-detail`, {
+                  nav(`/skill-detail/${skill._id}`, {
                     state: {
                       skill,
                     },
@@ -149,7 +149,7 @@ const UserSkills = () => {
               >
                 Read more
               </button>
-                <button onClick={() => handleEdit(skill._id)}>Edit</button>
+              <button onClick={() => handleEdit(skill._id)}>Edit</button>
               <button onClick={() => deleteSkill(skill._id)}>Delete</button>
             </>
           )}

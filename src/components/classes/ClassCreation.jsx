@@ -65,7 +65,7 @@ function ClassCreation({ skillId, skillTitle}) {
   // };
 
   return (
-    <div className="creation-container">
+    <div>
       <h2>Create a class</h2>
       <form onSubmit={handleClassCreation}>
         <label>
