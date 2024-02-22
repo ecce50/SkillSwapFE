@@ -23,7 +23,7 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/skill-detail" element={<SkillDetailPage />} />
+          <Route path="/skill-detail/:skillId" element={<SkillDetailPage />} />
           <Route path="/search-results" element={<SearchResults />} />{" "}
           <Route
             path="/profile"
@@ -33,7 +33,7 @@ function App() {
               </IsPrivate>
             }
           />
-          <Route path="/account-details" element={<AccountDetails/>}/>
+          <Route path="/account-details" element={<AccountDetails />} />
           <Route path="*" element={<h1>404 page</h1>} />
         </Routes>
       </ErrorBoundary>

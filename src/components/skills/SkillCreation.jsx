@@ -45,7 +45,7 @@ function SkillCreation() {
 
 
   return (
-    <div className="creation-container">
+    <div>
       <h2>Create a skill</h2>
       <form onSubmit={handleSkillCreation}>
         <label>
