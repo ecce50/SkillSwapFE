@@ -7,6 +7,7 @@ import { useContext } from 'react';
 function AccountDetails() {
 
     const { user, setUser } = useContext(AuthContext);
+    
 
   return (
     <div>
