@@ -9,6 +9,8 @@ import ErrorBoundary from "./components/auth/ErrorBoundary";
 import SkillDetailPage from "./pages/SkillDetailPage";
 import { Cloudinary } from "@cloudinary/url-gen";
 import AccountDetails from "./pages/AccountDetails";
+import "../style/index.css";
+
 
 function App() {
   const cld = new Cloudinary({

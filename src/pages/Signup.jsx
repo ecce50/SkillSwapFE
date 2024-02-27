@@ -2,7 +2,8 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useContext, useState } from "react";
 import { AuthContext } from "../context/Auth.context";
-import "../../style/global.css";
+import Navbar from "../components/Navbar";
+import "../../style/sign-up.css";
 
 function Signup() {
   const [email, setEmail] = useState("");
@@ -39,32 +40,37 @@ function Signup() {
   };
 
   return (
-    <div>
-      <h2>Sign Up</h2>
-      <form onSubmit={handleSignup} >
-        <label>
-          <input
-            type="email"
-            value={email}
-            required
-            onChange={(e) => {
-              setEmail(e.target.value);
-            }}
-          />
-        </label>
-        <label>
-          <input
-            type="password"
-            value={password}
-            required
-            onChange={(e) => {
-              setPassword(e.target.value);
-            }}
-          />
-        </label>
-        <button type="submit">Sign Up</button>
-      </form>
-    </div>
+    <>
+      <Navbar />
+      <div className="sign-up-form">
+        <h1>Sign Up</h1>
+        <form onSubmit={handleSignup}>
+          <label>
+            Email:
+            <input
+              type="email"
+              value={email}
+              required
+              onChange={(e) => {
+                setEmail(e.target.value);
+              }}
+            />
+          </label>
+          <label>
+            Password:
+            <input
+              type="password"
+              value={password}
+              required
+              onChange={(e) => {
+                setPassword(e.target.value);
+              }}
+            />
+          </label>
+          <button type="submit">Sign Up</button>
+        </form>
+      </div>
+    </>
   );
 }
 

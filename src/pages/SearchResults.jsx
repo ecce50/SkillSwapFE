@@ -5,7 +5,6 @@ import SearchResultsList from "../components/search/SearchResultsList";
 import Navbar from "../components/Navbar";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import "../../style/global.css";
 
 const SearchResults = () => {
   const navigate = useNavigate();
