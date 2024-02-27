@@ -1,0 +1,23 @@
+.nav-search-bar {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+
+}
+
+.nav-search-bar input {
+  width: 100%;
+  flex-grow: 1;
+  height: 2rem;
+  box-sizing: border-box;
+     border-top-right-radius: 0rem; /* Adjust the radius as needed */
+  border-bottom-right-radius: 0rem; /* Adjust the radius as needed */
+  
+}
+
+.test-button {
+  margin: 0.5rem 0.5rem 0.5rem 0;
+    border-top-left-radius: 0rem; /* Adjust the radius as needed */
+  border-bottom-left-radius: 0rem; /* Adjust the radius as needed */
+}

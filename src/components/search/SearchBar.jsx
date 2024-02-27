@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import "../../../style/search-bar.css";
 
 function SearchBar({ onSearch, isNavbar }) {
   const navigate = useNavigate();
@@ -36,7 +37,7 @@ function SearchBar({ onSearch, isNavbar }) {
 
   if (isNavbar) {
     return (
-      <div>
+      <div className="nav-search-bar">
         <label>
           <input
             value={title}
@@ -46,7 +47,7 @@ function SearchBar({ onSearch, isNavbar }) {
             }}
           />
         </label>
-        <button type="button" onClick={handleSearchClick}>
+        <button className="test-button" type="button" onClick={handleSearchClick}>
           Search
         </button>
       </div>
@@ -54,8 +55,7 @@ function SearchBar({ onSearch, isNavbar }) {
   }
 
   return (
-    <div>
-      <h2>SearchBar</h2>
+    <div className="search-bar">
       <form onSubmit={handleSearch}>
         <label>
           <input

@@ -1,34 +1,9 @@
-/* Apply a CSS reset */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+nav {
+    margin: -2rem -2rem 2rem -2rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    background-color:  var(--skillswap-purple);
+    align-items:center;
 }
 
-body {
-  margin: 0;
-  padding: 0;
-  font-family: 'Roboto', sans-serif;
-  background-color: #faf8f9;
-  color: rgb(42, 42, 42);
-  font-weight: 400;
-  line-height: 1.75;
-  text-align: center;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.navbar-container {
-  display: flex;
-  width: 100vw; /* Change to vw for viewport width */
-  justify-content: space-between;
-  align-items: center;
-  background-color: #3b6ca8;
-  padding: 10px; /* Adjust as needed */
-}
-
-.navLogo img {
-  max-height: 50px; /* Adjust as needed */
-}

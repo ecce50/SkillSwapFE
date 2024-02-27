@@ -1,0 +1,55 @@
+/* Hamburger Menu Styles */
+.hamburger-menu {
+  position: relative;
+  background-color: var(--skillswap-purple);
+  width: 40%;
+}
+
+.menu-button {
+  margin: -2rem 0 -2rem 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.1rem;
+  color: var(--skillswap-white); /* Use your color alias */
+}
+
+.menu-links {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  background-color: var(--skillswap-bg); /* Use your color alias */
+  padding: 1rem;
+}
+
+.menu-links.open {
+  display: block;
+   background-color: var(--skillswap-purple);
+  width: 100%;
+}
+
+.user-menu {
+  margin-bottom: 1rem;
+}
+
+.user-button {
+  background-color: var(--skillswap-highlight);
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--skillswap-white); /* Use your color alias */
+  font-size: 1rem;
+}
+
+.menu-links a {
+  display: block;
+  color: var(--skillswap-white); /* Use your color alias */
+  text-decoration: none;
+  margin-bottom: 0.5rem;
+}
+
+.menu-links a:hover {
+  text-decoration: underline;
+}

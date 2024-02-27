@@ -1,22 +1,19 @@
 import SearchBar from "../components/search/SearchBar";
 import Navbar from "../components/Navbar";
 import { Link } from "react-router-dom";
-import "/style/global.css";
-
+import SkillSwapLogo from "../assets/templogo_1024x950.png";
+import "../../style/homepage.css";
 
 
 function HomePage() {
   return (
-    <div>
+    <>
       <Navbar />
-      <Link to="/profile">Profile</Link>
-      <Link to="/login">Log in</Link>
-      <Link to="/search-results">Search results</Link>
-      <Link to="/account-details">Account Details</Link>
-      <h1>Skill Ƨwap</h1>
-
-      <SearchBar />
-    </div>
+      <div className="logo">
+        <img src={SkillSwapLogo} alt="Skill Swap Logo" />
+      </div>
+          <SearchBar />
+    </>
   );
 }
 

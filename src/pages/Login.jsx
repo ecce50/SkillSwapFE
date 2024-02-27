@@ -1,7 +1,6 @@
 import axios from "axios";
 import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import "../../style/global.css";
 import Navbar from "../components/Navbar";
 import { AuthContext } from "../context/Auth.context";
 
@@ -74,7 +73,6 @@ export default Login;
 // import { useContext, useState } from "react";
 // import { useNavigate } from "react-router-dom";
 // import { AuthContext } from "../context/Auth.context";
-// import "../../style/global.css";
 // import Navbar from "../components/Navbar";
 
 // function Login() {
