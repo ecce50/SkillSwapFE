@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useContext, useState, useEffect } from "react";
 import { AuthContext } from "../../context/Auth.context";
-
+import { BACKEND_URL } from "../../config/config.index.js";
 
 function SessionCreation({ classId }) {
 
@@ -79,7 +79,7 @@ function SessionCreation({ classId }) {
       //});
 
       const res = await axios.post(
-        "http://localhost:5005/session/session-creation",
+        `${BACKEND_URL}/session/session-creation`,
         {
           date,
           time,

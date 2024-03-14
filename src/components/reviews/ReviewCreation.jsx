@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useContext, useState, useEffect } from "react";
 import { AuthContext } from "../../context/Auth.context";
+import { BACKEND_URL } from "../../config/config.index.js";
 
 function ReviewCreation({ classId }) {
   //console.log("This is the passed classid: ", classId);
@@ -9,6 +10,7 @@ function ReviewCreation({ classId }) {
   const { authenticateUser } = useContext(AuthContext);
   const { user } = useContext(AuthContext);
   const reviewer = user._id;
+
 
   // useEffect with an empty dependency array to log classId only once on mount
   useEffect(() => {
@@ -33,7 +35,7 @@ function ReviewCreation({ classId }) {
       });
 
       const res = await axios.post(
-        "http://localhost:5005/review/review-creation",
+        `${BACKEND_URL}/review/review-creation`,
         {
           reviewer,
           score,

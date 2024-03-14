@@ -3,12 +3,13 @@ import {
   fetchSessionsByClassId,
   deleteSession,
 } from "./SessionUtils.jsx";
+import { BACKEND_URL } from "../config/config.index.js";
 
 export const fetchClassesBySkillId = async (skillId) => {
   try {
     const token = localStorage.getItem("authToken");
     const response = await axios.get(
-      `http://localhost:5005/class/classes?skillId=${skillId}`,
+      `${BACKEND_URL}/class/classes?skillId=${skillId}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -45,7 +46,7 @@ export const deleteClass = async (classId) => {
 
     console.log("Deleting class: ", classId);
     const response = await axios.delete(
-      `http://localhost:5005/class/delete-class/${classId}`
+      `${BACKEND_URL}/class/delete-class/${classId}`
     );
     console.log("Class deletion response:", response.status, response.data);
 

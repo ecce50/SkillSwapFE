@@ -1,6 +1,7 @@
 import axios from "axios";
 import { fetchClassesBySkillId } from "./ClassUtils";
 import { deleteClass } from "./ClassUtils";
+import { BACKEND_URL } from "../config/config.index.js";
 
 export const deleteSkill = async (skillId) => {
   try {
@@ -24,7 +25,7 @@ export const deleteSkill = async (skillId) => {
 
     console.log("Deleting skill: ", skillId);
     const response = await axios.delete(
-      `http://localhost:5005/skill/delete-skill/${skillId}`
+      `${BACKEND_URL}/skill/delete-skill/${skillId}`
     );
     console.log("Skill deletion response:", response.status, response.data);
 

@@ -3,6 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { fetchClassesBySkillId } from "../../utils/ClassUtils";
 import { deleteSkill } from "../../utils/SkillUtils";
+import { BACKEND_URL } from "../../config/config.index.js";
 
 // UserSkills component
 const UserSkills = () => {
@@ -17,7 +18,7 @@ const UserSkills = () => {
       try {
         const token = localStorage.getItem("authToken");
         const response = await axios.get(
-          `http://localhost:5005/skill/skills?timestamp=${Date.now()}`,
+          `${BACKEND_URL}/skill/skills?timestamp=${Date.now()}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -45,7 +46,7 @@ const UserSkills = () => {
   const handleSaveEditSkill = async (skillId, title, description) => {
     try {
       const token = localStorage.getItem("authToken");
-      const url = `http://localhost:5173/skill/update-skill/${skillId}`;
+      const url = `http://localhost:5005/skill/update-skill/${skillId}`;
 
       const response = await axios.put(
         url,

@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import SkillClasses from "../classes/SkillClasses";
 import ClassCreation from "../classes/ClassCreation";
+import { BACKEND_URL } from "../../config/config.index.js";
 
 function SkillDetail({ skillId }) {
   const [skill, setSkill] = useState(null);
@@ -12,7 +13,7 @@ function SkillDetail({ skillId }) {
       try {
         const token = localStorage.getItem("authToken");
         const response = await axios.get(
-          `http://localhost:5005/skill/skill-info/${skillId}`,
+          `${BACKEND_URL}/skill/skill-info/${skillId}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,

@@ -2,6 +2,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useContext, useState } from "react";
 import { AuthContext } from "../../context/Auth.context";
+import { BACKEND_URL } from "../../config/config.index.js";
 
 function ClassCreation({ skillId, skillTitle}) {
   const [title, setTitle] = useState("");
@@ -14,7 +15,7 @@ function ClassCreation({ skillId, skillTitle}) {
 
     try {
       const res = await axios.post(
-        "http://localhost:5005/class/class-creation",
+        `${BACKEND_URL}/class/class-creation`,
         {
           title,
           description,
@@ -43,24 +44,6 @@ function ClassCreation({ skillId, skillTitle}) {
       console.error("This is the error", error);
     }
   };
-
-  //   try {
-  //     const res = await axios.post(
-  //       "http://localhost:5005/class/class-creation",
-  //       {
-  //         title,
-  //         description,
-  //         skillId,
-  //       }
-  //     );
-  //     console.log("This is the axios post result", res);
-
-  //     //await authenticateUser();
-  //     nav("/skill-detail")
-  //   } catch (error) {
-  //     console.error("This is the error", error);
-  //   }
-  // };
 
   return (
     <div>

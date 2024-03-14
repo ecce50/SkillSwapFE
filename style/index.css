@@ -23,13 +23,12 @@ body, h1, h2, h3, h4, h5, h6 {
 
 /* Global Typography */
 body {
-
   font-family: 'Roboto', sans-serif;
-  font-size: 1rem; /* 16px */
-  line-height: 1.5; /* 24px */
+  font-size: 1rem;
+  line-height: 1.5;
   background-color: var(--skillswap-bg);
   color: var(--skillswap-white);
-padding: 2rem;
+  /* padding: 2rem 1rem; */
 }
 
 /* Headings */
@@ -84,10 +83,11 @@ p {
 
 /* Input fields */
 input {
-  width: calc(80% - 2rem); /* 1rem on both sides */
+  width: 80%;
   height: 2rem;
   border-radius: 0.1rem;
-border: none;
+  border: none;
+  box-sizing: border-box; /* Ensure box-sizing property is applied */
 }
 
 /* Links */
@@ -96,28 +96,25 @@ a {
 }
 
 button {
-  /* margin: 1rem 0 1rem 0; */
-  margin: 0.25rem;
+  margin: 0.25rem 0;
   background-color: var(--skillswap-highlight);
   padding: 4px 16px;
   border-radius: 0.1rem;
   border-style: none;
   color: var(--skillswap-white);
-  font-size: 1rem; /* 16px */
+  font-size: 1rem;
   font-weight: 700;
-  line-height: 1.5; /* 24px */
-  ;
+  line-height: 1.5;
 }
-
 /* Form formatting */
 
 form label {
-  display: block; 
+  display: block;
   color: var(--skillswap-white);
   margin-bottom: 0.5rem;
 }
 
 form input {
-  width: 100%; 
+  /* width: 80%;  */
   box-sizing: border-box;
 }

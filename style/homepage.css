@@ -1,6 +1,21 @@
+
+.logo-search {
+    margin: auto;
+    /* max-width: 80%; */
+}
+
+.search {
+margin: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+}
+
 .logo {
-    height: 8rem;
-    margin: 2rem 0 2rem 0;
-    display: flex;
-    justify-content: center;
+  display: flex;
+  /* width: 8rem; */
+  height: 8rem;
+  margin: 2rem 0 2rem 0;
+  justify-content: center;
 }

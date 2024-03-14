@@ -2,6 +2,7 @@
 /* eslint-disable no-unused-vars */
 import { createContext, useEffect, useState } from "react";
 import axios from "axios";
+import { BACKEND_URL } from "../config/config.index.js";
 
 const AuthContext = createContext();
 
@@ -24,7 +25,7 @@ const AuthContextWrapper = ({ children }) => {
         axios.defaults.headers.common[
           "Authorization"
         ] = `Bearer ${tokenInStorage}`;
-        const { data } = await axios.get("http://localhost:5005/auth/verify");
+        const { data } = await axios.get(`${BACKEND_URL}/auth/verify`);
         const { currentUser } = data;
         setUser(currentUser);
         setIsLoading(false);
