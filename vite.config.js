@@ -6,8 +6,8 @@ export default defineConfig({
   plugins: [react()],
   server: {
     proxy: {
-      "/search": "http://localhost:5005",
-      "/skill": "http://localhost:5005",
+      // "/search": `${BACKEND_URL}`,
+      // "/skill": `${BACKEND_URL}`,
     },
     historyApiFallback: true,
   },

@@ -2,7 +2,7 @@
 .hamburger-menu {
   position: relative;
   background-color: var(--skillswap-purple);
-  width: 40%;
+  /* width: 200px; */
 }
 
 .menu-button {

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { BACKEND_URL } from "../../config/config.index.js";
 
 const ClassReviews = ({ classId }) => {
    const [reviews, setReviews] = useState([]);
@@ -10,7 +11,7 @@ const ClassReviews = ({ classId }) => {
       try {
         const token = localStorage.getItem("authToken");
         const response = await axios.get(
-          `http://localhost:5005/review/reviews?classId=${classId}`,
+          `${BACKEND_URL}/review/reviews?classId=${classId}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,

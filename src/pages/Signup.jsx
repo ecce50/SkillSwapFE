@@ -4,6 +4,7 @@ import { useContext, useState } from "react";
 import { AuthContext } from "../context/Auth.context";
 import Navbar from "../components/Navbar";
 import "../../style/sign-up.css";
+import { BACKEND_URL } from "../config/config.index.js";
 
 function Signup() {
   const [email, setEmail] = useState("");
@@ -15,17 +16,20 @@ function Signup() {
     e.preventDefault();
 
     try {
-      const res = await axios.post("http://localhost:5005/auth/signup", {
+      const res = await axios.post(`${BACKEND_URL}/auth/signup`, {
         email,
         password,
       });
       console.log("This is the result from the signup route:", res);
 
       //If signup is successful, go on with the login
-      const loginRes = await axios.post("http://localhost:5005/auth/login", {
-        email,
-        password,
-      });
+      const loginRes = await axios.post(
+        `${BACKEND_URL}/auth/login`,
+        {
+          email,
+          password,
+        }
+      );
 
       localStorage.setItem("authToken", loginRes.data.token);
       console.log("This is the result from the login route", loginRes);

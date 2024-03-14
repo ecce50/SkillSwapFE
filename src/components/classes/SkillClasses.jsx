@@ -7,6 +7,7 @@ import ClassReviews from "../reviews/ClassReviews.jsx";
 import { deleteClass } from "../../utils/ClassUtils.jsx";
 import ClassImage from "./ClassImage.jsx";
 import { fetchTeacherByUserId } from "../../utils/UserUtils";
+import { BACKEND_URL } from "../../config/config.index.js";
 
 const SkillClasses = ({ skill }) => {
   const [classes, setClasses] = useState([]);
@@ -25,7 +26,7 @@ const SkillClasses = ({ skill }) => {
       try {
         const token = localStorage.getItem("authToken");
         const response = await axios.get(
-          `http://localhost:5005/class/classes?skillId=${skill._id}`,
+          `${BACKEND_URL}/class/classes?skillId=${skill._id}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -79,7 +80,7 @@ const SkillClasses = ({ skill }) => {
   const handleSaveEditClass = async (classId) => {
     try {
       const token = localStorage.getItem("authToken");
-      const url = `http://localhost:5005/class/update-class/${classId}`;
+      const url = `${BACKEND_URL}/class/update-class/${classId}`;
 
       const response = await axios.put(url, updatedClass, {
         headers: {
@@ -229,7 +230,7 @@ export default SkillClasses;
 //       try {
 //         const token = localStorage.getItem("authToken");
 //         const response = await axios.get(
-//           `http://localhost:5005/class/classes?skillId=${skill._id}`,
+//           `${BACKEND_URL}/class/classes?skillId=${skill._id}`,
 //           {
 //             headers: {
 //               Authorization: `Bearer ${token}`,
@@ -248,7 +249,7 @@ export default SkillClasses;
 //   const handleSaveEditClass = async (classId) => {
 //     try {
 //       const token = localStorage.getItem("authToken");
-//       const url = `http://localhost:5005/class/update-class/${classId}`;
+//       const url = `${BACKEND_URL}/class/update-class/${classId}`;
 
 //       const response = await axios.put(url, updatedClass, {
 //         headers: {

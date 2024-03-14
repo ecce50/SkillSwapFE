@@ -2,6 +2,7 @@ import React, { useState, useContext } from "react";
 import axios from "axios";
 import UserImage from "./UserImage";
 import { AuthContext } from "../../context/Auth.context";
+import { BACKEND_URL } from "../../config/config.index.js";
 
 function UserInfo() {
   const { user, setUser } = useContext(AuthContext);
@@ -39,7 +40,7 @@ function UserInfo() {
       const token = localStorage.getItem("authToken");
       const userId = user._id;
       const response = await axios.put(
-        `http://localhost:5005/user/update`,
+        `${BACKEND_URL}/user/update`,
         { userId, ...newUserData },
         {
           headers: {

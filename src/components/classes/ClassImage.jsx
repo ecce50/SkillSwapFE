@@ -3,6 +3,7 @@ import ImageUpload from "../../utils/ImageUpload";
 import { AuthContext } from "../../context/Auth.context";
 import { useContext } from "react";
 
+
 function ClassImage({ editMode, skillClass }) {
   const handleImageUpload = async (imageUrl) => {
     try {

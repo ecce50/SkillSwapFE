@@ -1,10 +1,11 @@
 import axios from "axios";
+import { BACKEND_URL } from "../config/config.index.js";
 
 export const fetchSessionsByClassId = async (classId) => {
   try {
     const token = localStorage.getItem("authToken");
     const response = await axios.get(
-      `http://localhost:5005/session/sessions?classId=${classId}`,
+      `${BACKEND_URL}/session/sessions?classId=${classId}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -24,7 +25,7 @@ export const deleteSession = async (sessionId) => {
   try {
     console.log("sessutils Before session deletion:", sessionId);
     await axios.delete(
-      `http://localhost:5005/session/delete-session/${sessionId}`
+      `${BACKEND_URL}/session/delete-session/${sessionId}`
     );
     console.log("sessutils After session deletion:", sessionId);
     return Promise.resolve();
