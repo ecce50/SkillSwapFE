@@ -31,13 +31,13 @@ function ClassCreation({ skillId, skillTitle}) {
       nav({
         pathname: "/skill-detail",
         // state: {
-        //   skill: {
-        //     _id: skillId,
-        //     title: skillTitle,
-        //     // Add other properties as needed
-        //   },
+        //  skill: {
+        // _id: skillId,
+        // title: skillTitle,
+         // Add other properties as needed
+        // },
         //   // You can also include the created class data if needed
-        //   createdClass,
+        // createdClass,
         // },
       });
     } catch (error) {
