@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { BACKEND_URL } from "../../config/config.index.js";
 
 function SkillCreation() {
   const [title, setTitle] = useState("");
@@ -14,7 +15,7 @@ function SkillCreation() {
    try {
      // Create the skill
      const skillResponse = await axios.post(
-       "http://localhost:5005/skill/create-skill",
+       `${BACKEND_URL}/skill/create-skill`,
        {
          title,
          description,
@@ -27,11 +28,11 @@ function SkillCreation() {
 
      // Update the user with the skillId
      const userResponse = await axios.put(
-       "http://localhost:5005/user/add-skill",
+       `${BACKEND_URL}/user/add-skill`,
        {
          skillId: createdSkillId,
        }
-       );
+     );
        console.log("Add skill: userResponse: ", userResponse)
 
      const updatedUser = userResponse.data.user;

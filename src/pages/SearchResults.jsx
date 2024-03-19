@@ -5,6 +5,7 @@ import SearchResultsList from "../components/search/SearchResultsList";
 import Navbar from "../components/Navbar";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { BACKEND_URL } from "../config/config.index.js";
 
 const SearchResults = () => {
   const navigate = useNavigate();
@@ -14,7 +15,7 @@ const SearchResults = () => {
       console.log("Handling new search in SearchResults:", newQuery);
 
       // Make your API call to get search results using axios
-      const response = await axios.get(`http://localhost:5173/search`, {
+      const response = await axios.get(`${BACKEND_URL}/search`, {
         params: { title: newQuery },
       });
       const data = response.data;

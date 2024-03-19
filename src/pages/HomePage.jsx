@@ -9,10 +9,14 @@ function HomePage() {
   return (
     <>
       <Navbar />
-      <div className="logo">
-        <img src={SkillSwapLogo} alt="Skill Swap Logo" />
-      </div>
+      <div className="logo-search">
+        <div className="logo">
+          <img src={SkillSwapLogo} alt="Skill Swap Logo" />
+        </div>
+        <div className="search">
           <SearchBar />
+        </div>
+      </div>
     </>
   );
 }

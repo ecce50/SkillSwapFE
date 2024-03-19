@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "../../../style/search-bar.css";
+import { BACKEND_URL } from "../../config/config.index.js";
 
 function SearchBar({ onSearch, isNavbar }) {
   const navigate = useNavigate();
@@ -15,7 +16,7 @@ function SearchBar({ onSearch, isNavbar }) {
     try {
       console.log("Title before request:", title);
       const res = await axios.get(
-        `http://localhost:5005/search?title=${title}`
+        `${BACKEND_URL}/search?title=${title}`
       );
       console.log("This is the axios get result search skill ", res);
 

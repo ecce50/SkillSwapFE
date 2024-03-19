@@ -1,11 +1,12 @@
 import axios from "axios";
 import { deleteSkill } from "./SkillUtils";
+import { BACKEND_URL } from "../config/config.index.js";
 
 export const fetchTeacherByUserId = async (teacherId) => {
   try {
     const token = localStorage.getItem("authToken");
     const response = await axios.get(
-      `http://localhost:5005/user/userinfo?teacherId=${teacherId}`,
+      `${BACKEND_URL}/user/userinfo?teacherId=${teacherId}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -24,7 +25,7 @@ export const fetchSkillsByUserId = async (userId) => {
     try {
       const token = localStorage.getItem("authToken");
       const response = await axios.get(
-        `http://localhost:5005/skill/skills?userId=${userId}`,
+        `${BACKEND_URL}/skill/skills?userId=${userId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -61,7 +62,7 @@ export const fetchSkillsByUserId = async (userId) => {
   
       console.log("Deleting user: ", userId);
       const response = await axios.delete(
-        `http://localhost:5005/user/delete-user/${userId}`
+        `${BACKEND_URL}/user/delete-user/${userId}`
       );
       console.log("User deletion response:", response.status, response.data);
   

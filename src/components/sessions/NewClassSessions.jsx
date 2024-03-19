@@ -35,7 +35,7 @@ function ClassSessions({ classId }) {
     try {
       const token = localStorage.getItem("authToken");
       await axios.put(
-        `http://localhost:5005/session/update-session/${sessionId}`,
+        `${BACKEND_URL}/session/update-session/${sessionId}`,
         updatedSession,
         {
           headers: {

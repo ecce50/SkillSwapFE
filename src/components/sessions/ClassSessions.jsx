@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react'
 import {
     fetchSessionsByClassId,
     deleteSession,
- } from '../../utils/SessionUtils';
+} from '../../utils/SessionUtils';
+ 
 
 function ClassSessions({classId}) {
     const [sessions, setSessions] = useState([]);
