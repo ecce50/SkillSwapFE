@@ -21,25 +21,8 @@ function ClassCreation({ skill }) {
       });
       console.log("This is the axios post result", res);
 
-      // Assuming the created class data is available in the response
-      const createdClass = res.data.class;
-
       // Update the navigation to include the state information
-      nav({
-        pathname: "/skill-detail",
-        // state: {
-        //  skill: {
-        // _id: skillId,
-        // title: skillTitle,
-        // Add other properties as needed
-        // },
-        //   // You can also include the created class data if needed
-        // createdClass,
-        // },
-      });
-
-      // Update the navigation to include the state information
-      // nav(`/skill-detail/${skillId}`);
+      nav(`/skill-detail/${skill._id}`);
 
 
     } catch (error) {
