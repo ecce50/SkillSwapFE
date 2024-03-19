@@ -17,12 +17,22 @@ const SearchResultsList = ({onSearch}) => {
 
 
   useEffect(() => {
-    const lowerCasedTerm = searchTerm.toLowerCase().trim();
+    const lowerCasedTerm = searchTerm.toLowerCase();
     console.log("Lowercased Term:", lowerCasedTerm);
 
 
-    const filtered = results.filter((result) =>
-    result.title.toLowerCase().trim().startsWith(lowerCasedTerm));
+   // const filtered = results.filter((result) =>
+   // result.title.toLowerCase().startsWith(lowerCasedTerm));
+
+   const filtered = results.filter((result) => {
+    const lowerCasedTitle = result.title.toLowerCase().trim();
+    const startsWith = lowerCasedTitle.startsWith(lowerCasedTerm);
+
+    // Log the titles being compared
+    console.log(`Comparing "${lowerCasedTitle}" with "${lowerCasedTerm}": ${startsWith}`);
+
+    return startsWith;
+  });
 
     console.log("Filtered Result:", filtered);
 
@@ -32,6 +42,11 @@ const SearchResultsList = ({onSearch}) => {
       onSearch(lowerCasedTerm, filtered);
     }
   }, [searchTerm, results, onSearch]);
+
+  // A second useEffect to log the state after it's updated
+  useEffect(() => {
+    console.log("Current search term state:", searchTerm);
+  }, [searchTerm]);
 
 
   return (
