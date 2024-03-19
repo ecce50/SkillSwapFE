@@ -4,7 +4,7 @@ import { useContext, useState } from "react";
 import { AuthContext } from "../../context/Auth.context";
 import { BACKEND_URL } from "../../config/config.index.js";
 
-function ClassCreation({ skillId, skillTitle}) {
+function ClassCreation({ skill }) {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const { authenticateUser } = useContext(AuthContext);
@@ -14,32 +14,17 @@ function ClassCreation({ skillId, skillTitle}) {
     e.preventDefault();
 
     try {
-      const res = await axios.post(
-        `${BACKEND_URL}/class/class-creation`,
-        {
-          title,
-          description,
-          skillId,
-        }
-      );
+      const res = await axios.post(`${BACKEND_URL}/class/class-creation`, {
+        title,
+        description,
+        skillId: skill._id,
+      });
       console.log("This is the axios post result", res);
 
-      // Assuming the created class data is available in the response
-      const createdClass = res.data.class;
-
       // Update the navigation to include the state information
-      nav({
-        pathname: "/skill-detail",
-        // state: {
-        //   skill: {
-        //     _id: skillId,
-        //     title: skillTitle,
-        //     // Add other properties as needed
-        //   },
-        //   // You can also include the created class data if needed
-        //   createdClass,
-        // },
-      });
+      nav(`/skill-detail/${skill._id}`);
+
+
     } catch (error) {
       console.error("This is the error", error);
     }
