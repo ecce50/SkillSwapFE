@@ -9,7 +9,6 @@ function SkillDetailPage() {
     <div key={skillId}>
       <Navbar />
     <SkillDetail skillId={skillId} />
-      <h3>Here is the skillId from SDP: {skillId}</h3>
     </div>
   );
 }

@@ -88,7 +88,7 @@ const UserSkills = () => {
 
   return (
     <div>
-      <h2>Your Skills</h2>
+      <h2>Your skills</h2>
       {skills.map((skill) => (
         <div key={skill._id}>
           {editedSkills[skill._id] ? (

@@ -46,14 +46,14 @@ function SessionCreation({ classId }) {
 // *** WHAT DOES THIS CODE DO??
 
   // useEffect with an empty dependency array to log classId only once on mount
-  useEffect(() => {
+  // useEffect(() => { 
     //console.log("This is the passed classid: ", classId);
 
     // Clean up function (optional)
-    return () => {
+    // return () => {
       // Code to run on component unmount or when classId changes (if needed)
-    };
-  }, []); // Empty dependency array means this effect runs once on mount
+    // };
+  // }, []); // Empty dependency array means this effect runs once on mount
 
 // ***
 
@@ -98,7 +98,7 @@ function SessionCreation({ classId }) {
 
   return (
     <div>
-      <h2>Create a Session</h2>
+      <h3>Create a Session</h3>
       <form onSubmit={handleSessionCreation}>
         <label>Date</label>
         <input
@@ -131,7 +131,7 @@ function SessionCreation({ classId }) {
             setPointsCost(e.target.value);
           }}
         />
-        <button type="submit">Add a Session</button>
+        <button type="submit">Add a session</button>
       </form>
     </div>
   );
