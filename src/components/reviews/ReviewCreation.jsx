@@ -53,7 +53,7 @@ function ReviewCreation({ classId }) {
 
   return (
     <div>
-      <h2>Write a review</h2>
+      <h3>Write a review</h3>
       <form onSubmit={handleReviewCreation}>
         <label>Content</label>
         <input

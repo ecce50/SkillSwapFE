@@ -50,7 +50,7 @@ function SkillCreation() {
       <h2>Create a skill</h2>
       <form onSubmit={handleSkillCreation}>
         <label>
-          Skill
+          Skill title
           <input
             value={title}
             required
@@ -71,7 +71,7 @@ function SkillCreation() {
           />
         </label>
         {/* Add the missing button for skill creation */}
-        <button type="submit">Create Skill</button>
+        <button type="submit">Create skill</button>
       </form>
     </div>
   );

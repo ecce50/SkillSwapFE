@@ -35,7 +35,7 @@ function ClassCreation({ skill }) {
       <h2>Create a class</h2>
       <form onSubmit={handleClassCreation}>
         <label>
-          Class
+          Class name
           <input
             value={title}
             required

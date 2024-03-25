@@ -116,18 +116,17 @@ const SkillClasses = ({ skill }) => {
       {classes.map((aClass) => (
         <div key={aClass._id}>
           {/* Common part for both edit mode and view mode */}
-          <h2>Class Title: {aClass.title} </h2>
+          <h2>{aClass.title} </h2>
           <ClassImage skillClass={aClass} editMode={editMode} />
-          <h4>Teacher: {teacherInfo.firstname}</h4>
-          <p>Class Description: {aClass.description}</p>
-          <h4>Duration: {aClass.duration}</h4>
-          <h4>Location: {aClass.location}</h4>
+          <p>Taught by {teacherInfo.firstname}</p>
+          <p>{aClass.description}</p>
+          <p>Duration {aClass.duration}</p>
+          <p>Location {aClass.location}</p>
 
           {/* Edit mode */}
           {editMode && editedClasses[aClass._id] && (
             <>
               <label>
-                Class Title
                 <input
                   value={updatedClass.title || aClass.title}
                   onChange={(e) =>
@@ -139,7 +138,7 @@ const SkillClasses = ({ skill }) => {
                 />
               </label>
               <label>
-                Class Description
+                Description
                 <textarea
                   value={updatedClass.description || aClass.description}
                   onChange={(e) =>
@@ -186,14 +185,16 @@ const SkillClasses = ({ skill }) => {
           {!editMode && !editedClasses[aClass._id] && (
             <>
               <button onClick={() => deleteClass(aClass._id)}>
-                Delete Class
+                Delete class
               </button>
-              <button onClick={() => handleEdit(aClass._id)}>Edit Class</button>
+              <button onClick={() => handleEdit(aClass._id)}>Edit class</button>
               {/* Other buttons and components */}
-              <h2>Reviews:</h2>
+
               <ClassReviews classId={aClass._id} />
-              <ClassSessions classId={aClass._id} />
+              {/* Comment in Miro about what needs doing here */}
               <ReviewCreation classId={aClass._id} />
+              <ClassSessions classId={aClass._id} />
+              
               <SessionCreation classId={aClass._id} />
             </>
           )}
