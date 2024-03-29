@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import ClassSessions from "../sessions/ClassSessions";
 import SessionCreation from "../sessions/SessionCreation";
@@ -8,6 +8,7 @@ import { deleteClass } from "../../utils/ClassUtils.jsx";
 import ClassImage from "./ClassImage.jsx";
 import { fetchTeacherByUserId } from "../../utils/UserUtils";
 import { BACKEND_URL } from "../../config/config.index.js";
+import { AuthContext } from "../../context/Auth.context.jsx";
 
 const SkillClasses = ({ skill }) => {
   const [classes, setClasses] = useState([]);
@@ -20,6 +21,7 @@ const SkillClasses = ({ skill }) => {
   });
   const [editMode, setEditMode] = useState(false); // Introduce editMode state
   const [teacherInfo, setTeacherInfo] = useState("");
+  const {user} = useContext(AuthContext);
 
   useEffect(() => {
     const fetchClasses = async () => {
@@ -191,8 +193,14 @@ const SkillClasses = ({ skill }) => {
               {/* Other buttons and components */}
 
               <ClassReviews classId={aClass._id} />
-              {/* Comment in Miro about what needs doing here */}
+            
+              {console.log("Logged-in user ID:", user._id)}
+              {console.log("Class creator ID:", aClass.teacherId)}
+
+              {user._id !== aClass.teacherId && (
               <ReviewCreation classId={aClass._id} />
+              )}
+
               <ClassSessions classId={aClass._id} />
               
               <SessionCreation classId={aClass._id} />
