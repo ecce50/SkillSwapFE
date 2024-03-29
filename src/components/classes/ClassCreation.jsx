@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { useContext, useState } from "react";
 import { AuthContext } from "../../context/Auth.context";
 import { BACKEND_URL } from "../../config/config.index.js";
+import Accordion from "../general/Accordion.jsx";
+
 
 function ClassCreation({ skill }) {
   const [title, setTitle] = useState("");
@@ -32,31 +34,32 @@ function ClassCreation({ skill }) {
 
   return (
     <div>
-      <h2>Create a class</h2>
-      <form onSubmit={handleClassCreation}>
-        <label>
-          Class
-          <input
-            value={title}
-            required
-            onChange={(e) => {
-              setTitle(e.target.value);
-            }}
-          />
-        </label>
-        <label>
-          Description
-          <textarea
-            value={description}
-            required
-            onChange={(e) => {
-              setDescription(e.target.value);
-            }}
-            rows={4} // Set the number of visible rows
-          />
-        </label>
-        <button type="submit">Create class</button>
-      </form>
+      <Accordion title="Create a class">
+        <form onSubmit={handleClassCreation}>
+          <label>
+            Class name
+            <input
+              value={title}
+              required
+              onChange={(e) => {
+                setTitle(e.target.value);
+              }}
+            />
+          </label>
+          <label>
+            Description
+            <textarea
+              value={description}
+              required
+              onChange={(e) => {
+                setDescription(e.target.value);
+              }}
+              rows={4} // Set the number of visible rows
+            />
+          </label>
+          <button type="submit">Create class</button>
+        </form>
+      </Accordion>
     </div>
   );
 }

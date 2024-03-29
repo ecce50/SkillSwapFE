@@ -2,6 +2,7 @@ import axios from "axios";
 import { useContext, useState, useEffect } from "react";
 import { AuthContext } from "../../context/Auth.context";
 import { BACKEND_URL } from "../../config/config.index.js";
+import Accordion from "../general/Accordion.jsx";
 
 function ReviewCreation({ classId }) {
   //console.log("This is the passed classid: ", classId);
@@ -53,26 +54,27 @@ function ReviewCreation({ classId }) {
 
   return (
     <div>
-      <h2>Write a review</h2>
-      <form onSubmit={handleReviewCreation}>
-        <label>Content</label>
-        <input
-          value={content}
-          required
-          onChange={(e) => {
-            setContent(e.target.value);
-          }}
-        />
-        <label>Score</label>
-        <input
-          value={score}
-          required
-          onChange={(e) => {
-            setScore(e.target.value);
-          }}
-        />
-        <button type="submit">Post your review</button>
-      </form>
+      <Accordion title="Write a review">
+        <form onSubmit={handleReviewCreation}>
+          <label>What did you think?</label>
+          <input
+            value={content}
+            required
+            onChange={(e) => {
+              setContent(e.target.value);
+            }}
+          />
+          <label>"Score (1-5)"</label>
+          <input
+            value={score}
+            required
+            onChange={(e) => {
+              setScore(e.target.value);
+            }}
+          />
+          <button type="submit">Post your review</button>
+        </form>
+      </Accordion>
     </div>
   );
 }

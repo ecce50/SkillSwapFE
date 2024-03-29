@@ -32,18 +32,18 @@ function ClassSessions({classId}) {
 
   return (
     <div>
-        <h2>Class Sessions</h2>
+        <h2>Sessions</h2>
         {sessions.length === 0 ? (
-            <p>No Sessions Listed</p>
+            <p>No sessions listed</p>
         ):(
             sessions.map((aSession) => (
                 <div key={aSession._id}>
-                    <h2>Session Date: {aSession.date} </h2>
-                    <h2>Session Time: {aSession.time}</h2>
-                    <h2>Session Level: {aSession.status}</h2>
-                    <h2>Session Cost: {aSession.pointsCost} points</h2>
+                    <p className="labelTitle">Date {aSession.date} </p>
+                    <p>Time {aSession.time}</p>
+                    <p>Level {aSession.status}</p>
+                    <p>Cost {aSession.pointsCost} points</p>
 
-                    <button onClick={() => deleteSession(aSession._id)}>Delete Session</button>
+                    <button onClick={() => deleteSession(aSession._id)}>Delete session</button>
                 </div>
 
             ))

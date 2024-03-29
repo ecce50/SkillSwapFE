@@ -37,27 +37,3 @@ function ClassImage({ editMode, skillClass }) {
 }
 
 export default ClassImage;
-
-// import React from "react";
-// import ImageUpload from "../../utils/ImageUpload";
-
-// function ClassImage({ editMode, skillClass }) {
-//   return (
-//     <>
-//       {skillClass && skillClass.imageURL && (
-//         <img
-//           src={skillClass.imageURL}
-//           alt="Class"
-//           style={{
-//             width: "400px",
-//             height: "200px",
-//             borderRadius: "0%",
-//           }}
-//         />
-//       )}
-//       {editMode && <ImageUpload />}
-//     </>
-//   );
-// }
-
-// export default ClassImage;

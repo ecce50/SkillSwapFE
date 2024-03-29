@@ -48,8 +48,8 @@ function SkillDetail({ skillId }) {
         <div>Loading...</div>
       ) : skill ? (
         <div>
-          <h2>Skill ID: {skill._id}</h2>
-          <h2>Skill name: {skill.title}</h2>
+          <h1>{skill.title}</h1>
+          <p>Skill ID: {skill._id}</p>
         </div>
       ) : (
         <div>Error: Skill not found</div>
