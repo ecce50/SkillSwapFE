@@ -193,17 +193,16 @@ const SkillClasses = ({ skill }) => {
               {/* Other buttons and components */}
 
               <ClassReviews classId={aClass._id} />
-            
-              {console.log("Logged-in user ID:", user._id)}
-              {console.log("Class creator ID:", aClass.teacherId)}
 
-              {user._id !== aClass.teacherId && (
+              {skill && user && user._id !== aClass.teacherId && (
               <ReviewCreation classId={aClass._id} />
               )}
 
               <ClassSessions classId={aClass._id} />
               
+              {skill && user && user._id === skill.teacherId && (
               <SessionCreation classId={aClass._id} />
+              )}
             </>
           )}
         </div>
