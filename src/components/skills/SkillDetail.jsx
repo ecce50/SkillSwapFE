@@ -1,12 +1,14 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext} from "react";
 import axios from "axios";
 import SkillClasses from "../classes/SkillClasses";
 import ClassCreation from "../classes/ClassCreation";
 import { BACKEND_URL } from "../../config/config.index.js";
+import { AuthContext } from "../../context/Auth.context.jsx";
 
 function SkillDetail({ skillId }) {
   const [skill, setSkill] = useState(null);
   const [loading, setLoading] = useState(true);
+  const {user} = useContext(AuthContext);
 
   useEffect(() => {
     const fetchSkill = async () => {
@@ -42,6 +44,16 @@ function SkillDetail({ skillId }) {
     console.log("Updated skill:", skill);
   }, [skill]);
 
+  /*
+  useEffect(() => {
+    if (user && skill) {
+      console.log("This is the logged in user's ID", user._id);
+      console.log("This is the teacher ID", skill.teacherId);
+    }
+  }, [user, skill]);
+  */
+  
+
   return (
     <div>
       {loading ? (
@@ -55,7 +67,10 @@ function SkillDetail({ skillId }) {
         <div>Error: Skill not found</div>
       )}
       {skill && <SkillClasses skill={skill} />}
-      {skill && <ClassCreation skill={skill} />}
+      {skill && user && user._id === skill.teacherId && (
+        <ClassCreation skill={skill} />
+      )}
+
     </div>
   );
 }
