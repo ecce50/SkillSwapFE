@@ -1,6 +1,6 @@
 // SearchResultsList.jsx
 import React, { useState, useEffect } from "react";
-import { useLocation, Link } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import SkillResultItem from "./SkillResultItem";
 import ClassResultItem from "./ClassResultItem";
 
@@ -54,7 +54,6 @@ const SearchResultsList = ({onSearch}) => {
       {/* Render your search results here */}
       {filteredResults.map((result) => (
         <div key={result._id}>
-          {/*<Link to={`/details/${result._id}`}>*/}
           {result.source === "skill" && result.title && <SkillResultItem result={result} />}
           {result.source === "class" && result.title && <ClassResultItem result={result} />}
         </div>

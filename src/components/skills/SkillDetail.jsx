@@ -4,6 +4,7 @@ import SkillClasses from "../classes/SkillClasses";
 import ClassCreation from "../classes/ClassCreation";
 import { BACKEND_URL } from "../../config/config.index.js";
 import { AuthContext } from "../../context/Auth.context.jsx";
+import ScrollToElement from "../general/ScrollToElement.jsx";
 
 function SkillDetail({ skillId }) {
   const [skill, setSkill] = useState(null);
