@@ -116,7 +116,7 @@ const SkillClasses = ({ skill }) => {
   return (
     <div>
       {classes.map((aClass) => (
-        <div key={aClass._id}>
+        <div key={aClass._id} id={aClass._id}>
           {/* Common part for both edit mode and view mode */}
           <h2>{aClass.title} </h2>
           <ClassImage skillClass={aClass} editMode={editMode} />
