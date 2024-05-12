@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { BACKEND_URL } from "../../config/config.index.js";
+import Accordion from "../general/Accordion.jsx";
 
 const ClassReviews = ({ classId }) => {
    const [reviews, setReviews] = useState([]);
@@ -35,6 +36,7 @@ const ClassReviews = ({ classId }) => {
 
   return (
     <div>
+      <Accordion title="Reviews">
       <h2>Reviews</h2>
       {reviews.map((aReview) => (
         <div key={aReview._id}>
@@ -43,6 +45,7 @@ const ClassReviews = ({ classId }) => {
           <p>Score {aReview.score}</p>
         </div>
       ))}
+      </Accordion>
     </div>
   );
 };
