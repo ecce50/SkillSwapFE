@@ -24,7 +24,7 @@ function ClassSessions({ classId }) {
     fetchSessions();
   }, [classId]);
 
-  const bookSession = async (sessionId) => {
+  const bookPlace = async (sessionId) => {
     try {
       // Update session with the current user's ID added to signedUp array
       const updatedSession = await axios.put(
@@ -42,7 +42,17 @@ function ClassSessions({ classId }) {
     }
   };
 
+  const unbookPlace = async (sessionId) => {
+    /* Here is the code for unbooking a place in a session */
+  };
 
+  const handleBookButtonClick = () => {
+    bookPlace();
+  };
+
+  const handleUnbookButtonClick = () => {
+    unbookPlace();
+  };
 
   return (
     <div>
@@ -56,11 +66,36 @@ function ClassSessions({ classId }) {
             <p>Time {aSession.time}</p>
             <p>Level {aSession.status}</p>
             <p>Cost {aSession.pointsCost} points</p>
-           
+            <p>Max attendees {aSession.maxAttendees}</p>
+            <p>Attending {aSession.signedUp.length}</p>
 
-            <button onClick={() => deleteSession(aSession._id)}>
-              Delete session
-            </button>
+            {/* Using if-else statements */}
+            {(() => {
+              let buttonText;
+              let buttonAction;
+
+              if (aSession.signedUp.length < aSession.maxAttendees) {
+                buttonText = "Book";
+                buttonAction = handleBookButtonClick;
+              } else if (aSession.signedUp.length === aSession.maxAttendees) {
+                buttonText = "Full";
+                buttonAction = null; // Button should be unclickable
+              } else if (aSession.signedUp.includes(student._id)) {
+                buttonText = "Unbook";
+                buttonAction = handleUnbookButtonClick;
+              }
+
+              return (
+                <>
+                  <button onClick={buttonAction} disabled={!buttonAction}>
+                    {buttonText}
+                  </button>
+                  <button onClick={() => deleteSession(aSession._id)}>
+                    Delete session
+                  </button>
+                </>
+              );
+            })()}
           </div>
         ))
       )}
