@@ -42,13 +42,7 @@ function ClassSessions({ classId }) {
     }
   };
 
-  // const deleteSessionAPI = async (sessionId) => {
-  //     try {
-  //         await deleteSession(sessionId);
-  //     } catch (error) {
-  //         console.error("Error when deleting session:", error);
-  //     }
-  // };
+
 
   return (
     <div>
