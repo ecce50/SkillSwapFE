@@ -62,7 +62,7 @@ function SkillDetail({ skillId }) {
       ) : skill ? (
         <div>
           <h1>{skill.title}</h1>
-          <p>Skill ID: {skill._id}</p>
+        {/*  <p>Skill ID: {skill._id}</p>*/}
         </div>
       ) : (
         <div>Error: Skill not found</div>
