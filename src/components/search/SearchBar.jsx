@@ -36,6 +36,13 @@ function SearchBar({ onSearch, isNavbar }) {
     handleSearch();
   };
 
+  const handleKeyPress = (e) => {
+    if (e.key === "Enter") {
+      handleSearch();
+    }
+  };
+
+
   if (isNavbar) {
     return (
       <div className="nav-search-bar">
@@ -46,6 +53,7 @@ function SearchBar({ onSearch, isNavbar }) {
             onChange={(e) => {
               setTitle(e.target.value);
             }}
+            onKeyPress={handleKeyPress}
           />
         </label>
         <button className="test-button" type="button" onClick={handleSearchClick}>
