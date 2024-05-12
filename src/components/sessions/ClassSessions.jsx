@@ -56,11 +56,7 @@ function ClassSessions({ classId }) {
             <p>Time {aSession.time}</p>
             <p>Level {aSession.status}</p>
             <p>Cost {aSession.pointsCost} points</p>
-            {aSession.signedUp.length === aSession.maxAttendees ? (
-              <button disabled>Full</button>
-            ) : (
-              <button onClick={() => bookSession(aSession._id)}>Book</button>
-            )}
+            
 
             <button onClick={() => deleteSession(aSession._id)}>
               Delete session

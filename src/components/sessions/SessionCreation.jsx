@@ -2,6 +2,7 @@ import axios from "axios";
 import { useContext, useState, useEffect } from "react";
 import { AuthContext } from "../../context/Auth.context";
 import { BACKEND_URL } from "../../config/config.index.js";
+import Accordion from "../general/Accordion.jsx";
 
 function SessionCreation({ classId }) {
 
@@ -97,6 +98,7 @@ function SessionCreation({ classId }) {
 
   return (
     <div>
+      <Accordion title="Create a Session">
       <h3>Create a Session</h3>
       <form onSubmit={handleSessionCreation}>
         <label>Date</label>
@@ -132,6 +134,7 @@ function SessionCreation({ classId }) {
         />
         <button type="submit">Add a session</button>
       </form>
+      </Accordion>
     </div>
   );
 }
