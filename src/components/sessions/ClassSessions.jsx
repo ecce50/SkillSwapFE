@@ -6,11 +6,9 @@ import {
 import { AuthContext } from "../../context/Auth.context.jsx";
 import axios from "axios";
 import { BACKEND_URL } from "../../config/config.index.js";
-
 function ClassSessions({ classId }) {
   const [sessions, setSessions] = useState([]);
   const student = useContext(AuthContext);
-
   useEffect(() => {
     const fetchSessions = async () => {
       try {
@@ -20,10 +18,8 @@ function ClassSessions({ classId }) {
         console.error("Error when fetching the sessions:", error);
       }
     };
-
     fetchSessions();
   }, [classId]);
-
   const bookPlace = async (sessionId) => {
     try {
       // Update session with the current user's ID added to signedUp array
@@ -41,19 +37,15 @@ function ClassSessions({ classId }) {
       console.error("Error when booking session:", error);
     }
   };
-
   const unbookPlace = async (sessionId) => {
     /* Here is the code for unbooking a place in a session */
   };
-
-  const handleBookButtonClick = () => {
-    bookPlace();
+  const handleBookButtonClick = (sessionId) => {
+    bookPlace(sessionId);
   };
-
-  const handleUnbookButtonClick = () => {
-    unbookPlace();
+  const handleUnbookButtonClick = (sessionId) => {
+    unbookPlace(sessionId);
   };
-
   return (
     <div>
       <h2>Sessions</h2>
@@ -68,12 +60,10 @@ function ClassSessions({ classId }) {
             <p>Cost {aSession.pointsCost} points</p>
             <p>Max attendees {aSession.maxAttendees}</p>
             <p>Attending {aSession.signedUp.length}</p>
-
             {/* Using if-else statements */}
             {(() => {
               let buttonText;
               let buttonAction;
-
               if (aSession.signedUp.length < aSession.maxAttendees) {
                 buttonText = "Book";
                 buttonAction = handleBookButtonClick;
@@ -84,10 +74,12 @@ function ClassSessions({ classId }) {
                 buttonText = "Unbook";
                 buttonAction = handleUnbookButtonClick;
               }
-
               return (
                 <>
-                  <button onClick={buttonAction} disabled={!buttonAction}>
+                  <button
+                    onClick={() => buttonAction && buttonAction(aSession._id)}
+                    disabled={!buttonAction}
+                  >
                     {buttonText}
                   </button>
                   <button onClick={() => deleteSession(aSession._id)}>
@@ -102,5 +94,4 @@ function ClassSessions({ classId }) {
     </div>
   );
 }
-
 export default ClassSessions;
