@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { BACKEND_URL } from "../../config/config.index.js";
+import Accordion from "../general/Accordion.jsx";
 
 function SkillCreation() {
   const [title, setTitle] = useState("");
@@ -47,6 +48,8 @@ function SkillCreation() {
 
   return (
     <div>
+      <br />
+      <Accordion title="Add a Skill">
       <h2>Create a skill</h2>
       <form onSubmit={handleSkillCreation}>
         <label>
@@ -73,6 +76,7 @@ function SkillCreation() {
         {/* Add the missing button for skill creation */}
         <button type="submit">Create skill</button>
       </form>
+      </Accordion>
     </div>
   );
 }

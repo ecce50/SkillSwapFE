@@ -3,6 +3,7 @@ import axios from "axios";
 import UserImage from "./UserImage";
 import { AuthContext } from "../../context/Auth.context";
 import { BACKEND_URL } from "../../config/config.index.js";
+import "../../../style/user-info.css";
 
 function UserInfo() {
   const { user, setUser } = useContext(AuthContext);
@@ -58,7 +59,7 @@ function UserInfo() {
   };
 
   return (
-    <>
+    <div className="user-info-container">
       <div>Profile</div>
 
       {editMode ? (
@@ -92,7 +93,7 @@ function UserInfo() {
           <button onClick={handleEditClick}>Edit Profile</button>
         </h3>
       )}
-    </>
+    </div>
   );
 }
 
