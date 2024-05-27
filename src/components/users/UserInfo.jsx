@@ -60,7 +60,6 @@ function UserInfo() {
 
   return (
     <div className="user-info-container">
-      <div>Profile</div>
 
       {editMode ? (
         <div>
@@ -88,8 +87,9 @@ function UserInfo() {
       ) : (
         <h3>
           <UserImage editMode={editMode} user={user} />
-          Welcome {user ? user.firstname : null}. This is your email:{" "}
+          Welcome {user ? user.firstname : null}. <br /> This is your email:{" "}
           {user ? user.email : null}{" "}
+          <br />
           <button onClick={handleEditClick}>Edit Profile</button>
         </h3>
       )}

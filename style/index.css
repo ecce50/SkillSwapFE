@@ -91,7 +91,7 @@ a {
 }
 
 button {
-  margin: 0.25rem 0;
+  margin: 0.25rem 0.5rem;
   background-color: var(--skillswap-highlight);
   padding: 4px 16px;
   border-radius: 0.1rem;

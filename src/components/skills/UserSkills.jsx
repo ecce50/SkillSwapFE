@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { fetchClassesBySkillId } from "../../utils/ClassUtils";
 import { deleteSkill } from "../../utils/SkillUtils";
 import { BACKEND_URL } from "../../config/config.index.js";
+import "../../../style/user-skills.css";
 
 // UserSkills component
 const UserSkills = () => {
@@ -90,7 +91,7 @@ const UserSkills = () => {
     <div>
       <h2>Your skills</h2>
       {skills.map((skill) => (
-        <div key={skill._id}>
+        <div className="user-skill-container" key={skill._id} >
           {editedSkills[skill._id] ? (
             // Render edit form for the skill
             <>
