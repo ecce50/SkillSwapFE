@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import "../../../style/search-results.css";
 
 const ClassResultItem = ({ result }) => {
   console.log("Rendering ClassResultItem with result:", result);
@@ -7,9 +8,9 @@ const ClassResultItem = ({ result }) => {
   const idAsString = result._id.toString();
   console.log("This is the id as a string: ", idAsString);
   return (
-    <div id={idAsString}>
+    <div id={idAsString} className="class-result-item">
       <Link to={`/skill-detail/${result.skillId}#${idAsString}`}>
-        <h2 style={{ color: "blue" }}>{result.title}</h2>
+        <h2>class- {result.title}</h2>
       </Link>
       <p>{result.description}</p>
       {/* Add more Class-specific details or styling as needed */}

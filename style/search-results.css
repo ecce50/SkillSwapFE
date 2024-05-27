@@ -1,0 +1,7 @@
+.skill-result-item > a{
+    color: var(--skillswap-highlight);
+}
+
+.class-result-item > a {
+    color: yellow;
+}
