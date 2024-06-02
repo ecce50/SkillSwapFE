@@ -41,7 +41,7 @@ function UserInfo() {
       const token = localStorage.getItem("authToken");
       const userId = user._id;
       const response = await axios.put(
-        `${BACKEND_URL}/user/update`,
+        `${BACKEND_URL}/user/update-user`,
         { userId, ...newUserData },
         {
           headers: {
