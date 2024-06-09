@@ -9,22 +9,24 @@ function SessionCreation({ classId }) {
 
   // This code is to provide default values for sessions to make testing easier. Can be deleted afterwards
 
-  const getDefaultDate = () => {
-    const twoMonthsFromNow = new Date();
-    twoMonthsFromNow.setMonth(twoMonthsFromNow.getMonth() + 2);
-    return twoMonthsFromNow.toISOString().split("T")[0];
-  };
+  //Below code was to make it easier to create sessions, but could be affecting the update of the sessions
 
-  const getDefaultTime = () => {
-    const now = new Date();
-    const hours = now.getHours().toString().padStart(2, "0");
-    const minutes = now.getMinutes().toString().padStart(2, "0");
-    return `${hours}:${minutes}`;
-  };
+  // const getDefaultDate = () => {
+  //   const twoMonthsFromNow = new Date();
+  //   twoMonthsFromNow.setMonth(twoMonthsFromNow.getMonth() + 2);
+  //   return twoMonthsFromNow.toISOString().split("T")[0];
+  // };
+
+  // const getDefaultTime = () => {
+  //   const now = new Date();
+  //   const hours = now.getHours().toString().padStart(2, "0");
+  //   const minutes = now.getMinutes().toString().padStart(2, "0");
+  //   return `${hours}:${minutes}`;
+  // };
 
   //Reinstate this code when finished with testing ***
 
-  // const [date, setDate] = useState("");
+  const [date, setDate] = useState("");
   // const [time, setTime] = useState("");
   // const [status, setStatus] = useState("");
   // const [pointsCost, setPointsCost] = useState("");
@@ -34,11 +36,12 @@ function SessionCreation({ classId }) {
 
   //Delete this code when finished with testing ***
 
-  const [date, setDate] = useState(getDefaultDate());
-  const [time, setTime] = useState(getDefaultTime());
+  // const [date, setDate] = useState(getDefaultDate());
+  // const [time, setTime] = useState(getDefaultTime());
+  const [time, setTime] = useState();
   const [status, setStatus] = useState("Beginners");
   const [pointsCost, setPointsCost] = useState(1);
-  const [maxAttendees, setMaxAttendees] = useState(0);
+  const [maxAttendees, setMaxAttendees] = useState(10);
   const { authenticateUser } = useContext(AuthContext);
 
   // ***
@@ -57,14 +60,14 @@ function SessionCreation({ classId }) {
 
   // ***
 
-  useEffect(() => {
-    // Use this effect if you want to update the time every minute
-    const intervalId = setInterval(() => {
-      setTime(getDefaultTime());
-    }, 60000);
+  // useEffect(() => {
+  //   // Use this effect if you want to update the time every minute
+  //   const intervalId = setInterval(() => {
+  //     setTime(getDefaultTime());
+  //   }, 60000);
 
-    return () => clearInterval(intervalId); // Cleanup interval on component unmount
-  }, []);
+  //   return () => clearInterval(intervalId); // Cleanup interval on component unmount
+  // }, []);
 
   const handleSessionCreation = async (e) => {
     e.preventDefault();

@@ -15,7 +15,7 @@ function UserImageUpload() {
         onSuccess={(imageUrl) => {
           // Update the user's imageURL in the MongoDB database
           axios
-            .patch(`${BACKEND_URL}/user/update`, {
+            .patch(`${BACKEND_URL}/user/update-user`, {
               userImage: imageUrl,
               userId: user._id,
             })
