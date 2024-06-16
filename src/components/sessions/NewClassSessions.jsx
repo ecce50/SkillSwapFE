@@ -109,3 +109,125 @@ export default ClassSessions;
 
 
 */
+
+
+
+// return (
+//   <div>
+//     <h2>Sessions</h2>
+//     {classes.map((aSession) => (
+//       <div key={aSession._id} id={aSession._id}>
+//         {/* Common part for both edit mode and view mode */}
+//         {aSession.date && <p className="labelTitle">Date {aSession.date}</p>}
+//         {aSession.time && <p>Time {aSession.time}</p>}
+//         {aSession.status && <p>Level {aSession.status}</p>}
+//         {aSession.pointsCost && <p>Cost {aSession.pointsCost} points</p>}
+//         {aSession.maxAttendees && (<p>Max attendees {aSession.maxAttendees}</p>)}
+//         <p>Attending {aSession.signedUp.length}</p>
+
+//         {/* Edit mode */}
+//         {editMode && editedSession[aSession._id] && (
+//           <>
+//             <label>
+//               <input
+//                 value={updatedSession.date || aSession.date}
+//                 onChange={(e) =>
+//                   setUpdatedClass((prevSession) => ({
+//                     ...prevSession,
+//                     date: e.target.value,
+//                   }))
+//                 }
+//               />
+//             </label>
+//             <label>
+//               <input
+//                 value={updatedSession.time || aSession.time}
+//                 onChange={(e) =>
+//                   setUpdatedClass((prevSession) => ({
+//                     ...prevSession,
+//                     time: e.target.value,
+//                   }))
+//                 }
+//               />
+//             </label>
+//             <label>
+//               <input
+//                 value={updatedSession.level || aSession.level}
+//                 onChange={(e) =>
+//                   setUpdatedClass((prevSession) => ({
+//                     ...prevSession,
+//                     level: e.target.value,
+//                   }))
+//                 }
+//               />
+//             </label>
+//             <label>
+//               <input
+//                 value={updatedSession.cost || aSession.cost}
+//                 onChange={(e) =>
+//                   setUpdatedClass((prevSession) => ({
+//                     ...prevSession,
+//                     cost: e.target.value,
+//                   }))
+//                 }
+//               />
+//             </label>
+//             <label>
+//               <input
+//                 value={updatedSession.maxAttendees || aSession.maxAttendees}
+//                 onChange={(e) =>
+//                   setUpdatedClass((prevSession) => ({
+//                     ...prevSession,
+//                     maxAttendees: e.target.value,
+//                   }))
+//                 }
+//               />
+//             </label>
+
+//             <button onClick={() => handleSaveEditSession(aSession._id)}>
+//               Save
+//             </button>
+//             <button onClick={handleCancelEdit}>Cancel</button>
+//           </>
+//         )}
+
+//         {/* View mode */}
+//         {!editMode && !editedClasses[aClass._id] && (
+//           <>
+//             {(() => {
+//               let buttonText;
+//               let buttonAction;
+//               if (aSession.signedUp.length < aSession.maxAttendees) {
+//                 buttonText = "Book";
+//                 buttonAction = handleBookButtonClick;
+//               } else if (aSession.signedUp.length === aSession.maxAttendees) {
+//                 buttonText = "Full";
+//                 buttonAction = null; // Button should be unclickable
+//               } else if (aSession.signedUp.includes(student._id)) {
+//                 buttonText = "Unbook";
+//                 buttonAction = handleUnbookButtonClick; // Assuming you have this function defined
+//               }
+//               return (
+//                 <>
+//                   <button
+//                     onClick={() =>
+//                       buttonAction && buttonAction(aSession._id, classId)
+//                     }
+//                     disabled={!buttonAction}
+//                   >
+//                     {buttonText}
+//                   </button>
+//                 </>
+//               );
+//             })()}
+
+//             <button onClick={() => deleteSession(aSession._id)}>
+//               Delete Session
+//             </button>
+//             <button onClick={() => handleEdit(aSession._id)}>Edit Session</button>
+//           </>
+//         )}
+//       </div>
+//     ))}
+//   </div>
+// );
