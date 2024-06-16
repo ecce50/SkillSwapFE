@@ -40,8 +40,8 @@ const bookPlace = async (sessionId, classId) => {
   try {
     // Update session with the current user's ID added to signedUp array
     const updatedSession = await axios.put(
-      `${BACKEND_URL}/session/update-session/${sessionId}`,
-      { signedUp: student.user._id } // Assuming student.attending is an array of session IDs the student is attending
+      `${BACKEND_URL}/session/update-session/`,
+      { signedUp: student.user._id, sessionId: sessionId } // Assuming student.attending is an array of session IDs the student is attending
       
     );
     console.log("Updated session after booking:", updatedSession.data.session);
