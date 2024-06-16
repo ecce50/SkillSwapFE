@@ -19,9 +19,9 @@ const SkillClasses = ({ skill }) => {
     duration: "",
     location: "",
   });
-  const [editMode, setEditMode] = useState(false); // Introduce editMode state
+  const [editMode, setEditMode] = useState(false);
   const [teacherInfo, setTeacherInfo] = useState("");
-  const {user} = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
 
   useEffect(() => {
     const fetchClasses = async () => {
@@ -60,10 +60,10 @@ const SkillClasses = ({ skill }) => {
   // Function to toggle edit mode and reset updated class state
   const toggleEditMode = () => {
     setEditMode(!editMode);
-    setUpdatedClass({}); // Reset updated class state
+    setUpdatedClass({});
   };
 
-  // Cancel edit function
+
   const handleCancelEdit = () => {
     toggleEditMode(); // Toggle edit mode and reset updated class state
   };
@@ -73,7 +73,7 @@ const SkillClasses = ({ skill }) => {
       ...prevEditedClasses,
       [classId]: true,
     }));
-    toggleEditMode(); // Enter edit mode
+    toggleEditMode();
     // Set updated class to the class being edited
     const classToEdit = classes.find((c) => c._id === classId);
     setUpdatedClass(classToEdit);
@@ -118,29 +118,25 @@ const SkillClasses = ({ skill }) => {
       {classes.map((aClass) => (
         <div key={aClass._id} id={aClass._id}>
           {/* Common part for both edit mode and view mode */}
-          <h2>{aClass.title} </h2>
-          <ClassImage skillClass={aClass} editMode={editMode} />
-          <p>Taught by {teacherInfo.firstname}</p>
-          <p>{aClass.description}</p>
-          <p>Duration {aClass.duration}</p>
-          <p>Location {aClass.location}</p>
+          <h2>{editMode && editedClasses[aClass._id] ? (
+            <input
+              value={updatedClass.title || aClass.title}
+              onChange={(e) =>
+                setUpdatedClass((prevClass) => ({
+                  ...prevClass,
+                  title: e.target.value,
+                }))
+              }
+            />
+          ) : (
+            aClass.title
+          )}
+          </h2>
 
-          {/* Edit mode */}
-          {editMode && editedClasses[aClass._id] && (
+          {editMode && editedClasses[aClass._id] ? (
             <>
               <label>
-                <input
-                  value={updatedClass.title || aClass.title}
-                  onChange={(e) =>
-                    setUpdatedClass((prevClass) => ({
-                      ...prevClass,
-                      title: e.target.value,
-                    }))
-                  }
-                />
-              </label>
-              <label>
-                Description
+                Description:
                 <textarea
                   value={updatedClass.description || aClass.description}
                   onChange={(e) =>
@@ -153,7 +149,7 @@ const SkillClasses = ({ skill }) => {
                 />
               </label>
               <label>
-                Duration
+                Duration:
                 <input
                   value={updatedClass.duration || aClass.duration}
                   onChange={(e) =>
@@ -165,7 +161,7 @@ const SkillClasses = ({ skill }) => {
                 />
               </label>
               <label>
-                Location
+                Location:
                 <input
                   value={updatedClass.location || aClass.location}
                   onChange={(e) =>
@@ -181,28 +177,40 @@ const SkillClasses = ({ skill }) => {
               </button>
               <button onClick={handleCancelEdit}>Cancel</button>
             </>
+          ) : (
+            <>
+              <ClassImage skillClass={aClass} editMode={editMode} />
+              <p>Taught by {teacherInfo.firstname}</p>
+              <p>{aClass.description}</p>
+              <p>Duration: {aClass.duration}</p>
+              <p>Location: {aClass.location}</p>
+            </>
           )}
 
-          {/* View mode */}
+          {/* View mode buttons */}
           {!editMode && !editedClasses[aClass._id] && (
             <>
-              <button onClick={() => deleteClass(aClass._id)}>
-                Delete class
-              </button>
-              <button onClick={() => handleEdit(aClass._id)}>Edit class</button>
-              {/* Other buttons and components */}
+
+              {skill && user && user._id === skill.teacherId && (
+                <button onClick={() => deleteClass(aClass._id)}>Delete class</button>,
+
+                <button onClick={() => handleEdit(aClass._id)}>Edit class</button>
+              )}
+
+
 
               <ClassReviews classId={aClass._id} />
 
               {skill && user && user._id !== aClass.teacherId && (
-              <ReviewCreation classId={aClass._id} />
+                <ReviewCreation classId={aClass._id} />
               )}
 
               <ClassSessions classId={aClass._id} />
-              
+
               {skill && user && user._id === skill.teacherId && (
-              <SessionCreation classId={aClass._id} />
+                <SessionCreation classId={aClass._id} />
               )}
+
             </>
           )}
         </div>
