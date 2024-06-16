@@ -19,9 +19,9 @@ const SkillClasses = ({ skill }) => {
     duration: "",
     location: "",
   });
-  const [editMode, setEditMode] = useState(false); // Introduce editMode state
+  const [editMode, setEditMode] = useState(false);
   const [teacherInfo, setTeacherInfo] = useState("");
-  const {user} = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
 
   useEffect(() => {
     const fetchClasses = async () => {
@@ -60,10 +60,10 @@ const SkillClasses = ({ skill }) => {
   // Function to toggle edit mode and reset updated class state
   const toggleEditMode = () => {
     setEditMode(!editMode);
-    setUpdatedClass({}); // Reset updated class state
+    setUpdatedClass({});
   };
 
-  // Cancel edit function
+
   const handleCancelEdit = () => {
     toggleEditMode(); // Toggle edit mode and reset updated class state
   };
@@ -73,7 +73,7 @@ const SkillClasses = ({ skill }) => {
       ...prevEditedClasses,
       [classId]: true,
     }));
-    toggleEditMode(); // Enter edit mode
+    toggleEditMode();
     // Set updated class to the class being edited
     const classToEdit = classes.find((c) => c._id === classId);
     setUpdatedClass(classToEdit);
@@ -132,7 +132,7 @@ const SkillClasses = ({ skill }) => {
             aClass.title
           )}
           </h2>
-          
+
           {editMode && editedClasses[aClass._id] ? (
             <>
               <label>
@@ -186,23 +186,31 @@ const SkillClasses = ({ skill }) => {
               <p>Location: {aClass.location}</p>
             </>
           )}
-  
+
           {/* View mode buttons */}
           {!editMode && !editedClasses[aClass._id] && (
             <>
-              <button onClick={() => deleteClass(aClass._id)}>
-                Delete class
-              </button>
-              <button onClick={() => handleEdit(aClass._id)}>Edit class</button>
-              {/* Other buttons and components */}
+
+              {skill && user && user._id === skill.teacherId && (
+                <button onClick={() => deleteClass(aClass._id)}>Delete class</button>,
+
+                <button onClick={() => handleEdit(aClass._id)}>Edit class</button>
+              )}
+
+
+
               <ClassReviews classId={aClass._id} />
+
               {skill && user && user._id !== aClass.teacherId && (
                 <ReviewCreation classId={aClass._id} />
               )}
+
               <ClassSessions classId={aClass._id} />
+
               {skill && user && user._id === skill.teacherId && (
                 <SessionCreation classId={aClass._id} />
               )}
+
             </>
           )}
         </div>
