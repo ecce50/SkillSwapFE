@@ -118,29 +118,25 @@ const SkillClasses = ({ skill }) => {
       {classes.map((aClass) => (
         <div key={aClass._id} id={aClass._id}>
           {/* Common part for both edit mode and view mode */}
-          <h2>{aClass.title} </h2>
-          <ClassImage skillClass={aClass} editMode={editMode} />
-          <p>Taught by {teacherInfo.firstname}</p>
-          <p>{aClass.description}</p>
-          <p>Duration {aClass.duration}</p>
-          <p>Location {aClass.location}</p>
-
-          {/* Edit mode */}
-          {editMode && editedClasses[aClass._id] && (
+          <h2>{editMode && editedClasses[aClass._id] ? (
+            <input
+              value={updatedClass.title || aClass.title}
+              onChange={(e) =>
+                setUpdatedClass((prevClass) => ({
+                  ...prevClass,
+                  title: e.target.value,
+                }))
+              }
+            />
+          ) : (
+            aClass.title
+          )}
+          </h2>
+          
+          {editMode && editedClasses[aClass._id] ? (
             <>
               <label>
-                <input
-                  value={updatedClass.title || aClass.title}
-                  onChange={(e) =>
-                    setUpdatedClass((prevClass) => ({
-                      ...prevClass,
-                      title: e.target.value,
-                    }))
-                  }
-                />
-              </label>
-              <label>
-                Description
+                Description:
                 <textarea
                   value={updatedClass.description || aClass.description}
                   onChange={(e) =>
@@ -153,7 +149,7 @@ const SkillClasses = ({ skill }) => {
                 />
               </label>
               <label>
-                Duration
+                Duration:
                 <input
                   value={updatedClass.duration || aClass.duration}
                   onChange={(e) =>
@@ -165,7 +161,7 @@ const SkillClasses = ({ skill }) => {
                 />
               </label>
               <label>
-                Location
+                Location:
                 <input
                   value={updatedClass.location || aClass.location}
                   onChange={(e) =>
@@ -181,9 +177,17 @@ const SkillClasses = ({ skill }) => {
               </button>
               <button onClick={handleCancelEdit}>Cancel</button>
             </>
+          ) : (
+            <>
+              <ClassImage skillClass={aClass} editMode={editMode} />
+              <p>Taught by {teacherInfo.firstname}</p>
+              <p>{aClass.description}</p>
+              <p>Duration: {aClass.duration}</p>
+              <p>Location: {aClass.location}</p>
+            </>
           )}
-
-          {/* View mode */}
+  
+          {/* View mode buttons */}
           {!editMode && !editedClasses[aClass._id] && (
             <>
               <button onClick={() => deleteClass(aClass._id)}>
@@ -191,17 +195,13 @@ const SkillClasses = ({ skill }) => {
               </button>
               <button onClick={() => handleEdit(aClass._id)}>Edit class</button>
               {/* Other buttons and components */}
-
               <ClassReviews classId={aClass._id} />
-
               {skill && user && user._id !== aClass.teacherId && (
-              <ReviewCreation classId={aClass._id} />
+                <ReviewCreation classId={aClass._id} />
               )}
-
               <ClassSessions classId={aClass._id} />
-              
               {skill && user && user._id === skill.teacherId && (
-              <SessionCreation classId={aClass._id} />
+                <SessionCreation classId={aClass._id} />
               )}
             </>
           )}
