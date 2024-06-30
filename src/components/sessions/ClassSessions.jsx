@@ -49,8 +49,8 @@ function ClassSessions({ classId }) {
     );
     try {
       // Update session with the current user's ID added to signedUp array
-      const updatedSession = await axios.put(
-        `${BACKEND_URL}/session/update-session/`,
+      const updatedSession = await axios.patch(
+        `${BACKEND_URL}/session/add-attendee/`,
         { signedUp: student.user._id, sessionId: sessionId }
 
       );
@@ -72,8 +72,49 @@ function ClassSessions({ classId }) {
     }
   };
 
+const unbookPlace = async (sessionId, classId) => {
+  console.log("Here is all the student data: ", student);
+  console.log(
+    "student.user.attendingSessions:",
+    student.user.attendingSessions
+  );
+  try {
+    // Update session by removing the current user's ID from the signedUp array
+    const updatedSession = await axios.patch(
+      `${BACKEND_URL}/session/remove-attendee/`,
+      { signedUp: student.user._id, sessionId: sessionId }
+    );
+    console.log(
+      "Updated session after unbooking:",
+      updatedSession.data.session
+    );
+
+    await axios.put(`${BACKEND_URL}/user/update-user`, {
+      userId: student.user._id,
+      attendingSessions: student.user.attendingSessions.filter(
+        (id) => id !== sessionId
+      ),
+    });
+
+    // Update state with the updated session
+    setSessions((prevSessions) =>
+      prevSessions.map((session) =>
+        session._id === sessionId ? updatedSession.data.session : session
+      )
+    );
+  } catch (error) {
+    console.error("Error when unbooking session:", error);
+  }
+};
+
+
   const handleBookButtonClick = (sessionId) => {
     bookPlace(sessionId, classId);
+  };
+
+
+  const handleUnbookButtonClick = (sessionId) => {
+    unbookPlace(sessionId, classId);
   };
 
   const toggleEditMode = () => {
@@ -208,7 +249,9 @@ function ClassSessions({ classId }) {
             </>
           ) : (
             <>
-              {aSession.date && <p className="labelTitle">Date: {aSession.date}</p>}
+              {aSession.date && (
+                <p className="labelTitle">Date: {aSession.date}</p>
+              )}
               {aSession.time && <p>Time: {aSession.time}</p>}
               {aSession.status && <p>Status: {aSession.status}</p>}
               {aSession.pointsCost && <p>Cost: {aSession.pointsCost} points</p>}
@@ -217,39 +260,31 @@ function ClassSessions({ classId }) {
               )}
               <p>Attending: {aSession.signedUp.length}</p>
 
-              {/* View mode buttons */}
-              {(() => {
-                let buttonText;
-                let buttonAction;
-                if (aSession.signedUp.length < aSession.maxAttendees) {
-                  buttonText = "Book";
-                  buttonAction = handleBookButtonClick;
-                } else if (aSession.signedUp.length === aSession.maxAttendees) {
-                  buttonText = "Full";
-                  buttonAction = null; // Button should be unclickable
-                } else if (aSession.signedUp.includes(student._id)) {
-                  buttonText = "Unbook";
-                  buttonAction = handleUnbookButtonClick;
+              <button
+                onClick={() =>
+                  aSession.signedUp.includes(student.user._id)
+                    ? handleUnbookButtonClick(aSession._id)
+                    : handleBookButtonClick(aSession._id)
                 }
-                return (
-                  <>
-                    <button
-                      onClick={() =>
-                        buttonAction && buttonAction(aSession._id, classId)
-                      }
-                      disabled={!buttonAction}
-                    >
-                      {buttonText}
-                    </button>
-                  </>
-                );
-              })()}
+                disabled={
+                  aSession.signedUp.length >= aSession.maxAttendees &&
+                  !aSession.signedUp.includes(student.user._id)
+                }
+              >
+                {aSession.signedUp.includes(student.user._id)
+                  ? "Unbook"
+                  : aSession.signedUp.length >= aSession.maxAttendees
+                  ? "Full"
+                  : "Book"}
+              </button>
 
+              <button onClick={() => deleteSession(aSession._id)}>
+                Delete Session
+              </button>
 
-                <button onClick={() => deleteSession(aSession._id)}>Delete Session</button>
-
-              <button onClick={() => handleEdit(aSession._id)}>Edit Session</button>
-            
+              <button onClick={() => handleEdit(aSession._id)}>
+                Edit Session
+              </button>
             </>
           )}
         </div>
