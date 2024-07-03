@@ -4,7 +4,7 @@ import { AuthContext } from "../../context/Auth.context";
 import { BACKEND_URL } from "../../config/config.index.js";
 import Accordion from "../general/Accordion.jsx";
 
-function SessionCreation({ classId }) {
+function SessionCreation({ classId, teacherId }) {
   //console.log("This is the passed classid: ", classId);
 
   // This code is to provide default values for sessions to make testing easier. Can be deleted afterwards
@@ -81,13 +81,14 @@ function SessionCreation({ classId }) {
       //  classId, //This is being console.logged every time we press a key. Should just be once?
       //});
 
-      const res = await axios.post(`${BACKEND_URL}/session/session-creation`, {
+      const res = await axios.post(`${BACKEND_URL}/session/create-session`, {
         date,
         time,
         status,
         pointsCost,
         classId,
         maxAttendees,
+        teacherId,
       });
       //console.log("Here is the axios session-creation result", res);
 
@@ -102,7 +103,7 @@ function SessionCreation({ classId }) {
       <Accordion title="Create a Session">
         <h3>Create a Session</h3>
         <form onSubmit={handleSessionCreation}>
-          <label>Date</label>
+          <label>Date DD-MM-YYYY</label>
           <input
             value={date}
             required

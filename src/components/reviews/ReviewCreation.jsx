@@ -36,7 +36,7 @@ function ReviewCreation({ classId }) {
       });
 
       const res = await axios.post(
-        `${BACKEND_URL}/review/review-creation`,
+        `${BACKEND_URL}/review/create-review`,
         {
           reviewer,
           score,

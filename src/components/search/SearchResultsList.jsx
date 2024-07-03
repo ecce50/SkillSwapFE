@@ -51,13 +51,20 @@ const SearchResultsList = ({onSearch}) => {
 
   return (
     <div>
-      {/* Render your search results here */}
-      {filteredResults.map((result) => (
-        <div key={result._id}>
-          {result.source === "skill" && result.title && <SkillResultItem result={result} />}
-          {result.source === "class" && result.title && <ClassResultItem result={result} />}
-        </div>
-      ))}
+      {filteredResults.length === 0 ? (
+        <p>Sorry, there are no results. Maybe you can be the first to teach this?</p>
+      ) : (
+        filteredResults.map((result) => (
+          <div key={result._id}>
+            {result.source === "skill" && result.title && (
+              <SkillResultItem result={result} />
+            )}
+            {result.source === "class" && result.title && (
+              <ClassResultItem result={result} />
+            )}
+          </div>
+        ))
+      )}
     </div>
   );
 };
