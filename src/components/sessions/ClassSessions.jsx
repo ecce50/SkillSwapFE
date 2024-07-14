@@ -1,22 +1,24 @@
 import React, { useEffect, useState, useContext } from "react";
-import {
-  fetchSessionsByClassId,
-  deleteSession,
-} from "../../utils/SessionUtils";
+import {fetchSessionsByClassId, deleteSession} from "../../utils/SessionUtils";
 import { AuthContext } from "../../context/Auth.context.jsx";
 import axios from "axios";
 import { BACKEND_URL } from "../../config/config.index.js";
 import GenericModal from "../../utils/GenericModal.jsx";
+import DatePicker from "react-datepicker";
+import { format } from "date-fns";
+import { registerLocale, setDefaultLocale } from  "react-datepicker";
+import { enGB } from 'date-fns/locale/en-GB';
+import "react-datepicker/dist/react-datepicker.css";
+registerLocale('enGB', enGB)
 
 function ClassSessions({ classId }) {
-  // State to store sessions and loading status
   const [sessions, setSessions] = useState([]);
   const [loading, setLoading] = useState(true);
   const student = useContext(AuthContext);
   const [editMode, setEditMode] = useState(false);
   const [editedSessions, setEditedSessions] = useState({});
   const [updatedSession, setUpdatedSession] = useState({
-    date: "",
+    date: null,
     time: "",
     status: "",
     pointsCost: "",
@@ -27,13 +29,13 @@ function ClassSessions({ classId }) {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [sessionToDelete, setSessionToDelete] = useState(null);
 
+
+
   // Fetch sessions when component mounts or classId changes
   useEffect(() => {
     const fetchSessions = async () => {
       try {
-        // Fetch sessions
         const sessions = await fetchSessionsByClassId(classId);
-        // Update state with sessions and set loading to false
         setSessions(sessions);
         setLoading(false);
         console.log("Here are the sessions: ", sessions);
@@ -44,7 +46,8 @@ function ClassSessions({ classId }) {
     fetchSessions();
   }, [classId]);
 
-  // Function to book a place in a session
+
+
   const bookPlace = async (sessionId, classId) => {
     console.log("Here is all the student data: ", student);
     console.log(
@@ -52,7 +55,6 @@ function ClassSessions({ classId }) {
       student.user.attendingSessions
     );
     try {
-      // Update session with the current user's ID added to signedUp array
       const updatedSession = await axios.patch(
         `${BACKEND_URL}/session/add-attendee/`,
         { signedUp: student.user._id, sessionId: sessionId }
@@ -66,7 +68,7 @@ function ClassSessions({ classId }) {
         userId: student.user._id,
         attendingSessions: [...student.user.attendingSessions, sessionId],
       });
-      // Update state with the updated session
+
       setSessions((prevSessions) =>
         prevSessions.map((session) =>
           session._id === sessionId ? updatedSession.data.session : session
@@ -77,6 +79,9 @@ function ClassSessions({ classId }) {
     }
   };
 
+
+
+
   const unbookPlace = async (sessionId, classId) => {
     console.log("Here is all the student data: ", student);
     console.log(
@@ -84,7 +89,6 @@ function ClassSessions({ classId }) {
       student.user.attendingSessions
     );
     try {
-      // Update session by removing the current user's ID from the signedUp array
       const updatedSession = await axios.patch(
         `${BACKEND_URL}/session/remove-attendee/`,
         { signedUp: student.user._id, sessionId: sessionId }
@@ -101,7 +105,6 @@ function ClassSessions({ classId }) {
         ),
       });
 
-      // Update state with the updated session
       setSessions((prevSessions) =>
         prevSessions.map((session) =>
           session._id === sessionId ? updatedSession.data.session : session
@@ -112,22 +115,28 @@ function ClassSessions({ classId }) {
     }
   };
 
+
+
   const handleBookButtonClick = (sessionId) => {
     bookPlace(sessionId, classId);
   };
 
+
   const handleUnbookButtonClick = (sessionId) => {
     unbookPlace(sessionId, classId);
   };
+
 
   const toggleEditMode = () => {
     setEditMode(!editMode);
     setUpdatedSession({});
   };
 
+
   const handleCancelEdit = () => {
     toggleEditMode();
   };
+
 
   const handleEdit = (sessionId) => {
     setEditedSessions((prevEditedSessions) => ({
@@ -135,10 +144,10 @@ function ClassSessions({ classId }) {
       [sessionId]: true,
     }));
     toggleEditMode();
-    // Set updated session to the session being edited
     const sessionToEdit = sessions.find((c) => c._id === sessionId);
     setUpdatedSession({ ...sessionToEdit, sessionId: sessionId });
   };
+
 
   const handleSaveEditSession = async (sessionId) => {
     try {
@@ -153,7 +162,6 @@ function ClassSessions({ classId }) {
       });
 
       if (response.status === 200) {
-        // Update the local sessions state with the new data
         setSessions((prevSession) =>
           prevSession.map((c) => (c._id === sessionId ? updatedSession : c))
         );
@@ -174,21 +182,26 @@ function ClassSessions({ classId }) {
     }
   };
 
+
   const handleDeleteButtonClick = (sessionId) => {
     setShowDeleteModal(true);
     setSessionToDelete(sessionId);
   };
+
 
   const handleCloseModal = () => {
     setShowDeleteModal(false);
     setSessionToDelete(null);
   };
 
+
   const handleConfirmDelete = () => {
     deleteSession(sessionToDelete);
     setShowDeleteModal(false);
     setSessionToDelete(null);
   };
+
+
 
   return (
     <div>
@@ -200,12 +213,14 @@ function ClassSessions({ classId }) {
             <>
               <label>
                 Date:
-                <input
-                  value={updatedSession.date || aSession.date}
-                  onChange={(e) =>
+                <DatePicker
+                  selected={updatedSession.date}
+                  dateFormat="dd-MM-yyyy"
+                  locale="enGB"
+                  onChange={(date) =>
                     setUpdatedSession((prevSession) => ({
                       ...prevSession,
-                      date: e.target.value,
+                      date,
                     }))
                   }
                 />
@@ -266,8 +281,8 @@ function ClassSessions({ classId }) {
             </>
           ) : (
             <>
-              {aSession.date && (
-                <p className="labelTitle">Date: {aSession.date}</p>
+            {aSession.date && (
+              <p className="labelTitle">Date: {format(new Date(aSession.date), 'dd-MM-yyyy')}</p>
               )}
               {aSession.time && <p>Time: {aSession.time}</p>}
               {aSession.status && <p>Status: {aSession.status}</p>}
