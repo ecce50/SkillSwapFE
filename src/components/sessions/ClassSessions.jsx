@@ -139,6 +139,7 @@ function ClassSessions({ classId }) {
       ...sessionToEdit,
       // date: new Date(sessionToEdit.dateTime),
       // time: new Date(sessionToEdit.dateTime),
+      //writing a comment to make a new push
  
       sessionId: sessionId,
     });
