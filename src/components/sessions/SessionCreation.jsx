@@ -18,6 +18,8 @@ function SessionCreation({ classId, teacherId }) {
   //Reinstate this code when finished with testing ***
 
   const [date, setDate] = useState("");
+  const [time, setTime] = useState("");
+   const [dateTime, setDateTime] = useState("");
   const [startDate, setStartDate] = useState ("");
   // const [time, setTime] = useState("");
   // const [status, setStatus] = useState("");
@@ -27,22 +29,36 @@ function SessionCreation({ classId, teacherId }) {
   // ***
 
   //Delete this code when finished with testing ***
-  const [time, setTime] = useState();
+
   const [status, setStatus] = useState("Beginners");
   const [pointsCost, setPointsCost] = useState(1);
   const [maxAttendees, setMaxAttendees] = useState(10);
   const { authenticateUser } = useContext(AuthContext);
 
   // ***
-
+  useEffect(() => {
+    if (date && time) {
+      const dateTime = new Date(
+        date.getFullYear(),
+        date.getMonth(),
+        date.getDate(),
+        time.getHours(),
+        time.getMinutes(),
+        time.getSeconds()
+      );
+      setDateTime(dateTime);
+      console.log("Here is dateTime: ", dateTime);
+    }
+  }, [date, time]);
 
   const handleSessionCreation = async (e) => {
     e.preventDefault();
 
+
     try {
       const res = await axios.post(`${BACKEND_URL}/session/create-session`, {
-        date,
-        time,
+        dateTime,
+        // time,
         status,
         pointsCost,
         classId,
@@ -62,22 +78,35 @@ function SessionCreation({ classId, teacherId }) {
         <h3>Create a Session</h3>
         <form onSubmit={handleSessionCreation}>
           <label>Date DD-MM-YYYY</label>
-          <DatePicker locale= "enGB" 
-          selected={startDate}
-          dateFormat="dd-MM-yyyy" 
-          onChange={(date) => {
-            setStartDate(date);
-            setDate(date);
-          }}
+          <DatePicker
+            locale="enGB"
+            selected={startDate}
+            dateFormat="dd-MM-yyyy"
+            onChange={(date) => {
+              setStartDate(date);
+              setDate(date);
+            }}
           />
           <label>Time</label>
-          <input
+          <DatePicker
+            locale="enGB"
+            selected={time}
+            onChange={(time) => {
+              setTime(time);
+            }}
+            showTimeSelect
+            showTimeSelectOnly
+            timeIntervals={15}
+            timeCaption="Time"
+            dateFormat="hh:mm"
+          />
+          {/* <input
             value={time}
             required
             onChange={(e) => {
               setTime(e.target.value);
             }}
-          />
+          /> */}
           <label>Ideal for</label>
           <input
             value={status}
