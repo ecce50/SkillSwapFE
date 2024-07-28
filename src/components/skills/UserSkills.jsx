@@ -9,9 +9,9 @@ import GenericModal from "../../utils/GenericModal.jsx";
 
 
 // UserSkills component
-const UserSkills = () => {
+const UserSkills = ({skills, setSkills}) => {
   // State for skills and edited skill
-  const [skills, setSkills] = useState([]);
+  //const [skills, setSkills] = useState([]);
   const [editedSkills, setEditedSkills] = useState({});
   const nav = useNavigate();
 
@@ -19,7 +19,7 @@ const [showDeleteModal, setShowDeleteModal] = useState(false);
 const [skillToDelete, setSkillToDelete] = useState(null);
 
   // Fetch skills from the server on component mount
-  useEffect(() => {
+/*  useEffect(() => {
     const fetchSkills = async () => {
       try {
         const token = localStorage.getItem("authToken");
@@ -38,7 +38,7 @@ const [skillToDelete, setSkillToDelete] = useState(null);
     };
 
     fetchSkills();
-  }, []);
+  }, []); */
 
   // Handle the "Edit" button click
   const handleEdit = (skillId) => {
