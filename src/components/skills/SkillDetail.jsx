@@ -54,6 +54,35 @@ function SkillDetail({ skillId }) {
   }, [user, skill]);
   */
   
+  //This is the changes we started makeing to have "classes page" redender when they get created. Needs fisnishing
+  const [classes, setClasses] = useState([]);
+
+  useEffect(() => {
+    const fetchClasses = async () => {
+      try {
+        const token = localStorage.getItem("authToken");
+        const response = await axios.get(
+          `${BACKEND_URL}/class/classes?skillId=${skill._id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        setClasses(response.data.classes);
+      } catch (error) {
+        console.error("Error when fetching the classes:", error);
+      }
+    };
+
+    fetchClasses();
+  }, [skill._id]);
+
+  const handleAddClass = (newClass) => {
+    setClasses((prevClasses) => [...prevClasses, newClass]);
+  };
+//--------------------------------------------------------------------
+
 
   return (
     <div>

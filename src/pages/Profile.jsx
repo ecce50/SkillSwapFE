@@ -11,7 +11,7 @@ function Profile() {
 
   const [skills, setSkills] = useState([]);
 
-    // Fetch skills from the server on component mount
+    // Fetch skills from the server on page mount
     useEffect(() => {
       const fetchSkills = async () => {
         try {

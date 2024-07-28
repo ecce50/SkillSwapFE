@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { fetchClassesBySkillId } from "../../utils/ClassUtils";
+//import { fetchClassesBySkillId } from "../../utils/ClassUtils";
 import { deleteSkill } from "../../utils/SkillUtils";
 import { BACKEND_URL } from "../../config/config.index.js";
 import "../../../style/user-skills.css";

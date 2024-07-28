@@ -12,7 +12,7 @@ import { AuthContext } from "../../context/Auth.context.jsx";
 import GenericModal from "../../utils/GenericModal.jsx";
 
 const SkillClasses = ({ skill }) => {
-  const [classes, setClasses] = useState([]);
+  //const [classes, setClasses] = useState([]);
   const [editedClasses, setEditedClasses] = useState({});
   const [updatedClass, setUpdatedClass] = useState({
     title: "",
@@ -27,7 +27,7 @@ const SkillClasses = ({ skill }) => {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [classToDelete, setClassToDelete] = useState(null);
 
-  useEffect(() => {
+  /* useEffect(() => {
     const fetchClasses = async () => {
       try {
         const token = localStorage.getItem("authToken");
@@ -46,7 +46,7 @@ const SkillClasses = ({ skill }) => {
     };
 
     fetchClasses();
-  }, [skill._id]);
+  }, [skill._id]); */
 
   useEffect(() => {
     const fetchTeacherInfo = async () => {
