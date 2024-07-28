@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { BACKEND_URL } from "../../config/config.index.js";
 import Accordion from "../general/Accordion.jsx";
 
-function SkillCreation() {
+function SkillCreation({onAddSkill}) {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [skillId, setSkillId] = useState(null);
@@ -15,14 +15,31 @@ function SkillCreation() {
 
    try {
      // Create the skill
+     const token = localStorage.getItem('authToken');
      const skillResponse = await axios.post(
        `${BACKEND_URL}/skill/create-skill`,
        {
          title,
          description,
-       }
+       },
+       {
+        headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+       },
+      }
      );
        console.log("Add skill: skillResponse: ", skillResponse);
+
+       if (skillResponse.status === 201) {
+        // Call the onAddSkill function to add the new skill to the list
+        onAddSkill(skillResponse.data.skill);
+        setTitle('');
+        setDescription('');
+      } else {
+        console.error('Failed to create skill:', skillResponse.data.message);
+      }
+  
 
      const createdSkill = skillResponse.data.skill;
      const createdSkillId = createdSkill._id;
@@ -43,7 +60,6 @@ function SkillCreation() {
      console.error("Error creating skill or updating user:", error);
    }
  };
-
 
 
   return (
