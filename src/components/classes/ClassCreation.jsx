@@ -5,8 +5,7 @@ import { AuthContext } from "../../context/Auth.context";
 import { BACKEND_URL } from "../../config/config.index.js";
 import Accordion from "../general/Accordion.jsx";
 
-
-function ClassCreation({ skill }) {
+function ClassCreation({ skill }, { onAddSkill }) {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const { authenticateUser } = useContext(AuthContext);
@@ -16,19 +15,35 @@ function ClassCreation({ skill }) {
     e.preventDefault();
 
     try {
-      const res = await axios.post(`${BACKEND_URL}/class/class-creation`, {
-        title,
-        description,
-        skillId: skill._id,
-      });
-      console.log("This is the axios post result", res);
+      const res = await axios.post(
+        `${BACKEND_URL}/class/class-creation`,
+        {
+          title,
+          description,
+          skillId: skill._id,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      console.log("This is the axios post result CLASS CREATION", res);
+
+     if (res.status === 201) {
+       // Call the onAddSkill function to add the new skill to the list
+       onAddSkill(res.data.class);
+       setTitle("");
+       setDescription("");
+     } else {
+       console.error("Failed to create class:", res.data.message);
+     }
 
       // Update the navigation to include the state information
-      nav(`/skill-detail/${skill._id}`);
-
-
+      // nav(`/skill-detail/${skill._id}`);
     } catch (error) {
-      console.error("This is the error", error);
+      console.error("This is the error CLASS CREATION", error);
     }
   };
 

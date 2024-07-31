@@ -11,7 +11,7 @@ import { BACKEND_URL } from "../../config/config.index.js";
 import { AuthContext } from "../../context/Auth.context.jsx";
 import GenericModal from "../../utils/GenericModal.jsx";
 
-const SkillClasses = ({ skill }) => {
+const SkillClasses = ({ skill, setClasses, classes }) => {
   //const [classes, setClasses] = useState([]);
   const [editedClasses, setEditedClasses] = useState({});
   const [updatedClass, setUpdatedClass] = useState({
