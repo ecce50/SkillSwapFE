@@ -5,7 +5,7 @@ import { AuthContext } from "../../context/Auth.context";
 import { BACKEND_URL } from "../../config/config.index.js";
 import Accordion from "../general/Accordion.jsx";
 
-function ClassCreation({ skill }, { onAddSkill }) {
+function ClassCreation({ skill, onAddClass }) {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const { authenticateUser } = useContext(AuthContext);
@@ -15,6 +15,7 @@ function ClassCreation({ skill }, { onAddSkill }) {
     e.preventDefault();
 
     try {
+      const token = localStorage.getItem("authToken");
       const res = await axios.post(
         `${BACKEND_URL}/class/class-creation`,
         {
@@ -33,7 +34,7 @@ function ClassCreation({ skill }, { onAddSkill }) {
 
      if (res.status === 201) {
        // Call the onAddSkill function to add the new skill to the list
-       onAddSkill(res.data.class);
+       onAddClass(res.data.class);
        setTitle("");
        setDescription("");
      } else {

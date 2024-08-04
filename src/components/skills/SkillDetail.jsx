@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext} from "react";
+import { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import SkillClasses from "../classes/SkillClasses";
 import ClassCreation from "../classes/ClassCreation";
@@ -7,12 +7,12 @@ import { AuthContext } from "../../context/Auth.context.jsx";
 import ScrollToElement from "../general/ScrollToElement.jsx";
 
 function SkillDetail({ skillId }) {
-  const [skill, setSkill] = useState(null);
   const [loading, setLoading] = useState(true);
   const { user } = useContext(AuthContext);
 
   //Code passed to B component
   const [classes, setClasses] = useState([]);
+  const [skill, setSkill] = useState(null);
 
   //A code
   // Fetch skill details and classes on component mount
@@ -29,8 +29,9 @@ function SkillDetail({ skillId }) {
           }),
         ]);
 
-        setSkill(skillResponse.data);
+        setSkill(skillResponse.data.skill);
         setClasses(classesResponse.data.classes);
+
         setLoading(false);
       } catch (error) {
         console.error("Error fetching skill or classes:", error);
@@ -90,28 +91,29 @@ function SkillDetail({ skillId }) {
   };
   //--------------------------------------------------------------------
 
- return (
-   <div>
-     {loading ? (
-       <div>Loading...</div>
-     ) : skill ? (
-       <div>
-         <h1>{skill.title}</h1>
-         {/* Pass classes and skill to SkillClasses */}
-         <SkillClasses
-           classes={classes}
-           skill={skill}
-           setClasses={setClasses}
-         />
-         {user && user._id === skill.teacherId && (
-           <ClassCreation skill={skill} onAddClass={handleAddClass} />
-         )}
-       </div>
-     ) : (
-       <div>Error: Skill not found</div>
-     )}
-   </div>
- );
+  return (
+    <div>
+      {console.log("Classes from the return SD: ", classes)}
+      {loading ? (
+        <div>Loading...</div>
+      ) : skill ? (
+        <div>
+          <h1>{skill.title}</h1>
+          {/* Pass classes and skill to SkillClasses */}
+          <SkillClasses
+            classes={classes}
+            skill={skill}
+            setClasses={setClasses}
+          />
+          {user && user._id === skill.teacherId && (
+            <ClassCreation skill={skill} onAddClass={handleAddClass} />
+          )}
+        </div>
+      ) : (
+        <div>Error: Skill not found</div>
+      )}
+    </div>
+  );
 }
 
 export default SkillDetail;

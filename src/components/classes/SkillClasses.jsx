@@ -51,6 +51,7 @@ const SkillClasses = ({ skill, setClasses, classes }) => {
   useEffect(() => {
     const fetchTeacherInfo = async () => {
       try {
+        console.log("fetchTeacherinfo skill.teacherId ", skill.teacherId)
         const teacher = await fetchTeacherByUserId(skill.teacherId);
         setTeacherInfo(teacher);
       } catch (error) {
@@ -135,6 +136,7 @@ const SkillClasses = ({ skill, setClasses, classes }) => {
 
  return (
    <div>
+     {console.log("Classes from the return: ", classes)}
      {classes.map((aClass) => (
        <div key={aClass._id} id={aClass._id}>
          {/* Common part for both edit mode and view mode */}
