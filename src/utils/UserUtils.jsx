@@ -4,6 +4,7 @@ import { BACKEND_URL } from "../config/config.index.js";
 
 export const fetchTeacherByUserId = async (teacherId) => {
   try {
+    console.log("front end console log teacher ID: ", teacherId)
     const token = localStorage.getItem("authToken");
     const response = await axios.get(
       `${BACKEND_URL}/user/userinfo?teacherId=${teacherId}`,
