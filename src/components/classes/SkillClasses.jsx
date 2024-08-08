@@ -10,9 +10,11 @@ import { fetchTeacherByUserId } from "../../utils/UserUtils";
 import { BACKEND_URL } from "../../config/config.index.js";
 import { AuthContext } from "../../context/Auth.context.jsx";
 import GenericModal from "../../utils/GenericModal.jsx";
+import {
+  fetchSessionsByClassId
+} from "../../utils/SessionUtils";
 
 const SkillClasses = ({ skill, setClasses, classes }) => {
-  //const [classes, setClasses] = useState([]);
   const [editedClasses, setEditedClasses] = useState({});
   const [updatedClass, setUpdatedClass] = useState({
     title: "",
@@ -23,35 +25,35 @@ const SkillClasses = ({ skill, setClasses, classes }) => {
   const [editMode, setEditMode] = useState(false);
   const [teacherInfo, setTeacherInfo] = useState("");
   const { user } = useContext(AuthContext);
-
+  const [sessions, setSessions] = useState({});
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [classToDelete, setClassToDelete] = useState(null);
 
-  /* useEffect(() => {
-    const fetchClasses = async () => {
+  // Fetch sessions when component mounts or classes change
+  useEffect(() => {
+    const fetchSessions = async (classId) => {
       try {
-        const token = localStorage.getItem("authToken");
-        const response = await axios.get(
-          `${BACKEND_URL}/class/classes?skillId=${skill._id}`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-        setClasses(response.data.classes);
+        const sessions = await fetchSessionsByClassId(classId);
+        setSessions((prevSessions) => ({
+          ...prevSessions,
+          [classId]: sessions,
+        }));
+        console.log("Here are the sessions: ", sessions);
       } catch (error) {
-        console.error("Error when fetching the classes:", error);
+        console.error("Error when fetching the sessions:", error);
       }
     };
 
-    fetchClasses();
-  }, [skill._id]); */
+    // Fetch sessions for each class
+    classes.forEach((aClass) => {
+      fetchSessions(aClass._id);
+    });
+  }, [classes]);
 
   useEffect(() => {
     const fetchTeacherInfo = async () => {
       try {
-        console.log("fetchTeacherinfo skill.teacherId ", skill.teacherId)
+        console.log("fetchTeacherinfo skill.teacherId ", skill.teacherId);
         const teacher = await fetchTeacherByUserId(skill.teacherId);
         setTeacherInfo(teacher);
       } catch (error) {
@@ -67,7 +69,6 @@ const SkillClasses = ({ skill, setClasses, classes }) => {
     setEditMode(!editMode);
     setUpdatedClass({});
   };
-
 
   const handleCancelEdit = () => {
     toggleEditMode(); // Toggle edit mode and reset updated class state
@@ -134,125 +135,152 @@ const SkillClasses = ({ skill, setClasses, classes }) => {
     setClassToDelete(null);
   };
 
- return (
-   <div>
-     {console.log("Classes from the return: ", classes)}
-     {classes.map((aClass) => (
-       <div key={aClass._id} id={aClass._id}>
-         {/* Common part for both edit mode and view mode */}
-         <h2>
-           {editMode && editedClasses[aClass._id] ? (
-             <input
-               value={updatedClass.title || aClass.title}
-               onChange={(e) =>
-                 setUpdatedClass((prevClass) => ({
-                   ...prevClass,
-                   title: e.target.value,
-                 }))
-               }
-             />
-           ) : (
-             aClass.title
-           )}
-         </h2>
+  const handleAddSession = (newSession) => {
+    setSessions((prevSessions) => ({
+      ...prevSessions,
+      [newSession.classId]: [
+        ...(prevSessions[newSession.classId] || []),
+        newSession,
+      ],
+    }));
+  };
 
-         {editMode && editedClasses[aClass._id] ? (
-           <>
-             <label>
-               Description:
-               <textarea
-                 value={updatedClass.description || aClass.description}
-                 onChange={(e) =>
-                   setUpdatedClass((prevClass) => ({
-                     ...prevClass,
-                     description: e.target.value,
-                   }))
-                 }
-                 rows={4}
-               />
-             </label>
-             <label>
-               Duration:
-               <input
-                 value={updatedClass.duration || aClass.duration}
-                 onChange={(e) =>
-                   setUpdatedClass((prevClass) => ({
-                     ...prevClass,
-                     duration: e.target.value,
-                   }))
-                 }
-               />
-             </label>
-             <label>
-               Location:
-               <input
-                 value={updatedClass.location || aClass.location}
-                 onChange={(e) =>
-                   setUpdatedClass((prevClass) => ({
-                     ...prevClass,
-                     location: e.target.value,
-                   }))
-                 }
-               />
-             </label>
-             <button onClick={() => handleSaveEditClass(aClass._id)}>
-               Save
-             </button>
-             <button onClick={handleCancelEdit}>Cancel</button>
-           </>
-         ) : (
-           <>
-             <ClassImage skillClass={aClass} editMode={editMode} />
-             <p>Taught by {teacherInfo.firstname}</p>
-             <p>{aClass.description}</p>
-             <p>Duration: {aClass.duration}</p>
-             <p>Location: {aClass.location}</p>
-           </>
-         )}
+  return (
+    <div style={{ backgroundColor: "darkblue" }}>
+      {console.log("Classes from the return: ", classes)}
+      {classes.map((aClass) => (
+        <div key={aClass._id} id={aClass._id}>
+          {/* Common part for both edit mode and view mode */}
+          <h2>
+            {editMode && editedClasses[aClass._id] ? (
+              <input
+                value={updatedClass.title || aClass.title}
+                onChange={(e) =>
+                  setUpdatedClass((prevClass) => ({
+                    ...prevClass,
+                    title: e.target.value,
+                  }))
+                }
+              />
+            ) : (
+              aClass.title
+            )}
+          </h2>
 
-         {/* View mode buttons */}
-         {!editMode && (
-           <>
-             {skill && user && user._id === skill.teacherId && (
-               <>
-                 <button onClick={() => handleDeleteButtonClick(aClass._id)}>
-                   Delete class
-                 </button>
-                 <button onClick={() => handleEdit(aClass._id)}>
-                   Edit class
-                 </button>
-               </>
-             )}
-             <GenericModal
-               show={showDeleteModal}
-               onClose={handleCloseModal}
-               onConfirm={handleConfirmDelete}
-               title="Confirm Deletion"
-               message="Are you sure you want to delete this class?"
-               confirmText="Delete"
-               cancelText="Cancel"
-             />
-             <ClassReviews classId={aClass._id} />
+          {editMode && editedClasses[aClass._id] ? (
+            <>
+              <label>
+                Description:
+                <textarea
+                  value={updatedClass.description || aClass.description}
+                  onChange={(e) =>
+                    setUpdatedClass((prevClass) => ({
+                      ...prevClass,
+                      description: e.target.value,
+                    }))
+                  }
+                  rows={4}
+                />
+              </label>
+              <label>
+                Duration:
+                <input
+                  value={updatedClass.duration || aClass.duration}
+                  onChange={(e) =>
+                    setUpdatedClass((prevClass) => ({
+                      ...prevClass,
+                      duration: e.target.value,
+                    }))
+                  }
+                />
+              </label>
+              <label>
+                Location:
+                <input
+                  value={updatedClass.location || aClass.location}
+                  onChange={(e) =>
+                    setUpdatedClass((prevClass) => ({
+                      ...prevClass,
+                      location: e.target.value,
+                    }))
+                  }
+                />
+              </label>
+              <button onClick={() => handleSaveEditClass(aClass._id)}>
+                Save
+              </button>
+              <button onClick={handleCancelEdit}>Cancel</button>
+            </>
+          ) : (
+            <>
+              {/* <ClassImage skillClass={aClass} editMode={editMode} /> */}
+              <p>Taught by {teacherInfo.firstname}</p>
+              <p>{aClass.description}</p>
+              <p>Duration: {aClass.duration}</p>
+              <p>Location: {aClass.location}</p>
+            </>
+          )}
 
-             {skill && user && user._id !== aClass.teacherId && (
-               <ReviewCreation classId={aClass._id} />
-             )}
+          {/* View mode buttons */}
+          {!editMode && (
+            <>
+              {skill && user && user._id === skill.teacherId && (
+                <>
+                  <button onClick={() => handleDeleteButtonClick(aClass._id)}>
+                    Delete class
+                  </button>
+                  <button onClick={() => handleEdit(aClass._id)}>
+                    Edit class
+                  </button>
+                </>
+              )}
+              <GenericModal
+                show={showDeleteModal}
+                onClose={handleCloseModal}
+                onConfirm={handleConfirmDelete}
+                title="Confirm Deletion"
+                message="Are you sure you want to delete this class?"
+                confirmText="Delete"
+                cancelText="Cancel"
+              />
+              <ClassReviews classId={aClass._id} />
 
-             <ClassSessions classId={aClass._id} />
+              {skill && user && user._id !== aClass.teacherId && (
+                <ReviewCreation classId={aClass._id} />
+              )}
 
-             {skill && user && user._id === skill.teacherId && (
-               <SessionCreation
-                 teacherId={aClass.teacherId}
-                 classId={aClass._id}
-               />
-             )}
-           </>
-         )}
-       </div>
-     ))}
-   </div>
- );
+              <ClassSessions
+                classId={aClass._id}
+                sessions={sessions[aClass._id] || []}
+                setSessions={(newSessions) =>
+                  setSessions((prevSessions) => ({
+                    ...prevSessions,
+                    [aClass._id]: newSessions,
+                  }))
+                }
+              />
 
+              {skill && user && user._id === skill.teacherId && (
+                <SessionCreation
+                  teacherId={aClass.teacherId}
+                  classId={aClass._id}
+                  onAddSession={(newSession) =>
+                    setSessions((prevSessions) => ({
+                      ...prevSessions,
+                      [aClass._id]: [
+                        ...(prevSessions[aClass._id] || []),
+                        newSession,
+                      ],
+                    }))
+                  }
+                />
+              )}
+            </>
+          )}
+        </div>
+      ))}
+    </div>
+  );
 };
 
 export default SkillClasses;

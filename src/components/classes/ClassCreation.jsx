@@ -32,14 +32,14 @@ function ClassCreation({ skill, onAddClass }) {
       );
       console.log("This is the axios post result CLASS CREATION", res);
 
-     if (res.status === 201) {
-       // Call the onAddSkill function to add the new skill to the list
-       onAddClass(res.data.class);
-       setTitle("");
-       setDescription("");
-     } else {
-       console.error("Failed to create class:", res.data.message);
-     }
+      if (res.status === 201) {
+        // Call the onAddSkill function to add the new skill to the list
+        onAddClass(res.data.class);
+        setTitle("");
+        setDescription("");
+      } else {
+        console.error("Failed to create class:", res.data.message);
+      }
 
       // Update the navigation to include the state information
       // nav(`/skill-detail/${skill._id}`);
@@ -49,7 +49,7 @@ function ClassCreation({ skill, onAddClass }) {
   };
 
   return (
-    <div>
+    <div style={{ backgroundColor: "green" }}>
       <Accordion title="Create a class">
         <form onSubmit={handleClassCreation}>
           <label>

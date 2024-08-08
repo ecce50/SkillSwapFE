@@ -92,7 +92,7 @@ function SkillDetail({ skillId }) {
   //--------------------------------------------------------------------
 
   return (
-    <div>
+    <div style={{ backgroundColor: "cyan" }}>
       {console.log("Classes from the return SD: ", classes)}
       {loading ? (
         <div>Loading...</div>

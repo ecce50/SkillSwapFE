@@ -14,8 +14,8 @@ import { enGB } from "date-fns/locale/en-GB";
 import "react-datepicker/dist/react-datepicker.css";
 registerLocale("enGB", enGB);
 
-function ClassSessions({ classId }) {
-  const [sessions, setSessions] = useState([]);
+function ClassSessions({ sessions, classId, setSessions }) {
+  // const [sessions, setSessions] = useState([]);
   const [loading, setLoading] = useState(true);
   const student = useContext(AuthContext);
   const [editMode, setEditMode] = useState(false);
@@ -31,20 +31,20 @@ function ClassSessions({ classId }) {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [sessionToDelete, setSessionToDelete] = useState(null);
 
-  // Fetch sessions when component mounts or classId changes
-  useEffect(() => {
-    const fetchSessions = async () => {
-      try {
-        const sessions = await fetchSessionsByClassId(classId);
-        setSessions(sessions);
-        setLoading(false);
-        console.log("Here are the sessions: ", sessions);
-      } catch (error) {
-        console.error("Error when fetching the sessions:", error);
-      }
-    };
-    fetchSessions();
-  }, [classId]);
+  //Fetch sessions when component mounts or classId changes
+  // useEffect(() => {
+  //   const fetchSessions = async () => {
+  //     try {
+  //       const sessions = await fetchSessionsByClassId(classId);
+  //       setSessions(sessions);
+  //       setLoading(false);
+  //       console.log("Here are the sessions: ", sessions);
+  //     } catch (error) {
+  //       console.error("Error when fetching the sessions:", error);
+  //     }
+  //   };
+  //   fetchSessions();
+  // }, [classId]);
 
   const bookPlace = async (sessionId, classId) => {
     console.log("Here is all the student data: ", student);
@@ -208,7 +208,7 @@ function ClassSessions({ classId }) {
   };
 
   return (
-    <div>
+    <div style={{ backgroundColor: "red" }}>
       <h2>Sessions</h2>
       {sessions.map((aSession) => (
         <div key={aSession._id} id={aSession._id}>

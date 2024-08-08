@@ -5,22 +5,20 @@ import { BACKEND_URL } from "../../config/config.index.js";
 import Accordion from "../general/Accordion.jsx";
 import DatePicker from "react-datepicker";
 import { format } from "date-fns";
-import { registerLocale, setDefaultLocale } from  "react-datepicker";
-import { enGB } from 'date-fns/locale/en-GB';
-registerLocale('enGB', enGB)
+import { registerLocale, setDefaultLocale } from "react-datepicker";
+import { enGB } from "date-fns/locale/en-GB";
+registerLocale("enGB", enGB);
 import "react-datepicker/dist/react-datepicker.css";
 
-
-function SessionCreation({ classId, teacherId }) {
-
+function SessionCreation({ classId, teacherId, onAddSession }) {
   // This code is to provide default values for sessions to make testing easier. Can be deleted afterwards
 
   //Reinstate this code when finished with testing ***
 
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
-   const [dateTime, setDateTime] = useState("");
-  const [startDate, setStartDate] = useState ("");
+  const [dateTime, setDateTime] = useState("");
+  const [startDate, setStartDate] = useState("");
   // const [time, setTime] = useState("");
   // const [status, setStatus] = useState("");
   // const [pointsCost, setPointsCost] = useState("");
@@ -54,26 +52,46 @@ function SessionCreation({ classId, teacherId }) {
   const handleSessionCreation = async (e) => {
     e.preventDefault();
 
-
     try {
-      const res = await axios.post(`${BACKEND_URL}/session/create-session`, {
-        dateTime,
-        // time,
-        status,
-        pointsCost,
-        classId,
-        maxAttendees,
-        teacherId,
-      });
-
-      await authenticateUser();
+      const token = localStorage.getItem("authToken");
+      const res = await axios.post(
+        `${BACKEND_URL}/session/create-session`,
+        {
+          dateTime,
+          // time,
+          status,
+          pointsCost,
+          classId,
+          maxAttendees,
+          teacherId,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      console.log("This is the axios post result SESSION CREATION", res);
+      if (res.status === 201) {
+        // Call the onAddSkill function to add the new skill to the list
+        onAddSession(res.data.session);
+        setDateTime("");
+        setStatus("Beginners");
+        setPointsCost(1);
+        setMaxAttendees(10);
+      
+      } else {
+        console.error("Failed to create session:", res.data.message);
+      }
+      // await authenticateUser();
     } catch (error) {
       console.error("This is the Session creation Create error", error);
     }
   };
 
   return (
-    <div>
+    <div style={{ backgroundColor: "purple" }}>
       <Accordion title="Create a Session">
         <h3>Create a Session</h3>
         <form onSubmit={handleSessionCreation}>
