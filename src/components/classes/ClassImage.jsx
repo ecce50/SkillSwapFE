@@ -3,8 +3,11 @@ import ImageUpload from "../../utils/ImageUpload";
 import { AuthContext } from "../../context/Auth.context";
 import { useContext } from "react";
 
-
 function ClassImage({ editMode, skillClass }) {
+  const { user, setUser } = useContext(AuthContext);
+  const userId = user._id;
+  const classId = skillClass._id;
+
   const handleImageUpload = async (imageUrl) => {
     try {
       console.log("Class image updated successfully:", imageUrl);
@@ -13,9 +16,6 @@ function ClassImage({ editMode, skillClass }) {
     }
   };
 
-    const { user, setUser } = useContext(AuthContext);
-    const userId = user._id;
-    const classId = skillClass._id;
   return (
     <>
       {skillClass && skillClass.imageURL && (
@@ -30,7 +30,12 @@ function ClassImage({ editMode, skillClass }) {
         />
       )}
       {editMode && (
-        <ImageUpload onSuccess={handleImageUpload} imageType="class" classId={classId} userId={userId} />
+        <ImageUpload
+          onSuccess={handleImageUpload}
+          imageType="class"
+          classId={classId}
+          userId={userId}
+        />
       )}
     </>
   );
