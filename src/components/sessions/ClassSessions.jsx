@@ -2,7 +2,7 @@ import React, { useEffect, useState, useContext } from "react";
 import {
   fetchSessionsByClassId,
   deleteSession,
-} from "../../utils/SessionUtils";
+} from "../../utils/SessionUtils.jsx";
 import { AuthContext } from "../../context/Auth.context.jsx";
 import axios from "axios";
 import { BACKEND_URL } from "../../config/config.index.js";
@@ -201,11 +201,31 @@ function ClassSessions({ sessions, classId, setSessions }) {
     setSessionToDelete(null);
   };
 
-  const handleConfirmDelete = () => {
+/*   const handleConfirmDelete = () => {
     deleteSession(sessionToDelete);
     setShowDeleteModal(false);
     setSessionToDelete(null);
+  }; */
+
+  const handleConfirmDelete = async () => {
+    try {
+      await deleteSession(sessionToDelete);
+  
+      // Remove the deleted session from the list of sessions
+      setSessions((prevSessions) =>
+        prevSessions.filter((session) => session._id !== sessionToDelete)
+      );
+  
+      // Close the modal and reset the sessionToDelete state
+      setShowDeleteModal(false);
+      setSessionToDelete(null);
+      console.log ("---------------DELETE this is the session now:", sessions);
+      console.log ("---------------DELETE PREV. this is the prevSessions:", prevSessions)
+    } catch (error) {
+      console.error("Error when deleting session:", error);
+    }
   };
+  
 
   return (
     <div style={{ backgroundColor: "red" }}>
