@@ -207,24 +207,54 @@ function ClassSessions({ sessions, classId, setSessions }) {
     setSessionToDelete(null);
   }; */
 
-  const handleConfirmDelete = async () => {
+  /* const handleConfirmDelete = async () => {
+    console.log("handleConfirmDelete was called")
     try {
       await deleteSession(sessionToDelete);
-  
+
+      setSessions((prevSessions) => {
+        console.log("---------------DELETE PREV. this is the prevSessions:", prevSessions);
+        const updatedSessions = prevSessions.filter((session) => session._id !== sessionToDelete);
+        console.log("Updated sessions after deletion:", Array.isArray(updatedSessions), updatedSessions);
+        return updatedSessions;
+      });
+      
       // Remove the deleted session from the list of sessions
-      setSessions((prevSessions) =>
-        prevSessions.filter((session) => session._id !== sessionToDelete)
-      );
+/*       setSessions((prevSessions) =>
+        prevSessions.filter((session) => session._id !== sessionToDelete),
+        console.log ("---------------DELETE PREV. this is the prevSessions:", prevSessions)
+      ); */
   
       // Close the modal and reset the sessionToDelete state
-      setShowDeleteModal(false);
+      /*setShowDeleteModal(false);
       setSessionToDelete(null);
       console.log ("---------------DELETE this is the session now:", sessions);
-      console.log ("---------------DELETE PREV. this is the prevSessions:", prevSessions)
+    } catch (error) {
+      console.error("Error when deleting session:", error);
+    }
+  }; */
+
+  const handleConfirmDelete = async () => {
+    console.log("handleConfirmDelete was called");
+    try {
+      console.log("Before calling deleteSession");
+      await deleteSession(sessionToDelete);
+      console.log("After calling deleteSession");
+  
+      setSessions((prevSessions) => {
+        console.log("Before filtering sessions:", prevSessions);
+        const updatedSessions = prevSessions.filter((session) => session._id !== sessionToDelete);
+        console.log("After filtering sessions:", updatedSessions);
+        return updatedSessions;
+      });
+  
+      setShowDeleteModal(false);
+      setSessionToDelete(null);
     } catch (error) {
       console.error("Error when deleting session:", error);
     }
   };
+  
   
 
   return (
