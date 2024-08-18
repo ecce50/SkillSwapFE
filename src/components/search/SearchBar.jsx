@@ -66,7 +66,6 @@ function SearchBar({ onSearch, isNavbar }) {
   return (
     <div className="search-bar">
       <form onSubmit={handleSearch}>
-        <label>
           <input
             value={title}
             required
@@ -74,7 +73,6 @@ function SearchBar({ onSearch, isNavbar }) {
               setTitle(e.target.value);
             }}
           />
-        </label>
         <button type="submit">Search</button>
       </form>
     </div>

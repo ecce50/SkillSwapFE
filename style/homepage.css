@@ -4,13 +4,28 @@
     /* max-width: 80%; */
 }
 
-.search {
-margin: auto;
+.search-bar {
+  margin: auto;
   display: flex;
   flex-direction: column;
   align-items: center;
-
+  padding: 20px;
+  border-radius: 4px;
 }
+
+.search-bar form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.search-bar input {
+  padding: 10px;
+  border: none;
+  border-radius: 2px;
+  margin-bottom: 10px;
+}
+
 
 .logo {
   display: flex;

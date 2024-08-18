@@ -12,7 +12,7 @@ import { AuthContext } from "../../context/Auth.context.jsx";
 import GenericModal from "../../utils/GenericModal.jsx";
 import {
   fetchSessionsByClassId
-} from "../../utils/SessionUtils";
+} from "../../utils/SessionUtils.jsx";
 
 const SkillClasses = ({ skill, setClasses, classes }) => {
   const [editedClasses, setEditedClasses] = useState({});

@@ -2,7 +2,7 @@ import React, { useEffect, useState, useContext } from "react";
 import {
   fetchSessionsByClassId,
   deleteSession,
-} from "../../utils/SessionUtils";
+} from "../../utils/SessionUtils.jsx";
 import { AuthContext } from "../../context/Auth.context.jsx";
 import axios from "axios";
 import { BACKEND_URL } from "../../config/config.index.js";
@@ -201,11 +201,61 @@ function ClassSessions({ sessions, classId, setSessions }) {
     setSessionToDelete(null);
   };
 
-  const handleConfirmDelete = () => {
+/*   const handleConfirmDelete = () => {
     deleteSession(sessionToDelete);
     setShowDeleteModal(false);
     setSessionToDelete(null);
+  }; */
+
+  /* const handleConfirmDelete = async () => {
+    console.log("handleConfirmDelete was called")
+    try {
+      await deleteSession(sessionToDelete);
+
+      setSessions((prevSessions) => {
+        console.log("---------------DELETE PREV. this is the prevSessions:", prevSessions);
+        const updatedSessions = prevSessions.filter((session) => session._id !== sessionToDelete);
+        console.log("Updated sessions after deletion:", Array.isArray(updatedSessions), updatedSessions);
+        return updatedSessions;
+      });
+      
+      // Remove the deleted session from the list of sessions
+/*       setSessions((prevSessions) =>
+        prevSessions.filter((session) => session._id !== sessionToDelete),
+        console.log ("---------------DELETE PREV. this is the prevSessions:", prevSessions)
+      ); */
+  
+      // Close the modal and reset the sessionToDelete state
+      /*setShowDeleteModal(false);
+      setSessionToDelete(null);
+      console.log ("---------------DELETE this is the session now:", sessions);
+    } catch (error) {
+      console.error("Error when deleting session:", error);
+    }
+  }; */
+
+  const handleConfirmDelete = async () => {
+    console.log("handleConfirmDelete was called");
+    try {
+      console.log("Before calling deleteSession");
+      await deleteSession(sessionToDelete);
+      console.log("After calling deleteSession");
+  
+      setSessions((prevSessions) => {
+        console.log("Before filtering sessions:", prevSessions);
+        const updatedSessions = prevSessions.filter((session) => session._id !== sessionToDelete);
+        console.log("After filtering sessions:", updatedSessions);
+        return updatedSessions;
+      });
+  
+      setShowDeleteModal(false);
+      setSessionToDelete(null);
+    } catch (error) {
+      console.error("Error when deleting session:", error);
+    }
   };
+  
+  
 
   return (
     <div style={{ backgroundColor: "red" }}>
