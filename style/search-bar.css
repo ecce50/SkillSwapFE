@@ -21,3 +21,9 @@
     border-top-left-radius: 0rem; /* Adjust the radius as needed */
   border-bottom-left-radius: 0rem; /* Adjust the radius as needed */
 }
+
+.form {
+  display: flex;
+  flex-direction: column;
+  background-color: green;
+}
