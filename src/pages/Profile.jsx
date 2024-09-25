@@ -35,6 +35,8 @@ function Profile() {
   }, []);
 
   //Code passed to C component
+
+  
   const handleAddSkill = (newSkill) => {
     setSkills((prevSkills) => [...prevSkills, newSkill]);
   };

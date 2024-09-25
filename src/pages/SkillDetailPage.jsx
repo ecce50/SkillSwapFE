@@ -14,3 +14,4 @@ function SkillDetailPage() {
 }
 
 export default SkillDetailPage;
+ 

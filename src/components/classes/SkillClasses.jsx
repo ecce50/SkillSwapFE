@@ -10,9 +10,7 @@ import { fetchTeacherByUserId } from "../../utils/UserUtils";
 import { BACKEND_URL } from "../../config/config.index.js";
 import { AuthContext } from "../../context/Auth.context.jsx";
 import GenericModal from "../../utils/GenericModal.jsx";
-import {
-  fetchSessionsByClassId
-} from "../../utils/SessionUtils.jsx";
+import { fetchSessionsByClassId } from "../../utils/SessionUtils.jsx";
 
 const SkillClasses = ({ skill, setClasses, classes }) => {
   const [editedClasses, setEditedClasses] = useState({});
@@ -25,7 +23,7 @@ const SkillClasses = ({ skill, setClasses, classes }) => {
   const [editMode, setEditMode] = useState(false);
   const [teacherInfo, setTeacherInfo] = useState("");
   const { user } = useContext(AuthContext);
-  const [sessions, setSessions] = useState({});
+  const [sessions, setSessions] = useState([]);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [classToDelete, setClassToDelete] = useState(null);
 
@@ -33,12 +31,12 @@ const SkillClasses = ({ skill, setClasses, classes }) => {
   useEffect(() => {
     const fetchSessions = async (classId) => {
       try {
-        const sessions = await fetchSessionsByClassId(classId);
+        const fetchedSessions = await fetchSessionsByClassId(classId);
         setSessions((prevSessions) => ({
           ...prevSessions,
-          [classId]: sessions,
+          [classId]: fetchedSessions,
         }));
-        console.log("Here are the sessions: ", sessions);
+        console.log("Here are the sessions: ", fetchedSessions);
       } catch (error) {
         console.error("Error when fetching the sessions:", error);
       }
@@ -148,6 +146,7 @@ const SkillClasses = ({ skill, setClasses, classes }) => {
   return (
     <div style={{ backgroundColor: "darkblue" }}>
       {console.log("Classes from the return: ", classes)}
+      {console.log("Sessions from the return: ", sessions)}
       {classes.map((aClass) => (
         <div key={aClass._id} id={aClass._id}>
           {/* Common part for both edit mode and view mode */}
@@ -249,6 +248,13 @@ const SkillClasses = ({ skill, setClasses, classes }) => {
                 <ReviewCreation classId={aClass._id} />
               )}
 
+              {/* <ClassSessions
+                key={aClass._id}
+                classId={aClass._id}
+                sessions={sessions[aClass._id] || []}
+                setSessions={setSessions}
+              /> */}
+
               <ClassSessions
                 classId={aClass._id}
                 sessions={sessions[aClass._id] || []}
@@ -264,15 +270,7 @@ const SkillClasses = ({ skill, setClasses, classes }) => {
                 <SessionCreation
                   teacherId={aClass.teacherId}
                   classId={aClass._id}
-                  onAddSession={(newSession) =>
-                    setSessions((prevSessions) => ({
-                      ...prevSessions,
-                      [aClass._id]: [
-                        ...(prevSessions[aClass._id] || []),
-                        newSession,
-                      ],
-                    }))
-                  }
+                  onAddSession={handleAddSession}
                 />
               )}
             </>

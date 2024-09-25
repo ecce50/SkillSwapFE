@@ -9,14 +9,14 @@ import { BACKEND_URL } from "../../config/config.index.js";
 import GenericModal from "../../utils/GenericModal.jsx";
 import DatePicker from "react-datepicker";
 import { format } from "date-fns";
-import { registerLocale, setDefaultLocale } from "react-datepicker";
+import { registerLocale } from "react-datepicker";
 import { enGB } from "date-fns/locale/en-GB";
 import "react-datepicker/dist/react-datepicker.css";
+
 registerLocale("enGB", enGB);
 
 function ClassSessions({ sessions, classId, setSessions }) {
-  // const [sessions, setSessions] = useState([]);
-  const [loading, setLoading] = useState(true);
+  // const [loading, setLoading] = useState(true);
   const student = useContext(AuthContext);
   const [editMode, setEditMode] = useState(false);
   const [editedSessions, setEditedSessions] = useState({});
@@ -31,35 +31,14 @@ function ClassSessions({ sessions, classId, setSessions }) {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [sessionToDelete, setSessionToDelete] = useState(null);
 
-  //Fetch sessions when component mounts or classId changes
-  // useEffect(() => {
-  //   const fetchSessions = async () => {
-  //     try {
-  //       const sessions = await fetchSessionsByClassId(classId);
-  //       setSessions(sessions);
-  //       setLoading(false);
-  //       console.log("Here are the sessions: ", sessions);
-  //     } catch (error) {
-  //       console.error("Error when fetching the sessions:", error);
-  //     }
-  //   };
-  //   fetchSessions();
-  // }, [classId]);
+  // const classSessions = sessions[classId] || [];
 
-  const bookPlace = async (sessionId, classId) => {
-    console.log("Here is all the student data: ", student);
-    console.log(
-      "student.user.attendingSessions:",
-      student.user.attendingSessions
-    );
+  // Function to book a place in a session
+  const bookPlace = async (sessionId) => {
     try {
-      const updatedSession = await axios.patch(
+      const bookedSession = await axios.patch(
         `${BACKEND_URL}/session/add-attendee/`,
         { signedUp: student.user._id, sessionId: sessionId }
-      );
-      console.log(
-        "Updated session after booking:",
-        updatedSession.data.session
       );
 
       await axios.put(`${BACKEND_URL}/user/update-user`, {
@@ -69,7 +48,7 @@ function ClassSessions({ sessions, classId, setSessions }) {
 
       setSessions((prevSessions) =>
         prevSessions.map((session) =>
-          session._id === sessionId ? updatedSession.data.session : session
+          session._id === sessionId ? bookedSession.data.session : session
         )
       );
     } catch (error) {
@@ -77,20 +56,12 @@ function ClassSessions({ sessions, classId, setSessions }) {
     }
   };
 
-  const unbookPlace = async (sessionId, classId) => {
-    console.log("Here is all the student data: ", student);
-    console.log(
-      "student.user.attendingSessions:",
-      student.user.attendingSessions
-    );
+  // Function to unbook a place in a session
+  const unbookPlace = async (sessionId) => {
     try {
       const updatedSession = await axios.patch(
         `${BACKEND_URL}/session/remove-attendee/`,
         { signedUp: student.user._id, sessionId: sessionId }
-      );
-      console.log(
-        "Updated session after unbooking:",
-        updatedSession.data.session
       );
 
       await axios.put(`${BACKEND_URL}/user/update-user`, {
@@ -111,11 +82,11 @@ function ClassSessions({ sessions, classId, setSessions }) {
   };
 
   const handleBookButtonClick = (sessionId) => {
-    bookPlace(sessionId, classId);
+    bookPlace(sessionId);
   };
 
   const handleUnbookButtonClick = (sessionId) => {
-    unbookPlace(sessionId, classId);
+    unbookPlace(sessionId);
   };
 
   const toggleEditMode = () => {
@@ -134,13 +105,11 @@ function ClassSessions({ sessions, classId, setSessions }) {
     }));
     toggleEditMode();
     const sessionToEdit = sessions.find((c) => c._id === sessionId);
-           const dateTime = new Date(sessionToEdit.dateTime);
+    const dateTime = new Date(sessionToEdit.dateTime);
     setUpdatedSession({
       ...sessionToEdit,
-      // date: new Date(sessionToEdit.dateTime),
-      // time: new Date(sessionToEdit.dateTime),
-      //writing a comment to make a new push
- 
+      date: dateTime,
+      time: dateTime,
       sessionId: sessionId,
     });
   };
@@ -171,8 +140,10 @@ function ClassSessions({ sessions, classId, setSessions }) {
       });
 
       if (response.status === 200) {
-        setSessions((prevSession) =>
-          prevSession.map((c) => (c._id === sessionId ? updatedSessionData : c))
+        setSessions((prevSessions) =>
+          prevSessions.map((session) =>
+            session._id === sessionId ? updatedSessionData : session
+          )
         );
 
         setEditedSessions((prevEditedSessions) => ({
@@ -180,8 +151,7 @@ function ClassSessions({ sessions, classId, setSessions }) {
           [sessionId]: false,
         }));
 
-        console.log("session updated successfully");
-        // Exit edit mode after saving edits
+        console.log("Session updated successfully");
         toggleEditMode();
       } else {
         console.error("Failed to update session:", response.data.message);
@@ -201,61 +171,58 @@ function ClassSessions({ sessions, classId, setSessions }) {
     setSessionToDelete(null);
   };
 
-/*   const handleConfirmDelete = () => {
-    deleteSession(sessionToDelete);
-    setShowDeleteModal(false);
-    setSessionToDelete(null);
-  }; */
+  // const handleConfirmDelete = async () => {
+  //   try {
+  //     await deleteSession(sessionToDelete);
 
-  /* const handleConfirmDelete = async () => {
-    console.log("handleConfirmDelete was called")
-    try {
-      await deleteSession(sessionToDelete);
+  //     // Update the sessions by removing the deleted session
+  //     setSessions((prevSessions) => {
+  //       const updatedSessionsForClass = prevSessions[classId].filter(
+  //         (session) => session._id !== sessionToDelete
+  //       );
 
-      setSessions((prevSessions) => {
-        console.log("---------------DELETE PREV. this is the prevSessions:", prevSessions);
-        const updatedSessions = prevSessions.filter((session) => session._id !== sessionToDelete);
-        console.log("Updated sessions after deletion:", Array.isArray(updatedSessions), updatedSessions);
-        return updatedSessions;
-      });
-      
-      // Remove the deleted session from the list of sessions
-/*       setSessions((prevSessions) =>
-        prevSessions.filter((session) => session._id !== sessionToDelete),
-        console.log ("---------------DELETE PREV. this is the prevSessions:", prevSessions)
-      ); */
-  
-      // Close the modal and reset the sessionToDelete state
-      /*setShowDeleteModal(false);
-      setSessionToDelete(null);
-      console.log ("---------------DELETE this is the session now:", sessions);
-    } catch (error) {
-      console.error("Error when deleting session:", error);
-    }
-  }; */
+  //       // Return the updated sessions for the specific class
+  //       return {
+  //         ...prevSessions,
+  //         [classId]: updatedSessionsForClass, // Only update sessions for the correct classId
+  //       };
+  //     });
+
+  //     setShowDeleteModal(false);
+  //     setSessionToDelete(null);
+  //   } catch (error) {
+  //     console.error("Error when deleting session:", error);
+  //   }
+  // };
 
   const handleConfirmDelete = async () => {
     console.log("handleConfirmDelete was called");
+
     try {
       console.log("Before calling deleteSession");
       await deleteSession(sessionToDelete);
       console.log("After calling deleteSession");
-  
-      setSessions((prevSessions) => {
+
+      const filteredSessions = (prevSessions) => {
         console.log("Before filtering sessions:", prevSessions);
-        const updatedSessions = prevSessions.filter((session) => session._id !== sessionToDelete);
+        const updatedSessions = prevSessions.filter(
+          (session) => session._id !== sessionToDelete
+        );
         console.log("After filtering sessions:", updatedSessions);
         return updatedSessions;
-      });
-  
+      };
+
+      // Call filteredSessions with the current sessions and pass the result to setSessions
+      const currentSessions = sessions; // Assuming sessions is the state variable
+      const updatedSessions = filteredSessions(currentSessions);
+      setSessions(updatedSessions);
       setShowDeleteModal(false);
       setSessionToDelete(null);
     } catch (error) {
-      console.error("Error when deleting session:", error);
+      console.error("Error deleting session:", error);
+      // Handle the error appropriately (e.g., show an error message to the user)
     }
   };
-  
-  
 
   return (
     <div style={{ backgroundColor: "red" }}>
@@ -340,71 +307,54 @@ function ClassSessions({ sessions, classId, setSessions }) {
               <button onClick={handleCancelEdit}>Cancel</button>
             </>
           ) : (
-            <>
-              {aSession.dateTime && (
-                <>
-                  <p>
-                    Date: {format(new Date(aSession.dateTime), "dd-MM-yyyy")}
-                  </p>
-                  <p>Time: {format(new Date(aSession.dateTime), "hh:mm aa")}</p>
-                </>
-              )}
-              {/* {aSession.time && <p>Time: {aSession.time}</p>} */}
-              {aSession.status && <p>Status: {aSession.status}</p>}
-              {aSession.pointsCost && <p>Cost: {aSession.pointsCost} points</p>}
-              {aSession.maxAttendees && (
-                <p>Max attendees: {aSession.maxAttendees}</p>
-              )}
-              <p>Attending: {aSession.signedUp.length}</p>
+            <div>
+              <h3>
+                Session Date:{" "}
+                {format(new Date(aSession.dateTime), "dd-MM-yyyy")}
+              </h3>
+              <p>Status: {aSession.status}</p>
+              <p>Points Cost: {aSession.pointsCost}</p>
+              <p>Max Attendees: {aSession.maxAttendees}</p>
 
-              {aSession &&
-                student &&
-                student.user._id !== aSession.teacherId && (
-                  <button
-                    onClick={() =>
-                      aSession.signedUp.includes(student.user._id) //check if student is already signed up
-                        ? handleUnbookButtonClick(aSession._id)
-                        : handleBookButtonClick(aSession._id)
-                    }
-                    disabled={
-                      aSession.signedUp.length >= aSession.maxAttendees && //check if the class is full (block sign up)
-                      !aSession.signedUp.includes(student.user._id)
-                    }
-                  >
-                    {aSession.signedUp.includes(student.user._id)
-                      ? "Unbook"
-                      : aSession.signedUp.length >= aSession.maxAttendees //check if the class is full (text)
-                      ? "Full"
-                      : "Book"}
-                  </button>
-                )}
-              {aSession &&
-                student &&
-                student.user._id === aSession.teacherId && (
+              {aSession.signedUp.includes(student.user._id) ? (
+                <button onClick={() => handleUnbookButtonClick(aSession._id)}>
+                  Unbook
+                </button>
+              ) : (
+                <button onClick={() => handleBookButtonClick(aSession._id)}>
+                  Book
+                </button>
+              )}
+
+              {
+                /* student.user.isAdmin*/ student.user && (
                   <>
+                    <button onClick={() => handleEdit(aSession._id)}>
+                      Edit
+                    </button>
                     <button
                       onClick={() => handleDeleteButtonClick(aSession._id)}
                     >
-                      Delete Session
-                    </button>
-                    <button onClick={() => handleEdit(aSession._id)}>
-                      Edit Session
+                      Delete
                     </button>
                   </>
-                )}
-            </>
+                )
+              }
+            </div>
           )}
         </div>
       ))}
-      <GenericModal
-        show={showDeleteModal}
-        onClose={handleCloseModal}
-        onConfirm={handleConfirmDelete}
-        title="Confirm Deletion"
-        message="Are you sure you want to delete this session?"
-        confirmText="Delete"
-        cancelText="Cancel"
-      />
+      {showDeleteModal && (
+        <GenericModal
+          show={showDeleteModal}
+          onClose={handleCloseModal}
+          onConfirm={handleConfirmDelete}
+          title="Confirm Deletion"
+          message="Are you sure you want to delete this session?"
+          confirmText="Delete"
+          cancelText="Cancel"
+        />
+      )}
     </div>
   );
 }
