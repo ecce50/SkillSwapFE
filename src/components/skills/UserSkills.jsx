@@ -101,7 +101,7 @@ const [skillToDelete, setSkillToDelete] = useState(null);
   };
 
   const handleConfirmDelete = () => {
-    deleteSkill(skillToDelete);
+    deleteSkill(skillToDelete, setSkills);
     setShowDeleteModal(false);
     setSkillToDelete(null);
   };

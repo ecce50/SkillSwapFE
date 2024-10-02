@@ -1,15 +1,22 @@
 // Accordion.js
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import "../../../style/accordion.css";
 
-function Accordion({ title, children }) {
-  const [isOpen, setIsOpen] = useState(false);
+function Accordion({ title, children, isOpen: isOpenProp, onToggle }) {
+  const [isOpen, setIsOpen] = useState(isOpenProp);
 
   const toggleAccordion = () => {
     setIsOpen(!isOpen);
+    if (onToggle) {
+      onToggle(!isOpen);
+    }
   };
 
+  // Sync internal state with prop
+  useEffect(() => {
+    setIsOpen(isOpenProp);
+  }, [isOpenProp]);
 
   return (
     <div className="accordion">
@@ -24,6 +31,13 @@ function Accordion({ title, children }) {
 Accordion.propTypes = {
   title: PropTypes.string.isRequired,
   children: PropTypes.node.isRequired,
+  isOpen: PropTypes.bool,
+  onToggle: PropTypes.func,
+};
+
+Accordion.defaultProps = {
+  isOpen: false,
+  onToggle: null,
 };
 
 export default Accordion;

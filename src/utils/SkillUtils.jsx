@@ -3,7 +3,7 @@ import { fetchClassesBySkillId } from "./ClassUtils";
 import { deleteClass } from "./ClassUtils";
 import { BACKEND_URL } from "../config/config.index.js";
 
-export const deleteSkill = async (skillId) => {
+export const deleteSkill = async (skillId, setSkills) => {
   try {
     const classes = await fetchClassesBySkillId(skillId); // Deleting associated classes before deleing the skil
 

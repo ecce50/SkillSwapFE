@@ -11,13 +11,13 @@
   flex-grow: 1;
   height: 2rem;
   box-sizing: border-box;
-     border-top-right-radius: 0rem; /* Adjust the radius as needed */
-  border-bottom-right-radius: 0rem; /* Adjust the radius as needed */
+     border-top-right-radius: 0rem;
+  border-bottom-right-radius: 0rem;
   
 }
 
 .test-button {
   margin: 0.5rem 0.5rem 0.5rem 0;
-    border-top-left-radius: 0rem; /* Adjust the radius as needed */
-  border-bottom-left-radius: 0rem; /* Adjust the radius as needed */
+    border-top-left-radius: 0rem;
+  border-bottom-left-radius: 0rem;
 }
