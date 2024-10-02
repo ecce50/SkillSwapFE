@@ -11,29 +11,18 @@ registerLocale("enGB", enGB);
 import "react-datepicker/dist/react-datepicker.css";
 
 function SessionCreation({ classId, teacherId, onAddSession }) {
-  // This code is to provide default values for sessions to make testing easier. Can be deleted afterwards
-
-  //Reinstate this code when finished with testing ***
-
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
   const [dateTime, setDateTime] = useState("");
   const [startDate, setStartDate] = useState("");
-  // const [time, setTime] = useState("");
-  // const [status, setStatus] = useState("");
-  // const [pointsCost, setPointsCost] = useState("");
-  // const { authenticateUser } = useContext(AuthContext);
-
-  // ***
-
-  //Delete this code when finished with testing ***
-
   const [status, setStatus] = useState("Beginners");
   const [pointsCost, setPointsCost] = useState(1);
   const [maxAttendees, setMaxAttendees] = useState(10);
   const { authenticateUser } = useContext(AuthContext);
 
-  // ***
+  // State to control whether accordion is open
+  const [isAccordionOpen, setIsAccordionOpen] = useState(true);
+
   useEffect(() => {
     if (date && time) {
       const dateTime = new Date(
@@ -58,7 +47,6 @@ function SessionCreation({ classId, teacherId, onAddSession }) {
         `${BACKEND_URL}/session/create-session`,
         {
           dateTime,
-          // time,
           status,
           pointsCost,
           classId,
@@ -74,17 +62,20 @@ function SessionCreation({ classId, teacherId, onAddSession }) {
       );
       console.log("This is the axios post result SESSION CREATION", res);
       if (res.status === 201) {
-        // Call the onAddSkill function to add the new skill to the list
+        // Call the onAddSession function to add the new session to the list
         onAddSession(res.data.session);
+
+        // Reset form fields
         setDateTime("");
         setStatus("Beginners");
         setPointsCost(1);
         setMaxAttendees(10);
-      
+
+        // Close the accordion after successful session creation
+        setIsAccordionOpen(false);
       } else {
         console.error("Failed to create session:", res.data.message);
       }
-      // await authenticateUser();
     } catch (error) {
       console.error("This is the Session creation Create error", error);
     }
@@ -92,7 +83,11 @@ function SessionCreation({ classId, teacherId, onAddSession }) {
 
   return (
     <div style={{ backgroundColor: "purple" }}>
-      <Accordion title="Create a Session">
+      <Accordion
+        title="Create a Session"
+        isOpen={isAccordionOpen}
+        onToggle={setIsAccordionOpen}
+      >
         <h3>Create a Session</h3>
         <form onSubmit={handleSessionCreation}>
           <label>Date DD-MM-YYYY</label>
@@ -118,13 +113,6 @@ function SessionCreation({ classId, teacherId, onAddSession }) {
             timeCaption="Time"
             dateFormat="hh:mm"
           />
-          {/* <input
-            value={time}
-            required
-            onChange={(e) => {
-              setTime(e.target.value);
-            }}
-          /> */}
           <label>Ideal for</label>
           <input
             value={status}
