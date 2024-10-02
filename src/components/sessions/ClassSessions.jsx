@@ -213,7 +213,7 @@ function ClassSessions({ sessions, classId, setSessions }) {
       };
 
       // Call filteredSessions with the current sessions and pass the result to setSessions
-      const currentSessions = sessions; // Assuming sessions is the state variable
+      const currentSessions = sessions;
       const updatedSessions = filteredSessions(currentSessions);
       setSessions(updatedSessions);
       setShowDeleteModal(false);

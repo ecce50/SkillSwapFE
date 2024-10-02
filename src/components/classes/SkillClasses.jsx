@@ -128,7 +128,7 @@ const SkillClasses = ({ skill, setClasses, classes }) => {
   };
 
   const handleConfirmDelete = () => {
-    deleteClass(classToDelete);
+    deleteClass(classToDelete, setClasses);
     setShowDeleteModal(false);
     setClassToDelete(null);
   };

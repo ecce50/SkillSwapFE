@@ -24,7 +24,7 @@ export const fetchClassesBySkillId = async (skillId) => {
   }
 };
 
-export const deleteClass = async (classId) => {
+export const deleteClass = async (classId, setClasses) => {
   try {
     const sessions = await fetchSessionsByClassId(classId);
 
