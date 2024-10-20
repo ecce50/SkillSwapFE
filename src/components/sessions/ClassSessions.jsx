@@ -261,7 +261,7 @@ function ClassSessions({ sessions, classId, setSessions }) {
                   showTimeSelectOnly
                   timeIntervals={15}
                   timeCaption="Time"
-                  dateFormat="hh:mm aa"
+                  dateFormat="HH:mm"
                 />
               </label>
               <label>
@@ -309,8 +309,12 @@ function ClassSessions({ sessions, classId, setSessions }) {
           ) : (
             <div>
               <h3>
-                Session Date:{" "}
+                Date:{" "}
                 {format(new Date(aSession.dateTime), "dd-MM-yyyy")}
+              </h3>
+              <h3>
+                Time:{" "}
+                {format(new Date(aSession.dateTime), "HH:mm")}
               </h3>
               <p>Status: {aSession.status}</p>
               <p>Points Cost: {aSession.pointsCost}</p>
