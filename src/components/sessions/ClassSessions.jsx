@@ -53,6 +53,11 @@ function ClassSessions({ sessions, classId, setSessions }) {
     }
   };
 
+  // const newSessions = (prevSessions) =>
+  //   prevSessions.map((session) =>
+  //     session._id === sessionId ? bookedSession.data.session : session
+  //   );
+
   const unbookPlace = async (sessionId) => {
     try {
       const updatedSession = await axios.patch(
@@ -276,9 +281,8 @@ function ClassSessions({ sessions, classId, setSessions }) {
                 </button>
               )}
 
-              {student.user /*&& student.user.isAdmin*/ && (
+              {student.user && student.user._id === aSession.teacherId && (
                 <>
-                  {console.log("student.user.isAdmin = ", student.user.isAdmin)}
                   <button onClick={() => handleEdit(aSession._id)}>Edit</button>
                   <button onClick={() => handleDeleteButtonClick(aSession._id)}>
                     Delete
