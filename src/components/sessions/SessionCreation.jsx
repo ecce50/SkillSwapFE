@@ -21,7 +21,7 @@ function SessionCreation({ classId, teacherId, onAddSession }) {
   const { authenticateUser } = useContext(AuthContext);
 
   // State to control whether accordion is open
-  const [isAccordionOpen, setIsAccordionOpen] = useState(true);
+  const [isAccordionOpen, setIsAccordionOpen] = useState(false);
 
   useEffect(() => {
     if (date && time) {
