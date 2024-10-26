@@ -16,9 +16,9 @@ function UserImage({ editMode, user }) {
 
   return (
     <>
-      {user && user.userImage && (
+      {user && user.profileImage && (
         <img
-          src={user.userImage}
+          src={user.profileImage}
           alt="Profile"
           style={{
             width: "200px",
@@ -28,7 +28,11 @@ function UserImage({ editMode, user }) {
         />
       )}
       {editMode && (
-        <ImageUpload onSuccess={handleImageUpload} imageType="user" userId={user._id} />
+        <ImageUpload
+          onSuccess={handleImageUpload}
+          imageType="user"
+          userId={user._id}
+        />
       )}
     </>
   );

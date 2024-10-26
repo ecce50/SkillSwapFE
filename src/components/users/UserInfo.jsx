@@ -11,7 +11,7 @@ function UserInfo() {
   const [newUserData, setNewUserData] = useState({
     firstname: user ? user.firstname : "",
     email: user ? user.email : "",
-    userImage: user ? user.userImage : "",
+    userImage: user ? user.profileImage : "",
   });
 
   const handleEditClick = () => {
@@ -24,7 +24,7 @@ function UserInfo() {
     setNewUserData({
       firstname: user ? user.firstname : "",
       email: user ? user.email : "",
-      userImage: user ? user.userImage : "",
+      userImage: user ? user.profileImage : "",
     });
   };
 

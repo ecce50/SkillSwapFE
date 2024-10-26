@@ -19,9 +19,13 @@ function ClassCreation({ skill, onAddClass }) {
       const res = await axios.post(
         `${BACKEND_URL}/class/class-creation`,
         {
-          title,
-          description,
           skillId: skill._id,
+          title,
+          classLocation,
+          classDuration,
+          description,
+          level,
+          classImage,
         },
         {
           headers: {
