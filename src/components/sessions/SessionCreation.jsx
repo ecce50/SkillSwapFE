@@ -46,12 +46,14 @@ function SessionCreation({ classId, teacherId, onAddSession }) {
       const res = await axios.post(
         `${BACKEND_URL}/session/create-session`,
         {
-          dateTime,
-          status,
-          pointsCost,
-          classId,
-          maxAttendees,
           teacherId,
+          classId,
+          dateTime,
+          pointsCost,
+          sessionLocation,
+          sessionDuration,
+          maxAttendees,
+          notes,
         },
         {
           headers: {

@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 import { BACKEND_URL } from "../../config/config.index.js";
 import Accordion from "../general/Accordion.jsx";
 
@@ -8,7 +7,6 @@ function SkillCreation({onAddSkill}) {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [skillId, setSkillId] = useState(null);
-  const nav = useNavigate();
 
  const handleSkillCreation = async (e) => {
    e.preventDefault();
@@ -21,6 +19,7 @@ function SkillCreation({onAddSkill}) {
        {
          title,
          description,
+         skillImage,
        },
        {
         headers: {
