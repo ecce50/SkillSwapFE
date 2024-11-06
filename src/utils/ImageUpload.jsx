@@ -3,7 +3,7 @@ import axios from "axios";
 import { useState } from "react";
 import { BACKEND_URL } from "../config/config.index.js";
 
-function ImageUpload({ onSuccess, imageType, classId, userId }) {
+function ImageUpload({ onSuccess, imageType, classId, userId, skillId }) {
   const [imageUrl, setImageUrl] = useState();
 
   // Define a function to handle file input changes
@@ -14,11 +14,25 @@ function ImageUpload({ onSuccess, imageType, classId, userId }) {
       const formData = new FormData();
       formData.append("file", file);
       formData.append("imageType", imageType); // Add imageType to formData
-   if (imageType === "user") {
-     formData.append("userId", userId);
-   } else if (imageType === "class") {
-     formData.append("classId", classId);
-   }
+      
+      switch (imageType) {
+        case 'user':
+          formData.append("userId", userId);
+          break;
+        case 'class':
+          formData.append("classId", classId);
+          break;
+        case 'skill':
+          formData.append("skillId", skillId);
+          break;
+}
+
+  //  if (imageType === "user") {
+  //    formData.append("userId", userId);
+
+  //  } else if (imageType === "class") {
+  //    formData.append("classId", classId);
+  //  }
       const res = await axios.post(
         `${BACKEND_URL}/image/upload-image`,
         formData

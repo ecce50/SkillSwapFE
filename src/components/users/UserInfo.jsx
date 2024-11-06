@@ -3,6 +3,7 @@ import axios from "axios";
 import UserImage from "./UserImage";
 import { AuthContext } from "../../context/Auth.context";
 import { BACKEND_URL } from "../../config/config.index.js";
+import ImageDisplay from "../../utils/ImageDisplay.jsx";
 import "../../../style/user-info.css";
 
 function UserInfo() {
@@ -60,7 +61,6 @@ function UserInfo() {
 
   return (
     <div className="user-info-container">
-
       {editMode ? (
         <div>
           <label>Name:</label>
@@ -85,13 +85,13 @@ function UserInfo() {
           <button onClick={handleCancelEdit}>Cancel</button>
         </div>
       ) : (
-        <h3>
-          <UserImage editMode={editMode} user={user} />
+        <>
+          <ImageDisplay editMode={editMode} imageType="user" entity={user} />;
+          {/* <UserImage editMode={editMode} user={user} />
           Welcome {user ? user.firstname : null}. <br /> This is your email:{" "}
-          {user ? user.email : null}{" "}
-          <br />
+          {user ? user.email : null} <br /> */}
           <button onClick={handleEditClick}>Edit Profile</button>
-        </h3>
+        </>
       )}
     </div>
   );
