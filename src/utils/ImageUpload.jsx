@@ -14,8 +14,10 @@ function ImageUpload({ onSuccess, imageType, classId, userId }) {
       const formData = new FormData();
       formData.append("file", file);
       formData.append("imageType", imageType); // Add imageType to formData
+      
    if (imageType === "user") {
      formData.append("userId", userId);
+     
    } else if (imageType === "class") {
      formData.append("classId", classId);
    }
