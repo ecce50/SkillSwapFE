@@ -7,6 +7,17 @@ function ImageDisplay({ editMode, imageType, entity }) {
 
   const handleImageUpload = async (imageUrl) => {
     try {
+      switch (imageType) {
+        case "user":
+              setUser({ ...entity, imageUrl: imageUrl });
+            case "class":
+             
+            case "skill":
+              
+            default:
+              return null;
+      }
+      
       if (imageType === "user") {
         setUser({ ...entity, imageUrl: imageUrl });
       }
@@ -16,24 +27,24 @@ function ImageDisplay({ editMode, imageType, entity }) {
     }
   };
 
-  const getImageSrc = () => {
-    switch (imageType) {
-      case "user":
-        return entity.profileImage;
-      case "class":
-        return entity.classImage;
-      case "skill":
-        return entity.skillImage;
-      default:
-        return null;
-    }
-  };
+  // const getImageSrc = () => {
+  //   switch (imageType) {
+  //     case "user":
+  //       return entity.imageURL;
+  //     case "class":
+  //       return entity.imageURL;
+  //     case "skill":
+  //       return entity.imageURL;
+  //     default:
+  //       return null;
+  //   }
+  // };
 
   return (
     <>
-      {entity && getImageSrc() && (
+      {entity && (
         <img
-          src={getImageSrc()}
+          src={entity.imageURL}
           alt={`${imageType} Image`}
           style={{
             width: "200px",
