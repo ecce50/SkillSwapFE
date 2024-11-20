@@ -6,6 +6,7 @@ import { deleteSkill } from "../../utils/SkillUtils";
 import { BACKEND_URL } from "../../config/config.index.js";
 import "../../../style/user-skills.css";
 import GenericModal from "../../utils/GenericModal.jsx";
+import ImageDisplay from "../../utils/ImageDisplay.jsx";
 
 
 // UserSkills component
@@ -156,7 +157,12 @@ const [skillToDelete, setSkillToDelete] = useState(null);
           ) : (
             // Render skill details and action buttons
             <>
-              <h3>{skill.title}</h3>
+              <ImageDisplay
+                editMode={editMode}
+                imageType="skill"
+                entity={skill}
+              />
+              ;<h3>{skill.title}</h3>
               <p>{skill.description}</p>
               {/* Use navigate for manual navigation */}
               <button
