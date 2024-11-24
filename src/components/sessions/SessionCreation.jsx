@@ -15,6 +15,9 @@ function SessionCreation({ classId, teacherId, onAddSession }) {
   const [time, setTime] = useState("");
   const [dateTime, setDateTime] = useState("");
   const [startDate, setStartDate] = useState("");
+  const [sessionLocation, setSessionLocation] = useState("");
+  const [sessionDuration, setSessionDuration] = useState("");
+  const [notes, setNotes] = useState("");
   const [status, setStatus] = useState("Beginners");
   const [pointsCost, setPointsCost] = useState(1);
   const [maxAttendees, setMaxAttendees] = useState(10);
