@@ -8,6 +8,10 @@ import Accordion from "../general/Accordion.jsx";
 function ClassCreation({ skill, onAddClass }) {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+  const [classLocation, setClassLocation] = useState("");
+  const [classDuration, setClassDuration] = useState("");
+  const [level, setLevel] = useState("Everyone");
+  const [classImage, setClassImage] = useState("");
   const { authenticateUser } = useContext(AuthContext);
   const nav = useNavigate();
 
