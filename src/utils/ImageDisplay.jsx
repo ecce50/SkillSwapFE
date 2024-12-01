@@ -1,14 +1,20 @@
-import React, { useContext } from "react";
+import React, { useState, useContext } from "react";
 import ImageUpload from "./ImageUpload";
 import { AuthContext } from "../context/Auth.context";
+import axios from "axios";
+import { BACKEND_URL } from "../config/config.index.js";
 
-function ImageDisplay({ editMode, imageType, entity, onUpdate}) {
+function ImageDisplay({ imageType, entity, onUpdate}) {
   const { setUser } = useContext(AuthContext);
+  const [localImageUrl, setLocalImageUrl] = useState(entity.imageUrl);
 
   const handleImageUpload = async (imageUrl) => {
     try {
+
+      setLocalImageUrl(imageUrl);
+
       // Update the server with the new image URL
-      await axios.put(`/api/${imageType}/${entity._id}/image`, { imageUrl });
+      await axios.put(`${BACKEND_URL}/skill/update-skill/${entity._id}`, { imageUrl });
 
       // Inform the parent component of the update
       if (onUpdate) {
