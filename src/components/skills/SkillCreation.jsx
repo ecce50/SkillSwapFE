@@ -19,7 +19,6 @@ function SkillCreation({onAddSkill}) {
        {
          title,
          description,
-        //  skillImage,
        },
        {
         headers: {
