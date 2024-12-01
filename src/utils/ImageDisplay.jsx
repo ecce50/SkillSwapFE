@@ -25,9 +25,6 @@ function ImageDisplay({ imageType, entity, onUpdate}) {
           break;
       }
 
-      // Update the server with the new image URL
-      //await axios.put(`${BACKEND_URL}/skill/update-skill/${entity._id}`, { imageUrl });
-
       // Inform the parent component of the update
       if (onUpdate) {
         onUpdate({ ...entity, imageUrl: imageUrl });

@@ -13,7 +13,7 @@ function ImageUpload({ onSuccess, imageType, entityId }) {
     try {
       const formData = new FormData();
       formData.append("file", file);
-      formData.append("imageType", imageType); // Add imageType to formData
+      formData.append("imageType", imageType);
       
       switch (imageType) {
         case 'user':
@@ -26,13 +26,6 @@ function ImageUpload({ onSuccess, imageType, entityId }) {
           formData.append("skillId", entityId);
           break;
 }
-
-  //  if (imageType === "user") {
-  //    formData.append("userId", userId);
-
-  //  } else if (imageType === "class") {
-  //    formData.append("classId", classId);
-  //  }
       const res = await axios.post(
         `${BACKEND_URL}/image/upload-image`,
         formData
