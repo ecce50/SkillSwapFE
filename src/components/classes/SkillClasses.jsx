@@ -1,16 +1,14 @@
 import React, { useState, useEffect, useContext } from "react";
-import axios from "axios";
 import ClassSessions from "../sessions/ClassSessions";
 import SessionCreation from "../sessions/SessionCreation";
 import ReviewCreation from "../reviews/ReviewCreation";
 import ClassReviews from "../reviews/ClassReviews.jsx";
 import { deleteClass } from "../../utils/ClassUtils.jsx";
-import ClassImage from "./ClassImage.jsx";
 import { fetchTeacherByUserId } from "../../utils/UserUtils";
-import { BACKEND_URL } from "../../config/config.index.js";
 import { AuthContext } from "../../context/Auth.context.jsx";
 import GenericModal from "../../utils/GenericModal.jsx";
 import { fetchSessionsByClassId } from "../../utils/SessionUtils.jsx";
+import ImageDisplay from "../../utils/ImageDisplay.jsx";
 
 const SkillClasses = ({ skill, setClasses, classes }) => {
   const [updatedClass, setUpdatedClass] = useState({
@@ -86,12 +84,27 @@ const SkillClasses = ({ skill, setClasses, classes }) => {
     }));
   };
 
+  const handleClassUpdate = (updatedClass) => {
+    console.log("this is the updated image of the class:", (updatedClass))
+    setClasses((prevClasses) =>
+      prevClasses.map((aClass) =>
+        aClass._id === updatedClass._id ? updatedClass : aClass
+      )
+    );
+  };
+
   return (
     <div style={{ backgroundColor: "darkblue" }}>
       {console.log("Classes from the return: ", classes)}
       {console.log("Sessions from the return: ", sessions)}
       {classes.map((aClass) => (
         <div key={aClass._id} id={aClass._id}>
+              <ImageDisplay
+                imageType="class"
+                entity={aClass}
+                key={aClass._id} //Do we need this twice?
+                onUpdate={handleClassUpdate} // Update the specific class in the parent state
+              />
           <h2>
               {aClass.title}
           </h2>

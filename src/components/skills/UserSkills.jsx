@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-//import { fetchClassesBySkillId } from "../../utils/ClassUtils";
 import { deleteSkill } from "../../utils/SkillUtils";
 import "../../../style/user-skills.css";
 import GenericModal from "../../utils/GenericModal.jsx";

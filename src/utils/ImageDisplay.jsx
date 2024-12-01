@@ -13,8 +13,20 @@ function ImageDisplay({ imageType, entity, onUpdate}) {
 
       setLocalImageUrl(imageUrl);
 
+      switch (imageType) {
+        case 'user':
+          await axios.put(`${BACKEND_URL}/user/update-skill/`, { imageUrl });
+          break;
+        case 'class':
+          await axios.put(`${BACKEND_URL}/class/update-class/${entity._id}`, { imageUrl });
+          break;
+        case 'skill':
+          await axios.put(`${BACKEND_URL}/skill/update-skill/${entity._id}`, { imageUrl });
+          break;
+      }
+
       // Update the server with the new image URL
-      await axios.put(`${BACKEND_URL}/skill/update-skill/${entity._id}`, { imageUrl });
+      //await axios.put(`${BACKEND_URL}/skill/update-skill/${entity._id}`, { imageUrl });
 
       // Inform the parent component of the update
       if (onUpdate) {
@@ -38,7 +50,6 @@ function ImageDisplay({ imageType, entity, onUpdate}) {
           }}
         />
       )}
-      {console.log("bbbbbbbbbbbbbbbbbbbbbbbbbbb", entity.imageUrl)}
         <ImageUpload
           onSuccess={handleImageUpload}
           imageType={imageType}
