@@ -15,7 +15,7 @@ function ImageDisplay({ imageType, entity, onUpdate}) {
 
       switch (imageType) {
         case 'user':
-          await axios.put(`${BACKEND_URL}/user/update-skill/`, { imageUrl });
+          await axios.put(`${BACKEND_URL}/user/update-user/${entity._id}`, { imageUrl });
           break;
         case 'class':
           await axios.put(`${BACKEND_URL}/class/update-class/${entity._id}`, { imageUrl });
