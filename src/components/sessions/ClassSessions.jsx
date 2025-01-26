@@ -28,8 +28,8 @@ function ClassSessions({ sessions, classId, setSessions }) {
         { signedUp: student.user._id, sessionId: sessionId }
       );
 
-      await axios.put(`${BACKEND_URL}/user/update-user`, {
-        userId: student.user._id,
+      await axios.put(`${BACKEND_URL}/user/update-user/${student.user._id}`, {
+/*         userId: student.user._id, */
         attendingSessions: [...student.user.attendingSessions, sessionId],
       });
 
@@ -55,8 +55,8 @@ function ClassSessions({ sessions, classId, setSessions }) {
         { signedUp: student.user._id, sessionId: sessionId }
       );
 
-      await axios.put(`${BACKEND_URL}/user/update-user`, {
-        userId: student.user._id,
+      await axios.put(`${BACKEND_URL}/user/update-user/${student.user._id}`, {
+/*         userId: student.user._id, */
         attendingSessions: student.user.attendingSessions.filter(
           (id) => id !== sessionId
         ),
