@@ -56,10 +56,10 @@ const SearchResultsList = ({onSearch}) => {
       ) : (
         filteredResults.map((result) => (
           <div key={result._id}>
-            {result.source === "skill" && result.title && (
+            {result.objectType === "skill" && result.title && (
               <SkillResultItem result={result} />
             )}
-            {result.source === "class" && result.title && (
+            {result.objectType === "class" && result.title && (
               <ClassResultItem result={result} />
             )}
           </div>

@@ -15,9 +15,9 @@ import "react-datepicker/dist/react-datepicker.css";
 
 registerLocale("enGB", enGB);
 
+
 function ClassSessions({ sessions, classId, setSessions }) {
   const student = useContext(AuthContext);
-
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [sessionToDelete, setSessionToDelete] = useState(null);
 
@@ -25,38 +25,32 @@ function ClassSessions({ sessions, classId, setSessions }) {
     try {
       const bookedSession = await axios.patch(
         `${BACKEND_URL}/session/add-attendee/`,
-        { signedUp: student.user._id, sessionId: sessionId }
+        { signedUp: student.user._id, sessionId }
       );
 
       await axios.put(`${BACKEND_URL}/user/update-user/${student.user._id}`, {
-/*         userId: student.user._id, */
         attendingSessions: [...student.user.attendingSessions, sessionId],
       });
 
-      setSessions((prevSessions) =>
-        prevSessions.map((session) =>
-          session._id === sessionId ? bookedSession.data.session : session
-        )
-      );
+      // Update the sessions state with the newly booked session data
+      setSessions((prevSessions) => {
+        const sessionArray = Object.values(bookedSession.data)[0]; // Extracting the array
+        console.log("Updated sessions array:", sessionArray);
+        return sessionArray; // Update the state with the new session array
+      });
     } catch (error) {
       console.error("Error when booking session:", error);
     }
   };
 
-  // const newSessions = (prevSessions) =>
-  //   prevSessions.map((session) =>
-  //     session._id === sessionId ? bookedSession.data.session : session
-  //   );
-
   const unbookPlace = async (sessionId) => {
     try {
       const updatedSession = await axios.patch(
         `${BACKEND_URL}/session/remove-attendee/`,
-        { signedUp: student.user._id, sessionId: sessionId }
+        { signedUp: student.user._id, sessionId }
       );
 
       await axios.put(`${BACKEND_URL}/user/update-user/${student.user._id}`, {
-/*         userId: student.user._id, */
         attendingSessions: student.user.attendingSessions.filter(
           (id) => id !== sessionId
         ),
@@ -72,14 +66,8 @@ function ClassSessions({ sessions, classId, setSessions }) {
     }
   };
 
-  const handleBookButtonClick = (sessionId) => {
-    bookPlace(sessionId);
-  };
-
-  const handleUnbookButtonClick = (sessionId) => {
-    unbookPlace(sessionId);
-  };
-
+  const handleBookButtonClick = (sessionId) => bookPlace(sessionId);
+  const handleUnbookButtonClick = (sessionId) => unbookPlace(sessionId);
 
   const handleDeleteButtonClick = (sessionId) => {
     setShowDeleteModal(true);
@@ -94,15 +82,9 @@ function ClassSessions({ sessions, classId, setSessions }) {
   const handleConfirmDelete = async () => {
     try {
       await deleteSession(sessionToDelete);
-
-      const filteredSessions = (prevSessions) => {
-        return prevSessions.filter(
-          (session) => session._id !== sessionToDelete
-        );
-      };
-
-      const updatedSessions = filteredSessions(sessions);
-      setSessions(updatedSessions);
+      setSessions((prevSessions) =>
+        prevSessions.filter((session) => session._id !== sessionToDelete)
+      );
       setShowDeleteModal(false);
       setSessionToDelete(null);
     } catch (error) {
@@ -110,38 +92,61 @@ function ClassSessions({ sessions, classId, setSessions }) {
     }
   };
 
+  // Make sure to use `sessions` here instead of `sessionArray`
   return (
     <div style={{ backgroundColor: "red" }}>
       <h2>Sessions</h2>
-      {sessions.map((aSession) => (
-        <div key={aSession._id} id={aSession._id}>
-            <div>
-              <h3>Date: {format(new Date(aSession.dateTime), "dd-MM-yyyy")}</h3>
-              <h3>Time: {format(new Date(aSession.dateTime), "HH:mm")}</h3>
-              <p>Status: {aSession.status}</p>
-              <p>Points Cost: {aSession.pointsCost}</p>
-              <p>Max Attendees: {aSession.maxAttendees}</p>
+      {sessions && sessions.length > 0 ? (
+        sessions.map((aSession) => {
+          const isTeacher =
+            student.user && student.user._id === aSession.teacherId;
+          const isStudentSignedUp = aSession.signedUp.includes(
+            student.user._id
+          );
+          const spotsLeft = aSession.maxAttendees - aSession.signedUp.length;
 
-              {aSession.signedUp.includes(student.user._id) ? (
-                <button onClick={() => handleUnbookButtonClick(aSession._id)}>
-                  Unbook
-                </button>
-              ) : (
-                <button onClick={() => handleBookButtonClick(aSession._id)}>
-                  Book
-                </button>
-              )}
+          return (
+            <div key={aSession._id} id={aSession._id}>
+              <div>
+                <h3>
+                  Date: {format(new Date(aSession.dateTime), "dd-MM-yyyy")}
+                </h3>
+                <h3>Time: {format(new Date(aSession.dateTime), "HH:mm")}</h3>
+                <p>Status: {aSession.status}</p>
+                <p>Points Cost: {aSession.pointsCost}</p>
+                <p>Max Attendees: {aSession.maxAttendees}</p>
+                <p>Spots Left: {spotsLeft}</p>
 
-              {student.user && student.user._id === aSession.teacherId && (
-                <>
-                  <button onClick={() => handleDeleteButtonClick(aSession._id)}>
-                    Delete
+                {isTeacher ? (
+                  <>
+                    <button onClick={() => handleEditButtonClick(aSession._id)}>
+                      Edit
+                    </button>
+                    <button
+                      onClick={() => handleDeleteButtonClick(aSession._id)}
+                    >
+                      Delete
+                    </button>
+                  </>
+                ) : isStudentSignedUp ? (
+                  <button onClick={() => handleUnbookButtonClick(aSession._id)}>
+                    Unbook
                   </button>
-                </>
-              )}
+                ) : spotsLeft > 0 ? (
+                  <button onClick={() => handleBookButtonClick(aSession._id)}>
+                    Book
+                  </button>
+                ) : (
+                  <button disabled>Full</button>
+                )}
+              </div>
             </div>
-        </div>
-      ))}
+          );
+        })
+      ) : (
+        <p>No sessions available.</p>
+      )}
+
       {showDeleteModal && (
         <GenericModal
           show={showDeleteModal}
@@ -158,5 +163,3 @@ function ClassSessions({ sessions, classId, setSessions }) {
 }
 
 export default ClassSessions;
-
-
