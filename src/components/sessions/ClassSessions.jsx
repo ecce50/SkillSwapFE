@@ -32,11 +32,12 @@ function ClassSessions({ sessions, classId, setSessions }) {
         attendingSessions: [...student.user.attendingSessions, sessionId],
       });
 
-      setSessions((prevSessions) =>
-        prevSessions.map((session) =>
-          session._id === sessionId ? bookedSession.data.session : session
-        )
-      );
+      // Update the sessions state with the newly booked session data
+      setSessions((prevSessions) => {
+        const sessionArray = Object.values(bookedSession.data)[0]; // Extracting the array
+        console.log("Updated sessions array:", sessionArray);
+        return sessionArray; // Update the state with the new session array
+      });
     } catch (error) {
       console.error("Error when booking session:", error);
     }
@@ -91,49 +92,60 @@ function ClassSessions({ sessions, classId, setSessions }) {
     }
   };
 
+  // Make sure to use `sessions` here instead of `sessionArray`
   return (
     <div style={{ backgroundColor: "red" }}>
       <h2>Sessions</h2>
-      {sessions.map((aSession) => {
-        const isTeacher =
-          student.user && student.user._id === aSession.teacherId;
-        const isStudentSignedUp = aSession.signedUp.includes(student.user._id);
-        const spotsLeft = aSession.maxAttendees - aSession.signedUp.length;
+      {sessions && sessions.length > 0 ? (
+        sessions.map((aSession) => {
+          const isTeacher =
+            student.user && student.user._id === aSession.teacherId;
+          const isStudentSignedUp = aSession.signedUp.includes(
+            student.user._id
+          );
+          const spotsLeft = aSession.maxAttendees - aSession.signedUp.length;
 
-        return (
-          <div key={aSession._id} id={aSession._id}>
-            <div>
-              <h3>Date: {format(new Date(aSession.dateTime), "dd-MM-yyyy")}</h3>
-              <h3>Time: {format(new Date(aSession.dateTime), "HH:mm")}</h3>
-              <p>Status: {aSession.status}</p>
-              <p>Points Cost: {aSession.pointsCost}</p>
-              <p>Max Attendees: {aSession.maxAttendees}</p>
-              <p>Spots Left: {spotsLeft}</p>
+          return (
+            <div key={aSession._id} id={aSession._id}>
+              <div>
+                <h3>
+                  Date: {format(new Date(aSession.dateTime), "dd-MM-yyyy")}
+                </h3>
+                <h3>Time: {format(new Date(aSession.dateTime), "HH:mm")}</h3>
+                <p>Status: {aSession.status}</p>
+                <p>Points Cost: {aSession.pointsCost}</p>
+                <p>Max Attendees: {aSession.maxAttendees}</p>
+                <p>Spots Left: {spotsLeft}</p>
 
-              {isTeacher ? (
-                <>
-                  <button onClick={() => handleEditButtonClick(aSession._id)}>
-                    Edit
+                {isTeacher ? (
+                  <>
+                    <button onClick={() => handleEditButtonClick(aSession._id)}>
+                      Edit
+                    </button>
+                    <button
+                      onClick={() => handleDeleteButtonClick(aSession._id)}
+                    >
+                      Delete
+                    </button>
+                  </>
+                ) : isStudentSignedUp ? (
+                  <button onClick={() => handleUnbookButtonClick(aSession._id)}>
+                    Unbook
                   </button>
-                  <button onClick={() => handleDeleteButtonClick(aSession._id)}>
-                    Delete
+                ) : spotsLeft > 0 ? (
+                  <button onClick={() => handleBookButtonClick(aSession._id)}>
+                    Book
                   </button>
-                </>
-              ) : isStudentSignedUp ? (
-                <button onClick={() => handleUnbookButtonClick(aSession._id)}>
-                  Unbook
-                </button>
-              ) : spotsLeft > 0 ? (
-                <button onClick={() => handleBookButtonClick(aSession._id)}>
-                  Book
-                </button>
-              ) : (
-                <button disabled>Full</button>
-              )}
+                ) : (
+                  <button disabled>Full</button>
+                )}
+              </div>
             </div>
-          </div>
-        );
-      })}
+          );
+        })
+      ) : (
+        <p>No sessions available.</p>
+      )}
 
       {showDeleteModal && (
         <GenericModal
