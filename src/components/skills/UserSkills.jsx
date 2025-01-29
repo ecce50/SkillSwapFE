@@ -50,7 +50,7 @@ const [skillToDelete, setSkillToDelete] = useState(null);
                 key={skill._id} //Do we need this twice?
                 onUpdate={handleSkillUpdate} // Update the specific skill in the parent state
               />
-              ;<h3>{skill.title}</h3>
+              <h3>{skill.title}</h3>
               <p>{skill.description}</p>
               {/* Use navigate for manual navigation */}
               <button
