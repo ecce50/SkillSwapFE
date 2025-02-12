@@ -141,7 +141,8 @@ const SkillClasses = ({ skill, setClasses, classes }) => {
 
               <ClassSessions
                 classId={aClass._id}
-                sessions={sessions[aClass._id] || []}
+/*                 sessions={sessions[aClass._id] || []} */
+                sessions= {sessions}
                 setSessions={(newSessions) =>
                   setSessions((prevSessions) => ({
                     ...prevSessions,

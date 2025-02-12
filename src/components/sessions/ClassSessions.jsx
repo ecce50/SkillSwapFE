@@ -21,6 +21,8 @@ function ClassSessions({ sessions, classId, setSessions }) {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [sessionToDelete, setSessionToDelete] = useState(null);
 
+  console.log ("AHHHHHHHHHHHHHHHHHHHH", sessions)
+
   const bookPlace = async (sessionId) => {
     try {
       const bookedSession = await axios.patch(
@@ -93,7 +95,7 @@ function ClassSessions({ sessions, classId, setSessions }) {
   };
 
   // Make sure to use `sessions` here instead of `sessionArray`
-  return (
+  /* return (
     <div style={{ backgroundColor: "red" }}>
       <h2>Sessions</h2>
       {sessions && sessions.length > 0 ? (
@@ -145,7 +147,65 @@ function ClassSessions({ sessions, classId, setSessions }) {
         })
       ) : (
         <p>No sessions available.</p>
-      )}
+      )} */
+
+        return (
+          <div style={{ backgroundColor: "red" }}>
+            <h2>Sessions</h2>
+            
+            {sessions && Object.keys(sessions).length > 0 ? ( 
+              Object.values(sessions) 
+                .flat() 
+                .map((aSession) => { 
+                  const isTeacher =
+                    student.user && student.user._id === aSession.teacherId;
+                  const isStudentSignedUp = aSession.signedUp.includes(
+                    student.user._id
+                  );
+                  const spotsLeft = aSession.maxAttendees - aSession.signedUp.length;
+        
+                  return (
+                    <div key={aSession._id} id={aSession._id}>
+                      <div>
+                        <h3>
+                          Date: {format(new Date(aSession.dateTime), "dd-MM-yyyy")}
+                        </h3>
+                        <h3>Time: {format(new Date(aSession.dateTime), "HH:mm")}</h3>
+                        <p>Status: {aSession.status}</p>
+                        <p>Points Cost: {aSession.pointsCost}</p>
+                        <p>Max Attendees: {aSession.maxAttendees}</p>
+                        <p>Spots Left: {spotsLeft}</p>
+        
+                        {isTeacher ? (
+                          <>
+                            <button onClick={() => handleEditButtonClick(aSession._id)}>
+                              Edit
+                            </button>
+                            <button
+                              onClick={() => handleDeleteButtonClick(aSession._id)}
+                            >
+                              Delete
+                            </button>
+                          </>
+                        ) : isStudentSignedUp ? (
+                          <button onClick={() => handleUnbookButtonClick(aSession._id)}>
+                            Unbook
+                          </button>
+                        ) : spotsLeft > 0 ? (
+                          <button onClick={() => handleBookButtonClick(aSession._id)}>
+                            Book
+                          </button>
+                        ) : (
+                          <button disabled>Full</button>
+                        )}
+                      </div>
+                    </div>
+                  );
+                })
+            ) : (
+              <p>No sessions available.</p>
+            )}
+         
 
       {showDeleteModal && (
         <GenericModal
